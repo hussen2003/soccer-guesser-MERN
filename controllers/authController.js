@@ -6,7 +6,7 @@ export const signup = async (req, res) => {
   try {
     const { name, email, username, password, score } = req.body;
     //implement confirm password
-    const user = await User.findOne({ username });
+    //const user = await User.findOne({ username });
     //hash password
 
     const newUser = new User({

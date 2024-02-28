@@ -16,10 +16,8 @@ const playerSchema = new mongoose.Schema({
         position:{
             type: String,
             required: true,
-            enum: ["Striker", "Left Winger", "Right Winger", 
-            "Attacking Midfielder", "Central Midfielder", 
-            "Defensive Midfielder", "Left Back", "Right Back", 
-            "Center Back", "Goalkeeper"]
+            enum: ["ST", "LW", "RW", "CAM", "CM", 
+            "CDM", "LB", "RB", "CB", "GK"]
         },
         country:{
             type: String,
@@ -28,10 +26,10 @@ const playerSchema = new mongoose.Schema({
         club:{
             type: String,
             required: true
-        }
+        },
     }]
 });
 
-const Player = mongoose.model("Player", playerSchema);
+const Player = mongoose.model("players", playerSchema);
 
 export default Player;
