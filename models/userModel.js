@@ -1,23 +1,23 @@
-//models for databse collections/tables
+//models for user databse collections/tables
 
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: {
-    type: "string",
+    type: String,
     required: true,
   },
   email: {
-    type: "string",
+    type: String,
     required: true,
   },
   username: {
-    type: "string",
+    type: String,
     required: true,
     unique: true,
   },
   password: {
-    type: "string",
+    type: String,
     required: true,
     minLength: 6,
   },
