@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 import './login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post('/api/login', { email, password });
-//       console.log(response.data); // Handle successful login
-//     } catch (err) {
-//       setError(err.response.data.message); // Handle login error
-//     }
-//   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post('/api/login', { email, password });
+  //     console.log(response.data); // Handle successful login
+  //   } catch (err) {
+  //     setError(err.response.data.message); // Handle login error
+  //   }
+  // };
 
   return (
     <div className='login-container'>
