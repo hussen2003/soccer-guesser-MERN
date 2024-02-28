@@ -1,0 +1,14 @@
+.navbar-brand {
+    display: block;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.1cap;
+    background-color:rgb(233, 227, 221);
+    color:black;
+
+  }
+  
+  .navbar-brand {
+    font-size: 30px;
+  }
+  
