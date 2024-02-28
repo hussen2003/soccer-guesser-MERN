@@ -21,7 +21,8 @@
   }
   
   .login-container label {
-    font-weight: bold;
+    padding-top: 5px;
+    font-weight:lighter;
     margin-bottom: 5px;
   }
   
