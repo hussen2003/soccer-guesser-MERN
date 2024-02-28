@@ -37,12 +37,7 @@
   }
   
   .login-container button {
-    padding: 10px 20px;
-    background-color: #2196F3;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 8px 20px;
   }
   
   .login-container button:hover {

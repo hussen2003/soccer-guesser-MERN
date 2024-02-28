@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import './login.css';
 
 const Login = () => {
@@ -38,7 +39,7 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <Button type="submit" variant="outline-primary">Login</Button>{' '}
     </div>
   );
 };
