@@ -6,25 +6,31 @@ export const signup = async (req, res) => {
   try {
     const { name, email, username, password, score } = req.body;
     //implement confirm password
-    //const user = await User.findOne({ username });
+    const user = await User.findOne({ username });
     //hash password
 
-    const newUser = new User({
+    if (!user) {
+      return res.status(400).json({ error: "Username already exists" });
+    } else {
+      const newUser = new User({
       name,
       email,
       username,
       password,
       score: score || 0,
-    });
+      });
 
-    await newUser.save();
-    res.status(201).json({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
-      username: newUser.username,
-      score: score || 0,
-    });
+      await newUser.save();
+      res.status(201).json({
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        username: newUser.username,
+        score: score || 0,
+      });
+
+    }
+    
   } catch (error) {
     console.log("Error in signup controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -40,7 +46,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ error: "Username does not exist" });
     }
 
-    if (password !== user.password) {
+    if (password != user.password) {
       return res.status(400).json({ error: "Incorrect password" });
     }
 
