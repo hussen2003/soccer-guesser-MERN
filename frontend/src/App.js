@@ -1,13 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import Header from "./components/header/Header";
-import Login from "./components/login/Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from './pages/LoginPage.js';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <div>
-      <Header />
-      <Login />
+      <BrowserRouter>
+        <Routes>
+          <Route path = "/" index element={<LoginPage />} />
+          <Route path = "/LandingPage" index element={<LandingPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
