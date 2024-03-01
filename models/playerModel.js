@@ -21,7 +21,7 @@ const playerSchema = new mongoose.Schema({
         type: String,
       },
       age: {
-        type: String,
+        type: Number,
       },
       image: {
         type: String,
@@ -33,7 +33,7 @@ const playerSchema = new mongoose.Schema({
         type: String,
       },
       overall: {
-        type: String,
+        type: Number,
       },
     },
   ],
