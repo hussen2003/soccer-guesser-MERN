@@ -3,31 +3,40 @@
 import mongoose from "mongoose";
 
 const playerSchema = new mongoose.Schema({
-    players: [{
-        name: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        age:{
-            type: Number,
-            required: true
-        },
-        position:{
-            type: String,
-            required: true,
-            enum: ["ST", "LW", "RW", "CAM", "CM", 
-            "CDM", "LB", "RB", "CB", "GK"]
-        },
-        country:{
-            type: String,
-            required: true
-        },
-        club:{
-            type: String,
-            required: true
-        },
-    }]
+  players: [
+    {
+      name: {
+        type: String,
+      },
+      nationality: {
+        type: String,
+      },
+      league: {
+        type: String,
+      },
+      club: {
+        type: String,
+      },
+      positions: {
+        type: String,
+      },
+      age: {
+        type: String,
+      },
+      image: {
+        type: String,
+      },
+      country_flag: {
+        type: String,
+      },
+      club_logo: {
+        type: String,
+      },
+      overall: {
+        type: String,
+      },
+    },
+  ],
 });
 
 const Player = mongoose.model("players", playerSchema);
