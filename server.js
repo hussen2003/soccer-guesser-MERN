@@ -13,7 +13,7 @@ dotenv.config();
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
-app.use("/landing", landingRoutes)
+app.use("/api/landing", landingRoutes)
 
 
 //app.get("/", (req, res) => {

@@ -7,7 +7,7 @@ const leaderboardAmount = 10;
 export const leaderboard = async (req, res) => {
     try {
       //const { score } = req.body;
-      const users = await User.find({}).select('username', 'score').sort({ score: 1}).limit(20);
+        //const users = await User.find({}).select('username', 'score').sort({ score: 1 }).limit(20);
   
       
 
@@ -27,7 +27,7 @@ export const leaderboard = async (req, res) => {
     //     score: user.score,
     //   });
 
-    res.status(201).json(users);
+        res.status(201).json(hi);
 
     } catch (error) {
       console.log("Error in login controller", error.message);
