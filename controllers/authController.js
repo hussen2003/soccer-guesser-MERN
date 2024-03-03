@@ -8,6 +8,7 @@ export const signup = async (req, res) => {
     //implement confirm password
     const user = await User.findOne({ username });
     //hash password
+    
 
     if (user) {
       return res.status(400).json({ error: "Username already exists" });

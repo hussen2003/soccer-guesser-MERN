@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
+import landingRoutes from "./routes/landingRoutes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import cors from "cors";
 
@@ -12,6 +13,7 @@ dotenv.config();
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/landing". landingRoutes);
 
 
 //app.get("/", (req, res) => {
