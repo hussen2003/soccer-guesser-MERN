@@ -1,7 +1,8 @@
-import express from "express";
+import express, { application } from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import dailyRoutes from "./routes/dailyRoutes.js";
+import unlimitedRoutes from "./routes/unlimitedRoutes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import cors from "cors";
 
@@ -13,7 +14,8 @@ dotenv.config();
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
-app.use("/api/daily", dailyRoutes)
+app.use("/api/daily", dailyRoutes);
+app.use("/api/unlimited", unlimitedRoutes);
 
 
 //app.get("/", (req, res) => {
