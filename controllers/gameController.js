@@ -8,7 +8,6 @@ export const guesser = async (req, res) => {
     
     const { guess, player } = req.body;
 
-    var player = "player";
     var nameLength = player.length;
     var letters = []; // number coded: 0 for not in name, 1 for in name but wrong place, 2 for in name and correct place
     var result;
