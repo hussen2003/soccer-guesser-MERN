@@ -1,4 +1,4 @@
-//landing page api
+//game unlimited players version page api
 
 import User from "../models/userModel.js";
 

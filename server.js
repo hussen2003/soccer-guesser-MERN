@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import dailyRoutes from "./routes/dailyRoutes.js";
 import unlimitedRoutes from "./routes/unlimitedRoutes.js";
+import gameRoutes from "./routes/gameRoutes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import cors from "cors";
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/daily", dailyRoutes);
 app.use("/api/unlimited", unlimitedRoutes);
+app.use("/api/game", gameRoutes);
 
 
 //app.get("/", (req, res) => {

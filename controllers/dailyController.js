@@ -1,4 +1,4 @@
-//landing page api
+//game daily version page api
 
 import User from "../models/userModel.js";
 
