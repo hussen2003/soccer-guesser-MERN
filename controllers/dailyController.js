@@ -12,7 +12,7 @@ export const leaderboard = async (req, res) => {
         res.status(201).json(users);
 
     } catch (error) {
-      console.log("Error in login controller", error.message);
+      console.log("Error in daily controller", error.message);
       res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -24,11 +24,12 @@ export const updateScore = async (req, res) => {
         await User.updateOne({ username }, { score: score })
 
         res.status(201).json({
-            score: score || 0,
+            username: username,
+            score: score || 0
           });
 
     } catch (error) {
-      console.log("Error in login controller", error.message);
+      console.log("Error in daily controller", error.message);
       res.status(500).json({ error: "Internal Server Error" });
     }
 };
