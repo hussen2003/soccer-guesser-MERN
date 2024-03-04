@@ -4,11 +4,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 function LandingPage() {
-    const array = localStorage.getItem('user_data');
-    const ar1 = array.split(",");
-    var name = ar1[1];
-    const ar2 = name.split(":");
-    var name2 = ar2[1].replace(/"/g, '');
+    const name = (JSON.parse(localStorage.getItem('user_data')).name);
     const [message, setMessage] = useState("");
     const playdaily = (event) => {
         event.preventDefault();
@@ -35,7 +31,7 @@ function LandingPage() {
         <div>
             <Header />
             <div className='landing-page'></div>
-            <h1> Hello, {name2}!</h1>
+            <h1> Hello, {name}!</h1>
             <div style={{ margin: '75px 0' }}></div> { }
             <Button onClick = {playdaily}
                 onMouseEnter={handleMouseEnter}
