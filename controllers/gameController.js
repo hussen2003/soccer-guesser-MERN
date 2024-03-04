@@ -5,11 +5,11 @@ import Player from "../models/playerModel.js";
 
 export const guesser = async (req, res) => {
     try {
-      const date = new Date();
-      const day = date.getDay();
-      const month = date.getMonth();
-      const year = date.getFullYear();
-      const currentDate = `${day}-${month}-${year}`;
+      // const date = new Date();
+      // const day = date.getDay();
+      // const month = date.getMonth();
+      // const year = date.getFullYear();
+      // const currentDate = `${day}-${month}-${year}`;
       
       const { guess } = req.body;
 
