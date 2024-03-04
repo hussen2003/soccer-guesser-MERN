@@ -23,7 +23,7 @@ function LandingPage() {
     const logout = (event) => {
         event.preventDefault();
         setMessage("success?");
-        window.location.href = "/Login";
+        window.location.href = "/";
     }
     function handleMouseEnter(event) {
         event.target.style.backgroundColor = '#3dea76'; // Change background color on hover
@@ -50,11 +50,11 @@ function LandingPage() {
                 style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}>
                 LeaderBoard
             </Button>
-            <div style={{ margin: '60px 0' }}></div> { }
-            <Button onClick={goleaderboard}
+            <div style={{ margin: '100px 0' }}></div> { }
+            <Button onClick={logout}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '40px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}>
                 Logout
             </Button>
         </div>
