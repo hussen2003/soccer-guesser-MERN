@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import dailyRoutes from "./routes/dailyRoutes.js";
 import unlimitedRoutes from "./routes/unlimitedRoutes.js";
 import gameRoutes from "./routes/gameRoutes.js";
+import playersRoutes from "./routes/playersRoutes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import cors from "cors";
 
@@ -18,6 +19,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/daily", dailyRoutes);
 app.use("/api/unlimited", unlimitedRoutes);
 app.use("/api/game", gameRoutes);
+app.use("/api/players", playersRoutes);
 
 
 //app.get("/", (req, res) => {

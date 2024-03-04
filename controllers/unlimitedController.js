@@ -2,6 +2,8 @@
 
 import User from "../models/userModel.js";
 
+import Player from "../models/playerModel.js";
+
 const leaderboardAmount = 10;
 
 export const leaderboard = async (req, res) => {
