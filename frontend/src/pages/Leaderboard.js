@@ -15,6 +15,35 @@ function Leaderboard(){
     function handleMouseLeave(event) {
         event.target.style.backgroundColor = '#efeee9'; // Change background color back to normal when mouse leaves
     }
+    const grabdata = () =>{
+        var js = JSON.stringify(null);
+        try {
+            const response = fetch("http://localhost:5001/api/daily/leaderboard", {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+            var req = JSON.parse(response.text());
+            const array = req.split(',');
+            if (req.error) {
+                <h2>Error occured... Please try again later!</h2>
+              return;
+            } else {
+                <h2>  Name       Score</h2>
+              for(let i = 0; i < array.length; i++){
+                if(array[i] == null)
+                    break;
+
+                <div>
+                    {i + 1}  {array[i].name}      {array[i].score}
+                </div>
+              }
+            }
+          } catch (e) {
+            alert(e.toString());
+            return;
+          }
+    }
     return(
         <div>
             <Header />
@@ -25,9 +54,8 @@ function Leaderboard(){
             style = {{position: 'fixed', top: '100pt', left: '200pt', padding: '10px', backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer',}}>
             Home
             </button>
-            <div style={{ margin: '30px 0' }}></div> {}
             <h1>Top Players</h1>
-
+                {grabdata()}
         </div>
     );
 }
