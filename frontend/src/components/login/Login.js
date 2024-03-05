@@ -4,9 +4,15 @@ import axios from 'axios';
 import './login.css';
 
 function Login() {
+  const signup = (event) => {
+    event.preventDefault();
+    setMessage("success?");
+    window.location.href = "/SignUpPage";
+  }
   var loginName;
   var loginPassword;
   const [message, setMessage] = useState("");
+
   const doLogin = async (event) => {
     event.preventDefault();
     var obj = { username: loginName.value, password: loginPassword.value };
@@ -38,6 +44,12 @@ function Login() {
       return;
     }
   };
+  function handleMouseEnter(event) {
+    event.target.style.backgroundColor = '#3dea76'; // Change background color on hover
+  }
+  function handleMouseLeave(event) {
+    event.target.style.backgroundColor = '#efeee9'; // Change background color back to normal when mouse leaves
+  }
 
   return (
     <div className='login-container'>
@@ -64,6 +76,13 @@ function Login() {
             />
           </div>
           <Button type="submit" variant="outline-primary" onClick={doLogin}>Login</Button>{' '}
+          <div style={{ margin: '20px 0' }}></div> { }
+            <Button onClick={signup}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                Sign Up
+            </Button>
       </form>
     </div>
   );

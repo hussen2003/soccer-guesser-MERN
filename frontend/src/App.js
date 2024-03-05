@@ -6,7 +6,7 @@ import LandingPage from './pages/LandingPage';
 import DailyPage from './pages/DailyPage';
 import Leaderboard from './pages/Leaderboard';
 import AboutPage from './pages/AboutPage.js';
-import SignUp from "./components/signup/Signup";
+import SignUpPage from './pages/SignUpPage.js';
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path = "/" index element={<LoginPage />} />
+          <Route path = "/SignUpPage" index element={<SignUpPage />} />
           <Route path = "/LandingPage" index element={<LandingPage />} />
           <Route path = "/DailyPage" index element = {<DailyPage />} />
           <Route path = "/Leaderboard" index element = {<Leaderboard />} />
