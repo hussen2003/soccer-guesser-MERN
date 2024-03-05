@@ -33,7 +33,8 @@ function SignUp() {
           };
           localStorage.setItem("user_data", JSON.stringify(user));
           setMessage("success?");
-          window.location.href = "/LandingPage";
+          window.location.href = "/";
+          alert("Successfully created account");
         }
       } catch (e) {
         alert(e.toString());
