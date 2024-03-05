@@ -4,7 +4,7 @@ import './aboutpage.css'; // Importing CSS for styling
 
 function AboutPage() {
     const teamMembers = [
-        { name: 'David Urrego', role: 'DFrontend (Web)' },
+        { name: 'David Urrego', role: 'Frontend (Web)' },
         { name: 'Hussen Premier', role: 'Database' },
         { name: 'Jack Gao', role: 'Frontend' },
         { name: 'Luckner Ablard', role: 'Frontend (Mobile)' },
