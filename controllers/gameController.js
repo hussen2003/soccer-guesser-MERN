@@ -35,7 +35,7 @@ export const guesser = async (req, res) => {
     });
 
   } catch (error) {
-    console.log("Error in unlimited controller", error.message);
+    console.log("Error in gamess controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

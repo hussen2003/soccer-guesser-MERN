@@ -20,10 +20,11 @@ export const getDailyPlayer = async (req, res) => {
     try {
       
         const date = new Date();
-        const day = date.getDay();
-        const month = date.getMonth();
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
         const year = date.getFullYear();
         const currentDate = `${day}-${month}-${year}`;
+        const Dcorrect = date.getDay();
     
         const dailyPlayer = await Player.find({ currentDate });
   
@@ -48,4 +49,16 @@ export const getPlayers = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }   
   };
+
+export const giveDailyDate = async (req, res) => {
+   try {
+     //const { username, password } = req.body;
+     const players = await Player.find({});
+     
+     res.status(201).json(players);
+   } catch (error) {
+     console.log("Error in players controller", error.message);
+     res.status(500).json({ error: "Internal Server Error" });
+   }   
+ };
   
