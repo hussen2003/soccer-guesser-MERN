@@ -1,0 +1,49 @@
+.container {
+    background-image: url('GrassyImage.jpg'); /* Replace 'grass-background.jpg' with your grass image file */
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px; /* Add padding for better readability */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Text color for better visibility */
+    font-family: Arial, sans-serif; /* Set font family */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button[type='submit'] {
+    background-color: #28a745; /* Green color for submit button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+button[type='submit']:hover {
+    background-color: #218838; /* Darker green color on hover */
+}
