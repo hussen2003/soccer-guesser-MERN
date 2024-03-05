@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema({
   score: {
     type: Number,
   },
-  dailyDate:{
+  dailyDate: {
     type: String,
-  }
+  },
 });
 
 const User = mongoose.model("users", userSchema);

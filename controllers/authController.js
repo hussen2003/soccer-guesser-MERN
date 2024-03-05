@@ -4,21 +4,21 @@ import User from "../models/userModel.js";
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, username, password, score } = req.body;
+    const { name, email, username, password, score, dailyDate } = req.body;
     //implement confirm password
     const user = await User.findOne({ username });
     //hash password
-
 
     if (user) {
       return res.status(400).json({ error: "Username already exists" });
     } else {
       const newUser = new User({
-      name,
-      email,
-      username,
-      password,
-      score: score || 0,
+        name,
+        email,
+        username,
+        password,
+        score: score || 0,
+        dailyDate: dailyDate || "",
       });
 
       await newUser.save();
@@ -28,10 +28,9 @@ export const signup = async (req, res) => {
         email: newUser.email,
         username: newUser.username,
         score: score || 0,
+        dailyDate: dailyDate || "",
       });
-
     }
-    
   } catch (error) {
     console.log("Error in signup controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -67,7 +66,11 @@ export const login = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     //const { username, password } = req.body;
-    const users = await User.find({}).select({ "username": 1, "password": 1, "_id": 1});
+    const users = await User.find({}).select({
+      username: 1,
+      password: 1,
+      _id: 1,
+    });
 
     res.status(201).json(users);
   } catch (error) {
