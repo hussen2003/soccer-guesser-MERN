@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import DailyPage from './pages/DailyPage';
 import Leaderboard from './pages/Leaderboard';
 import AboutPage from './pages/AboutPage.js';
+import SignUp from "./components/signup/Signup";
 
 function App() {
   return (
