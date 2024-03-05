@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
   dailyDate: {
     type: String,
   },
+  streak: {
+    type: Number,
+  },
 });
 
 const User = mongoose.model("users", userSchema);

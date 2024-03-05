@@ -4,7 +4,8 @@ import User from "../models/userModel.js";
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, username, password, score, dailyDate } = req.body;
+    const { name, email, username, password, score, dailyDate, streak } =
+      req.body;
     //implement confirm password
     const user = await User.findOne({ username });
     //hash password
@@ -19,6 +20,7 @@ export const signup = async (req, res) => {
         password,
         score: score || 0,
         dailyDate: dailyDate || "",
+        streak: streak || 0,
       });
 
       await newUser.save();
@@ -29,6 +31,7 @@ export const signup = async (req, res) => {
         username: newUser.username,
         score: score || 0,
         dailyDate: dailyDate || "",
+        streak: streak || 0,
       });
     }
   } catch (error) {
