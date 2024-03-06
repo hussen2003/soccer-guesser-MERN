@@ -8,7 +8,7 @@ const Header = () => {
   <div>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Navbar.Brand>
-        <Nav.Link href="/">SOCCERDLE 123</Nav.Link>
+        <Nav.Link href="/">SOCCERDLE</Nav.Link>
       </Navbar.Brand>
     </Navbar>
   </div>
