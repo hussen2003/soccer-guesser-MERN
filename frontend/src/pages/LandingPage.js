@@ -28,7 +28,7 @@ function LandingPage() {
         event.target.style.backgroundColor = '#efeee9'; // Change background color back to normal when mouse leaves
     }
     function handleMouseEnterlog(event) {
-        event.target.style.backgroundColor = '#ff0000';
+        event.target.style.backgroundColor = '#ff5555';
     }
     return (
         <div>
