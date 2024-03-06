@@ -1,14 +1,10 @@
 .navbar-brand {
-    display: block;
+    display:block;
     width: 100%;
     text-align: center;
     letter-spacing:0.1em;
-    background-color:rgb(233, 227, 221);
-    color:black;
-
-  }
-  
-  .navbar-brand {
-    font-size: 30px;
+    background-image: url('../login/GrassyImage.jpg');
+    color:rgb(255, 255, 255);
+    font-size: 60px;
   }
   
