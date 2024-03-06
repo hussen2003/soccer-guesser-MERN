@@ -56,7 +56,7 @@ function Login() {
       <Button onClick = {aboutus}
       onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
       onMouseLeave={(e) => e.target.style.backgroundColor = '#efeee9'}
-      style={{ position: 'fixed', top: '15%', right: '15%', padding: '10px', minWidth: '50px' ,backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.2em' }}
+      style={{ position: 'fixed', top: '15vh', right: '15vw', padding: '2px', minWidth: '1.2vw' , backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.5vw' }}
       >About Us</Button>
       <h2>Login</h2>
       <form onSubmit={doLogin}>

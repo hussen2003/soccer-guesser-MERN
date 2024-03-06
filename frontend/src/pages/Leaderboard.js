@@ -43,7 +43,7 @@ function Leaderboard() {
             <button onClick={goback}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                style={{ position: 'absolute', top: '140px', left: '15%', padding: '10px', backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer' }}>
+                style={{ position: 'absolute', top: '9vw', left: '15vw', padding: '10px', backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer' }}>
                 Home
             </button>
             <div style={{ margin: '30px 0' }}></div> { }
