@@ -31,18 +31,13 @@ function DailyPage() {
     const [gameEnded, setGameEnded] = useState(false);
     const [guessesMade, setGuessesMade] = useState(Array(0));
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
-
-    var correctName;
-    var nationality;
-    try {
-        correctName = dailyPlayer.name; 
-        nationality = dailyPlayer.nationality;
-    } catch (error) {
-        correctName = null;
-        nationality = null;
-    }
     
-    if (!correctName) return null;
+    if (!dailyPlayer) return null;
+
+    var correctName = dailyPlayer.name;     
+    var nationality = dailyPlayer.nationality;
+    
+    
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
