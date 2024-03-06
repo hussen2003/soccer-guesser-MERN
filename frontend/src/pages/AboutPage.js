@@ -14,6 +14,13 @@ function AboutPage() {
         { name: 'Ryan Rahrooh', role: 'Project Manager' }
     ];
 
+    function handleMouseEnter(event) {
+        event.target.style.backgroundColor = '#3dea76'; // Change background color on hover
+    }
+    function handleMouseLeave(event) {
+        event.target.style.backgroundColor = '#efeee9'; // Change background color back to normal when mouse leaves
+    }
+
     const goHome = () => {
         window.location.href = "/"; // Navigate to the home page
     };
@@ -31,7 +38,10 @@ function AboutPage() {
                         </div>
                     ))}
                 </div>
-                <button onClick={goHome} className="home-button">
+                <button onClick={goHome}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="home-button">
                     Home
                 </button>
             </div>
