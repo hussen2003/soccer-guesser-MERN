@@ -15,7 +15,7 @@ function DailyPage() {
                 if (!response.ok) {
                     throw new Error('Failed to obtain daily player data!');
                 }
-                const data = await response.json();
+                const data = JSON.parse(await response.text());
                 setDailyPlayer(data);
             } catch (e) {
                 alert(e.toString());
@@ -32,7 +32,16 @@ function DailyPage() {
     const [guessesMade, setGuessesMade] = useState(Array(0));
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
 
-    const correctName = dailyPlayer ? dailyPlayer.name : null;
+    var correctName;
+    var nationality;
+    try {
+        correctName = dailyPlayer.name; 
+        nationality = dailyPlayer.nationality;
+    } catch (error) {
+        correctName = null;
+        nationality = null;
+    }
+    
     if (!correctName) return null;
 
     const handleKeyPress = (event) => {
