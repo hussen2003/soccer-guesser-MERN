@@ -39,7 +39,7 @@ function LandingPage() {
             <Button onClick={playdaily}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '25px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '25px', width: '225px', height: '80px', cursor: 'pointer' }}>
                 Play Daily Game
             </Button>
             <div style={{ margin: '20px 0' }}></div> { }
