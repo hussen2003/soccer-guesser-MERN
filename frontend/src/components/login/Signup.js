@@ -41,10 +41,14 @@ function SignUp() {
         return;
       }
     };
+    const goHome = () => {
+        window.location.href = "/"; // Navigate to the home page
+    };
 
     return (
         <div className="container"> 
             <h2>Sign Up</h2> 
+            <div style={{ margin: '10px 0' }}></div> { }
             <form onSubmit={doSignup}> 
                 <div className="form-group">
                     <label htmlFor="username">Name:</label>
@@ -87,6 +91,8 @@ function SignUp() {
                     />
                 </div>
                 <Button type="submit" variant="outline-primary" onClick={doSignup}>Sign Up</Button>{' '}
+                <Button variant="secondary" onClick={goHome} className='homne-button'> Home </Button>
+                
             </form>
         </div>
     );

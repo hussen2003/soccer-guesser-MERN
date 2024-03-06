@@ -1,23 +1,30 @@
 .container {
-    background-image: url('GrassyImage.jpg'); /* Replace 'grass-background.jpg' with your grass image file */
+    background-image: url('SignUpWallpaper.jpeg');
     background-size: cover;
+    background-position: center;
     width: 100vw;
     height: 100vh;
-    padding: 20px; /* Add padding for better readability */
+    padding: 20px; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white; /* Text color for better visibility */
-    font-family: Arial, sans-serif; /* Set font family */
+    color: white; 
+    font-family: Arial, sans-serif; 
 }
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 45px;
+    letter-spacing:0.1em;
+  }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 label {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -27,7 +34,6 @@ input[type='password'] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
