@@ -49,26 +49,26 @@ function Login() {
     <div className='login-container'>
       <h2>Login</h2>
       <form onSubmit={doLogin}>
-        <div>
-            <label htmlFor="email">Username:</label>
+      <div className="form-group"> {/* Added a class for consistency */}
+            <label htmlFor="username">Username:</label>
             <input
-              type="username"
-              id="username"
-              value={loginName}
-              ref={(c) => (loginName = c)}
-              required
+                type="text"
+                id="username"
+                value={loginName}
+                ref={(c) => (loginName = c)}
+                required
             />
-          </div>
-          <div>
+        </div>
+        <div className="form-group"> {/* Added a class for consistency */}
             <label htmlFor="password">Password:</label>
             <input
-              type="password"
-              id="password"
-              value={loginPassword}
-              ref={(c) => (loginPassword = c)}
-              required
+                type="password"
+                id="password"
+                value={loginPassword}
+                ref={(c) => (loginPassword = c)}
+                required
             />
-          </div>
+        </div>
           <Button type="submit" variant="outline-primary" onClick={doLogin}>Login</Button>{' '}
           <div style={{ margin: '10px 0' }}></div> { }
           <p>Don't have an account? Click Below to sign up!</p>
