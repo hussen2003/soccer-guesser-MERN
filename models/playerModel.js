@@ -35,6 +35,9 @@ const playerSchema = new mongoose.Schema({
       overall: {
         type: Number,
       },
+      dailyDate: {
+        type: String,
+      },
     },
   ],
 });
