@@ -1,8 +1,6 @@
 import React from 'react';
 import Header from '../components/header/Header.js';
 import './aboutpage.css'; // Importing CSS for styling
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 
 function AboutPage() {
     const teamMembers = [
