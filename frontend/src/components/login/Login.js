@@ -54,10 +54,10 @@ function Login() {
   return (
     <div className='login-container'>
       <Button onClick = {aboutus}
-      onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
-      onMouseLeave={(e) => e.target.style.backgroundColor = '#efeee9'}
-      style={{ position: 'fixed', top: '15vh', right: '15vw', padding: '2px', minWidth: '1.2vw' , backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.5vw' }}
-      >About Us</Button>
+    onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
+    onMouseLeave={(e) => e.target.style.backgroundColor = '#efeee9'}
+    style={{ position: 'fixed', bottom: '85%', right: '25%', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '150px', height: '40px', transition: 'background-color 0.3s', border: 'none'}}
+>About Us</Button>
       <h2>Login</h2>
       <form onSubmit={doLogin}>
         <div className="form-group"> {/* Added a class for consistency */}
