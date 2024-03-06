@@ -19,15 +19,14 @@ export const getRandomPlayer = async (req, res) => {
 export const getDailyPlayer = async (req, res) => {
     try {
       
-        const date = new Date();
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        const currentDate = `${day}-${month}-${year}`;
+      const date = new Date();
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      const dailyDate = date + ""
     
-        const dailyPlayer = await Player.find({ currentDate });
+      const dailyPlayer = await Player.findOne({ dailyDate });
   
-      
       res.status(201).json(dailyPlayer);
   
     } catch (error) {
@@ -54,7 +53,6 @@ export const giveDailyDate = async (req, res) => {
     const addedDaily = [];
     const indexes = [];
    try {
-     //const { username, password } = req.body;
      const players = await Player.find({});
      var start = new Date();
      var end = new Date();
@@ -68,8 +66,10 @@ export const giveDailyDate = async (req, res) => {
         usedNumber = false;
         addedDaily.push(randomNum);
         end.setDate(startDate + i);
-        const dateString = "" + end;
-        players[randomNum].dailyDate = dateString;
+        end.setHours(0);
+        end.setMinutes(0);
+        end.setSeconds(0);
+        players[randomNum].dailyDate = "" + end;
         end = new Date();
         await players[randomNum].save();
 
