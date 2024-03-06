@@ -3,15 +3,19 @@ import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'; 
 
 function SignUp() {
-    var SignUpName;
-    var SignUpPassword;
-    var SignUpUsername;
-    var SignUpEmail;
+    // var SignUpName;
+    // var SignUpPassword;
+    // var SignUpUsername;
+    // var SignUpEmail;
+    const [SignUpName, setSignUpName] = useState("");
+    const [SignUpPassword, setSignUpPassword] = useState("");
+    const [SignUpUsername, setSignUpUsername] = useState("");
+    const [SignUpEmail, setSignUpEmail] = useState("");
     const [message, setMessage] = useState("");
 
     const doSignup = async (event) => {
       event.preventDefault();
-      var obj = { name: SignUpName.value, email: SignUpEmail.value, username: SignUpUsername.value, password: SignUpPassword.value };
+      var obj = { name: SignUpName, email: SignUpEmail, username: SignUpUsername, password: SignUpPassword }; // maybe SignUpName.target.value
       var js = JSON.stringify(obj);
       try {
         const response = await fetch("http://localhost:5001/api/auth/signup", {
@@ -46,17 +50,17 @@ function SignUp() {
     };
 
     return (
-        <div className="container"> 
+        <div className="signup-container"> 
             <h2>Sign Up</h2> 
-            <div style={{ margin: '10px 0' }}></div> { }
             <form onSubmit={doSignup}> 
                 <div className="form-group">
-                    <label htmlFor="username">Name:</label>
+                    <label htmlFor="name">Name:</label>
                     <input
                         type="text"
                         id="name" 
                         value={SignUpName} 
-                        ref={(c) => (SignUpName = c)}
+                        // ref={(c) => (SignUpName = c)}
+                        onChange={(e) => setSignUpName(e.target.value)}
                         required
                     />
                 </div>
@@ -66,7 +70,8 @@ function SignUp() {
                         type="text"
                         id="username" 
                         value={SignUpUsername} 
-                        ref={(c) => (SignUpUsername = c)}
+                        // ref={(c) => (SignUpUsername = c)}
+                        onChange={(e) => setSignUpUsername(e.target.value)}
                         required
                     />
                 </div>
@@ -76,7 +81,8 @@ function SignUp() {
                         type="email" 
                         id="email" 
                         value={SignUpEmail} 
-                        ref={(c) => (SignUpEmail = c)}
+                        // ref={(c) => (SignUpEmail = c)}
+                        onChange={(e) => setSignUpEmail(e.target.value)}
                         required
                     />
                 </div>
@@ -86,7 +92,8 @@ function SignUp() {
                         type="password" 
                         id="password" 
                         value={SignUpPassword} 
-                        ref={(c) => (SignUpPassword = c)}
+                        // ref={(c) => (SignUpPassword = c)}
+                        onChange={(e) => setSignUpPassword(e.target.value)}
                         required
                     />
                 </div>

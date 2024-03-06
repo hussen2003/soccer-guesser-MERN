@@ -1,6 +1,12 @@
 .about-page {
     margin: 50px auto;
     text-align: center;
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 75%;
+    background-color: transparent;
 }
 
 .team-members {
@@ -17,6 +23,13 @@
     width: 200px;
 }
 
+.about-title{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 45px;
+    letter-spacing: 0.1em;
+    color:rgb(255, 255, 255);
+}
 .member h2 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -32,6 +45,7 @@
     background-color: #efeee9;
     color: #000;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 10px;
 }

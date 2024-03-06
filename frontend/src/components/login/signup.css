@@ -1,23 +1,26 @@
-.container {
-    background-image: url('SignUpWallpaper.jpeg');
-    background-size: cover;
-    background-position: center;
-    width: 100vw;
+/* .signup-container {
+    margin: 0;
+    padding: 0;
     height: 100vh;
-    padding: 20px; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white; 
-    font-family: Arial, sans-serif; 
+    color: white;
+    font-family: Arial, sans-serif;
+} */
+
+.container {
+    width: 100%;
+    padding: 20px;
 }
+
 h2 {
     text-align: center;
     margin-bottom: 20px;
     font-size: 45px;
-    letter-spacing:0.1em;
-  }
+    letter-spacing: 0.1em;
+}
 
 .form-group {
     margin-bottom: 40px;
@@ -25,7 +28,6 @@ h2 {
 
 label {
     font-size: 20px;
-    font-weight: bold;
 }
 
 input[type='text'],
@@ -40,16 +42,16 @@ input[type='password'] {
 }
 
 button[type='submit'] {
-    background-color: #28a745; /* Green color for submit button */
+    background-color: #28a745;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    transition: background-color 0.3s ease; 
 }
 
 button[type='submit']:hover {
-    background-color: #218838; /* Darker green color on hover */
+    background-color: #218838;
 }
