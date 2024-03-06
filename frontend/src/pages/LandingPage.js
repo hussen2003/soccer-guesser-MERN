@@ -28,7 +28,7 @@ function LandingPage() {
         event.target.style.backgroundColor = '#efeee9'; // Change background color back to normal when mouse leaves
     }
     function handleMouseEnterlog(event) {
-        event.target.style.backgroundColor = '#ff0000';
+        event.target.style.backgroundColor = '#ff5555';
     }
     return (
         <div>
@@ -36,7 +36,7 @@ function LandingPage() {
             <div className='landing-page'></div>
             <h1> Hello, {name}!</h1>
             <div style={{ margin: '75px 0' }}></div> { }
-            <Button onClick = {playdaily}
+            <Button onClick={playdaily}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '25px', width: '225px', height: '80px', cursor: 'pointer' }}>
