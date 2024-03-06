@@ -31,13 +31,13 @@ function DailyPage() {
     const [gameEnded, setGameEnded] = useState(false);
     const [guessesMade, setGuessesMade] = useState(Array(0));
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
-    
+
     if (!dailyPlayer) return null;
 
-    var correctName = dailyPlayer.name;     
+    var correctName = dailyPlayer.name;
     var nationality = dailyPlayer.nationality;
-    
-    
+
+
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -63,28 +63,37 @@ function DailyPage() {
     };
 
     return (
-        <div>
+        <div style={{
+            minHeight: '75vh',
+            minWidth: '75vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: '20px'
+        }}>
             <Header />
-            {guessesMade.map((guess, index) => (
-                <div key={index} style={{ border: '1px solid #ccc', padding: '5px', margin: '5px auto', width: '30%' }}>
-                    <p>{`Guess ${index + 1}: ${guess}`}</p>
-                </div>
-            ))}
-            {!gameEnded && (
-                <div style={{ border: '1px solid #ccc', padding: '5px', margin: '5px auto', width: '30%' }}>
-                    <p>{`Guess ${guessesMade.length + 1}:`}</p>
-                    <input type="text" value={guess} onChange={(e) => setGuess(e.target.value)} onKeyPress={handleKeyPress} maxLength={15} autoFocus />
-                </div>
-            )}
-            {gameEnded && (
-                <div style={{ margin: '10px auto', width: '40%' }}>
-                    {guess.toLowerCase() == correctName.toLowerCase() ? (
-                        <p>{`You guessed it in ${guessesMade.length} tries`}</p>
-                    ) : (
-                        <p>{`The player was ${correctName}`}</p>
-                    )}
-                </div>
-            )}
+            <div style = {{width: '100%'}}>
+                {guessesMade.map((guess, index) => (
+                    <div key={index} style={{ border: '1px solid #ccc', padding: '5px', margin: '5px auto', width: '30%' }}>
+                        <p>{`Guess ${index + 1}: ${guess}`}</p>
+                    </div>
+                ))}
+                {!gameEnded && (
+                    <div style={{ border: '1px solid #ccc', padding: '5px', margin: '5px auto', width: '30%' }}>
+                        <p>{`Guess ${guessesMade.length + 1}:`}</p>
+                        <input type="text" value={guess} onChange={(e) => setGuess(e.target.value)} onKeyPress={handleKeyPress} maxLength={15} autoFocus />
+                    </div>
+                )}
+                {gameEnded && (
+                    <div style={{ margin: '10px auto', width: '40%' }}>
+                        {guess.toLowerCase() == correctName.toLowerCase() ? (
+                            <p>{`You guessed it in ${guessesMade.length} tries`}</p>
+                        ) : (
+                            <p>{`The player was ${correctName}`}</p>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
