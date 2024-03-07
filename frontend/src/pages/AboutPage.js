@@ -3,7 +3,7 @@ import './aboutpage.css'; // Importing CSS for styling
 
 function AboutPage() {
     const teamMembers = [
-        { name: 'David Urrego', role: 'Frontend (Web)', image: 'https://cdn.sofifa.net/players/241/721/24_120.png', linkedin: 'https://www.linkedin.com/in/david-urrego/' },
+        { name: 'David Urrego', role: 'Frontend (Web)', image: 'https://cdn.sofifa.net/players/241/721/24_120.png', linkedin: 'https://www.linkedin.com/in/david-urrego-93aa522b8/' },
         { name: 'Hussen Premier', role: 'Database', image: 'https://cdn.sofifa.net/players/192/448/24_120.png', linkedin: 'https://www.linkedin.com/in/hussen-premier/'},
         { name: 'Jack Gao', role: 'Frontend (Web)/(Mobile)', image: 'https://cdn.sofifa.net/players/232/411/24_120.png', linkedin: 'https://www.linkedin.com/in/jack-gao-376328290'},
         { name: 'Luckner Ablard', role: 'Frontend (Mobile)', image: 'https://cdn.sofifa.net/players/206/517/24_120.png', linkedin: 'https://www.linkedin.com/in/luckner-ablard/' },
