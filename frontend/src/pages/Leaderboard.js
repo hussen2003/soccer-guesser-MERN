@@ -43,7 +43,7 @@ function Leaderboard() {
             backgroundImage: `url(${BirdsEyeViewSoccerField})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundColor: 'rgba(255, 255, 255, .8)',
+            backgroundColor: 'rgba(255, 255, 255, .1)',
             minHeight: '70vh',
             minWidth: '60vh',
             display: 'flex',
@@ -55,7 +55,7 @@ function Leaderboard() {
             <div className='Leaderboard' style={{
                 width: '100%',
                 margin: '15px auto',
-                backgroundColor: 'rgba(0, 240, 0, .1)', // Adjust transparency here
+                backgroundColor: 'rgba(0, 150, 0, .5)', // Adjust transparency here
                 padding: '20px',
                 borderRadius: '1px', // Optional: Add border radius for better appearance
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' // Optional: Add shadow for better contrast
@@ -66,7 +66,7 @@ function Leaderboard() {
                     style={{ position: 'absolute', top: '9vw', left: '15vw', padding: '10px', backgroundColor: '#efeee9', color: '#000', border: 'none', cursor: 'pointer' }}>
                     Home
                 </button>
-                <h1 style={{ textAlign: 'center' }}>Top Players</h1>
+                <h1 style={{ textAlign: 'center'}}>Top Players</h1>
                 <div style={{ margin: '20px 0' }}></div>
                 <div style={{
                     width: '100%',

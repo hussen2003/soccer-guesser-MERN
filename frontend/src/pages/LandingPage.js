@@ -34,7 +34,7 @@ function LandingPage() {
         <div>
             <Header />
             <div className='landing-page'></div>
-            <h1> Hello, {name}!</h1>
+            <h1 style = {{color: 'white'}}> Hello, {name}!</h1>
             <div style={{ margin: '75px 0' }}></div> { }
             <Button onClick={playdaily}
                 onMouseEnter={handleMouseEnter}
