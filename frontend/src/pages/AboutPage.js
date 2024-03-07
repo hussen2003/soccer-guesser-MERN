@@ -10,7 +10,7 @@ function AboutPage() {
         { name: 'Moses Cohen', role: 'Frontend (Web)', image: 'https://cdn.sofifa.net/players/231/443/24_120.png', linkedin: 'https://www.linkedin.com/in/moses-cohen/' },
         { name: 'Patrick Rizkalla', role: 'API', image: 'https://cdn.sofifa.net/players/264/240/24_120.png', linkedin: 'https://www.linkedin.com/in/patrick-rizkalla/' },
         { name: 'Raul Graterol', role: 'Frontend (Mobile)', image: 'https://cdn.sofifa.net/players/252/371/24_120.png', linkedin: 'https://www.linkedin.com/in/raul-graterol-509716241' },
-        { name: 'Ryan Rahrooh', role: 'Project Manager', image: 'https://cdn.sofifa.net/players/216/352/24_120.png', linkedin: 'https://www.linkedin.com/in/ryan-rahrooh' }
+        { name: 'Ryan Rahrooh', role: 'Project Manager', image: 'https://cdn.sofifa.net/players/010/535/15_120.png', linkedin: 'https://www.linkedin.com/in/ryan-rahrooh' }
     ];
 
     function handleMouseEnter(event) {
