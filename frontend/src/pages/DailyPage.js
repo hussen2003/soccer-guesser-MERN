@@ -142,11 +142,13 @@ function DailyPage() {
                         {guessesMade.map((guess, index) => (
                             <span key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #ccc', padding: '10px', margin: '5px auto', width: '75%', backgroundColor: 'white', borderRadius: '5px' }}>
                                 <p style={{ fontSize: '15px', color: 'black', margin: '0' }}>{`Guess ${index + 1}: ${guess}`}</p>
-                                {index >= 0 && !gameEnded && (
+                                {index > 0 && !gameEnded && !hintdex[index] && (
                                     <span>
                                         <button onClick={() => revealHint(index)} style={{ padding: '5px 10px', borderRadius: '5px', backgroundColor: '#007bff', color: 'white', cursor: 'pointer' }}>Show Hint</button>
-                                        {hintdex[index - 1] && <span style={{ margin: '10px auto', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>{getHint(index)}</span>}
                                     </span>
+                                )}
+                                {index > 0 && hintdex[index] && (
+                                    <span style={{ margin: '10px auto', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>{getHint(index)}</span>
                                 )}
                             </span>
                         ))}
