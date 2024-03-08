@@ -149,7 +149,7 @@ function DailyPage() {
                     {gameEnded && (
                         <div style={{ margin: '10px auto', width: '50%', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>
                             {guess.toLowerCase() === dailyPlayer.name.toLowerCase() ? (
-                                <p style={{ margin: '0' }}>{`You guessed it in ${guessesMade.length} tries`}</p>
+                                <p style={{ margin: '0' }}>{`You guessed it in ${guessesMade.length} ${guessesMade.length === 1 ? 'try!' : 'tries!'}`}</p>
                             ) : (
                                 <p style={{ margin: '0' }}>{`The player was ${dailyPlayer.name}`}</p>
                             )}
