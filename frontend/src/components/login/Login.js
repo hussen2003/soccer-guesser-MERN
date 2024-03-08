@@ -3,6 +3,18 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import './login.css';
 
+const app_name = 'soccerdle-mern'
+function buildPath(route)
+{
+  if (process.env.NODE_ENV === 'production')
+  {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  }
+  else
+  {
+    return 'http://localhost:5001/' + route;
+  }
+}
 function Login() {
   const signup = (event) => {
     event.preventDefault();
@@ -24,7 +36,7 @@ function Login() {
     var obj = { username: loginName.value, password: loginPassword.value };
     var js = JSON.stringify(obj);
     try {
-      const response = await fetch("http://localhost:5001/api/auth/login", {
+      const response = await fetch(buildPath('api/auth/login'), {
         method: "POST",
         body: js,
         headers: { "Content-Type": "application/json" },

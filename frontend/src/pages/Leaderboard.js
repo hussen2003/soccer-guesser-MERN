@@ -3,6 +3,20 @@ import React, { useState, useEffect } from 'react';
 import BirdsEyeViewSoccerField from '../components/login/BirdsEyeViewSoccerField.jpg';
 import Wallpaper3 from '../components/login/wallpaper3.jpg';
 
+const app_name = 'soccerdle-mern'
+function buildPath(route)
+{
+  if (process.env.NODE_ENV === 'production')
+  {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  }
+  else
+  {
+    return 'http://localhost:5001/' + route;
+  }
+}
+
+
 // will be used for displaying leaderboard
 function Leaderboard() {
     const [message, setMessage] = useState("");
@@ -21,7 +35,7 @@ function Leaderboard() {
     useEffect(() => {
         async function grabdata() {
             try {
-                const response = await fetch("http://localhost:5001/api/daily/leaderboard", {
+                const response = await fetch(buildPath('api/daily/leaderboard'), {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });

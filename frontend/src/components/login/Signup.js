@@ -2,6 +2,19 @@ import './signup.css';
 import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'; 
 
+const app_name = 'soccerdle-mern'
+function buildPath(route)
+{
+  if (process.env.NODE_ENV === 'production')
+  {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  }
+  else
+  {
+    return 'http://localhost:5001/' + route;
+  }
+}
+
 function SignUp() {
     // var SignUpName;
     // var SignUpPassword;
@@ -24,7 +37,7 @@ function SignUp() {
       var obj = { name: SignUpName, email: SignUpEmail, username: SignUpUsername, password: SignUpPassword }; // maybe SignUpName.target.value
       var js = JSON.stringify(obj);
       try {
-        const response = await fetch("http://localhost:5001/api/auth/signup", {
+        const response = await fetch(buildPath('api/auth/signup'), {
           method: "POST",
           body: js,
           headers: { "Content-Type": "application/json" },

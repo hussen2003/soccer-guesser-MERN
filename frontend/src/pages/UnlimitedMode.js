@@ -2,6 +2,20 @@ import Header from '../components/header/Header.js';
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
+const app_name = 'soccerdle-mern'
+function buildPath(route)
+{
+  if (process.env.NODE_ENV === 'production')
+  {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  }
+  else
+  {
+    return 'http://localhost:5001/' + route;
+  }
+}
+
+
 // unlimited mode page
 function UnlimitedMode() {
     const [message, setMessage] = useState("");
@@ -9,7 +23,7 @@ function UnlimitedMode() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5001/api/players/getRandomPlayer", {
+                const response = await fetch(buildPath('api/players/getRandomPlayer'), {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });
