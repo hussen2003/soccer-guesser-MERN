@@ -106,17 +106,17 @@ function SignUp() {
                 <Button onClick = {doSignup}
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}
-                style={{ position: 'fixed', top: '67vh', right: '50.4vw', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '100px', height: '40px', transition: 'background-color 0.3s', border: 'none', margin: '13px 0'}}
+                style={{ position: 'relative', top: '1vh', right: '5px', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '100px', height: '40px', transition: 'background-color 0.3s', border: 'none', margin: '13px 0'}}
                 >Sign Up</Button>
                 <Button onClick = {goHome}
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#db2e2e'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#ed6d6d'}
-                style={{ position: 'fixed', top: '67vh', right: '45.3vw', padding: '10px 20px', backgroundColor: '#ed6d6d', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '100px', height: '40px', transition: 'background-color 0.3s', border: 'none',margin: '13px 0'}}
+                style={{ position:'relative', top: '1vh', right: '-10px', padding: '10px 20px', backgroundColor: '#ed6d6d', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '100px', height: '40px', transition: 'background-color 0.3s', border: 'none',margin: '13px 0'}}
                 >Home</Button>
                 <Button onClick = {aboutus}
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}
-                style={{ position: 'fixed', top: '10.5vh', right: '4vw', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '150px', height: '40px', transition: 'background-color 0.3s', border: 'none'}}
+                style={{ position: 'relative', top: '-61vh', right: '-42vw', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '150px', height: '40px', transition: 'background-color 0.3s', border: 'none'}}
                 >About Us</Button>
                 
             </form>
