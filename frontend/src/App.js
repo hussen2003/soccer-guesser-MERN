@@ -7,6 +7,7 @@ import DailyPage from './pages/DailyPage';
 import Leaderboard from './pages/Leaderboard';
 import AboutPage from './pages/AboutPage.js';
 import SignUpPage from './pages/SignUpPage.js';
+import UnlimitedMode from './pages/UnlimitedMode.js';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path = "/DailyPage" index element = {<DailyPage />} />
           <Route path = "/Leaderboard" index element = {<Leaderboard />} />
           <Route path = "/AboutPage" index element = {<AboutPage />} />
+          <Route path = "/UnlimitedMode" index element = {<UnlimitedMode />} />
         </Routes>
       </BrowserRouter>
     </div>

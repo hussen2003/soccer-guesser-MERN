@@ -21,6 +21,11 @@ function LandingPage() {
         setMessage("success?");
         window.location.href = "/";
     }
+    const goUnlimited = (event) => {
+        event.preventDefault();
+        setMessage("success?");
+        window.location.href = "/UnlimitedMode";
+    }
     function handleMouseEnter(event) {
         event.target.style.backgroundColor = '#3dea76'; // Change background color on hover
     }
@@ -43,13 +48,20 @@ function LandingPage() {
                 Play Daily Game
             </Button>
             <div style={{ margin: '20px 0' }}></div> { }
+            <Button onClick={goUnlimited}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '25px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                Unlimited Mode
+            </Button>
+            <div style={{ margin: '20px 0' }}></div> { }
             <Button onClick={goleaderboard}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}>
                 LeaderBoard
             </Button>
-            <div style={{ margin: '100px 0' }}></div> { }
+            <div style={{ margin: '80px 0' }}></div> { }
             <Button onClick={logout}
                 onMouseEnter={handleMouseEnterlog}
                 onMouseLeave={handleMouseLeave}

@@ -4,8 +4,7 @@ import User from "../models/userModel.js";
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, username, password, score, dailyDate, streak } =
-      req.body;
+    const { name, email, username, password } = req.body;
     //implement confirm password
     const user = await User.findOne({ username });
     //hash password
@@ -18,9 +17,6 @@ export const signup = async (req, res) => {
         email,
         username,
         password,
-        score: score || 0,
-        dailyDate: dailyDate || "",
-        streak: streak || 0,
       });
 
       await newUser.save();
@@ -29,9 +25,6 @@ export const signup = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         username: newUser.username,
-        score: score || 0,
-        dailyDate: dailyDate || "",
-        streak: streak || 0,
       });
     }
   } catch (error) {
@@ -58,7 +51,6 @@ export const login = async (req, res) => {
       name: user.name,
       email: user.email,
       username: user.username,
-      score: user.score,
     });
   } catch (error) {
     console.log("Error in login controller", error.message);

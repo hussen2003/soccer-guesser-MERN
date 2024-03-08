@@ -1,14 +1,15 @@
 import Header from '../components/header/Header.js';
 import React, { useState, useEffect } from 'react';
+import Button from 'react-bootstrap/Button';
 
-// will work on this later, this is for playing the daily game
-function DailyPage() {
+// unlimited mode page
+function UnlimitedMode() {
     const [message, setMessage] = useState("");
     const [dailyPlayer, setDailyPlayer] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5001/api/players/getDailyPlayer", {
+                const response = await fetch("http://localhost:5001/api/players/getRandomPlayer", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });
@@ -25,6 +26,19 @@ function DailyPage() {
         }
         fetchData();
     }, []);
+
+    const goback = async (event) => {
+        event.preventDefault();
+        setMessage("success?");
+        window.location.href = "/LandingPage";
+    }
+
+    function handleMouseEnter(event) {
+        event.target.style.backgroundColor = '#3dea76';
+    }
+    function handleMouseLeave(event) {
+        event.target.style.backgroundColor = '#efeee9';
+    }
 
     const [guess, setGuess] = useState('');
     const [gameEnded, setGameEnded] = useState(false);
@@ -108,6 +122,7 @@ function DailyPage() {
     return (
         <div>
             <Header />
+            <h3 style={{ color: 'white' }}>Soccerdle Unlimited</h3>
             <div style={{
                 minHeight: '75vh',
                 minWidth: '75vh',
@@ -122,7 +137,7 @@ function DailyPage() {
                 <span style={{ width: '100%', alignContent: 'center' }}>
                     <div>
                         {guessesMade.map((guess, index) => (
-                            <span key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #ccc', padding: '10px', margin: '5px auto', width: '80%', backgroundColor: 'white', borderRadius: '5px', height: '10vh' }}>
+                            <span key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #ccc', padding: '10px', margin: '5px auto', width: '80%', backgroundColor: 'white', borderRadius: '5px', height: '9vh' }}>
                                 <p style={{ fontSize: '20px', color: 'black', margin: '0' }}>{`Guess ${index + 1}: ${guess}`}</p>
                                 {index >= 0 && !hintdex[index] && !gameEnded && (
                                     <span>
@@ -130,9 +145,9 @@ function DailyPage() {
                                     </span>
                                 )}
                                 {hintdex[index] && (
-                                    <span style={{ margin: '10px auto', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>{getHint(index)}{' '} 
-                                    {index === 0 && <img src={dailyPlayer.country_flag} alt="Country Flag" />} 
-                                    {index === 3 && <img src={dailyPlayer.club_logo} alt="club logo"/>}
+                                    <span style={{ margin: '10px auto', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>{getHint(index)}{' '}
+                                        {index === 0 && <img src={dailyPlayer.country_flag} alt="Country Flag" />}
+                                        {index === 3 && <img src={dailyPlayer.club_logo} alt="club logo" />}
                                     </span>
                                 )}
                             </span>
@@ -153,9 +168,23 @@ function DailyPage() {
                             )}
                             <span>
                                 <img src={dailyPlayer.image} style={{ maxWidth: '100%', height: 'auto' }} />
-                                <span><img src={dailyPlayer.club_logo} style={{ maxWidth: '100%/', height: 'auto'}} /></span>
+                                <span><img src={dailyPlayer.club_logo} style={{ maxWidth: '100%/', height: 'auto' }} /></span>
                             </span>
                         </div>
+                    )}
+                    {gameEnded && (
+                        <span><Button onClick={() => window.location.reload()}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}>
+                            Play Again</Button>
+                            {' '}
+                            <Button onClick={goback}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer' , border: '2px solid #000000', minWidth: '6vw'}}>
+                            Home</Button>
+                        </span>
                     )}
                 </span>
             </div>
@@ -164,4 +193,4 @@ function DailyPage() {
     );
 }
 
-export default DailyPage;
+export default UnlimitedMode;

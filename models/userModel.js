@@ -23,12 +23,35 @@ const userSchema = new mongoose.Schema({
   },
   score: {
     type: Number,
+    default: 0,
+  },
+  dailyScore: {
+    type: Number,
+    default: 0,
   },
   dailyDate: {
     type: String,
+    default: "",
+  },
+  lastDatePlayed: {
+    type: String,
+    default: "",
+  },
+  guessDistribution: {
+    type: [Number],
+    default: [0, 0, 0, 0, 0, 0],
+  },
+  amountGamesPlayed: {
+    type: Number,
+    default: 0,
+  },
+  amountGamesWon: {
+    type: Number,
+    default: 0,
   },
   streak: {
     type: Number,
+    default: 0,
   },
 });
 

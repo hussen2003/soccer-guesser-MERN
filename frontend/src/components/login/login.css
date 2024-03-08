@@ -1,6 +1,6 @@
 body {
-  background-image: url('wallpaper3.jpg');
-  background-size: cover;
+    background-image: url('wallpaper3.jpg');
+    background-size: cover;
     background-position: center;
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ body {
     max-width: 400px;
     margin: 0 auto;
     padding: 30px;
-    background-color: #ffffff;
+    background-color: rgba(224, 224, 224, 0.697);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -46,7 +46,6 @@ body {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-
     padding-left: 10px;
     width: calc(100% - 20px);
   }
