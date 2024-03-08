@@ -22,13 +22,6 @@ app.use("/api/game", gameRoutes);
 app.use("/api/players", playersRoutes);
 
 
-//app.get("/", (req, res) => {
-  //root route http://localhost:5000/
-  //res.send("Hello World!!!");
-//});
-
-
-
 
 app.listen(PORT, () => {
   connectToMongoDB();
