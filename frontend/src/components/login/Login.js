@@ -57,7 +57,7 @@ function Login() {
     onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
     onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}
     style={{ position: 'fixed', top: '10.5vh', right: '4vw', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '150px', height: '40px', transition: 'background-color 0.3s', border: 'none'}}
->About Us</Button>
+    >About Us</Button>
       <h2>Login</h2>
       <form onSubmit={doLogin}>
         <div className="form-group"> {/* Added a class for consistency */}
