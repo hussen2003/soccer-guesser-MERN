@@ -1,14 +1,14 @@
 import Header from '../components/header/Header.js';
 import React, { useState, useEffect } from 'react';
 
-// will work on this later, this is for playing the daily game
-function DailyPage() {
+// unlimited mode page
+function UnlimitedMode() {
     const [message, setMessage] = useState("");
     const [dailyPlayer, setDailyPlayer] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5001/api/players/getDailyPlayer", {
+                const response = await fetch("http://localhost:5001/api/players/getRandomPlayer", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });
@@ -108,6 +108,7 @@ function DailyPage() {
     return (
         <div>
             <Header />
+            <h3 style = {{color: 'white'}}>Soccerdle Unlimited</h3>
             <div style={{
                 minHeight: '75vh',
                 minWidth: '75vh',
@@ -164,4 +165,4 @@ function DailyPage() {
     );
 }
 
-export default DailyPage;
+export default UnlimitedMode;
