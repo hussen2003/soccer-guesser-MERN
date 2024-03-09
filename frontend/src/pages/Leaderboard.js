@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import BirdsEyeViewSoccerField from '../components/login/BirdsEyeViewSoccerField.jpg';
 import Wallpaper3 from '../components/login/wallpaper3.jpg';
 
-const app_name = 'soccerdle-mern'
+const app_name = 'soccerdle-mern-ace81d4f14ec'
 function buildPath(route)
 {
   if (process.env.NODE_ENV === 'production')

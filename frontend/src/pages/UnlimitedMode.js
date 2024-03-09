@@ -2,7 +2,7 @@ import Header from '../components/header/Header.js';
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
-const app_name = 'soccerdle-mern'
+const app_name = 'soccerdle-mern-ace81d4f14ec'
 function buildPath(route)
 {
   if (process.env.NODE_ENV === 'production')

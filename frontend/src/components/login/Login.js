@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import './login.css';
 
-const app_name = 'soccerdle-mern'
+const app_name = 'soccerdle-mern-ace81d4f14ec'
 function buildPath(route)
 {
   if (process.env.NODE_ENV === 'production')
