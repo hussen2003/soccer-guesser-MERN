@@ -1,0 +1,15 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(61, 61, 61, 0.6); /* Adjust the alpha value (0.5) for the desired transparency */
+}
+
+.navbar-brand {
+  display: block;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.1em;
+  color: rgb(255, 255, 255);
+  font-size: 50px;
+}
