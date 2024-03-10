@@ -187,8 +187,8 @@ function UnlimitedMode() {
                                 <p style={{ margin: '0' }}>{`The player was ${gameState.dailyPlayer.name}`}</p>
                             )}
                             <span>
-                                <img src={gameState.dailyPlayer.image} style={{ maxWidth: '100%', height: 'auto' }} />
-                                <span><img src={gameState.dailyPlayer.club_logo} style={{ maxWidth: '100%/', height: 'auto' }} /></span>
+                                <img src={gameState.dailyPlayer.image} style={{ maxWidth: '100%', height: '128px' }} />
+                                <span><img src={gameState.dailyPlayer.club_logo} style={{ maxWidth: '100%/', height: '64px'}} /></span>
                             </span>
                         </div>
                     )}
