@@ -65,10 +65,9 @@ function UnlimitedMode() {
         if (guess.trim() === "") {
             return;
         }
-
-        const currentGuess = guess.toLowerCase();
-        const correctNameLower = dailyPlayer.name.toLowerCase();
-        const isCorrectGuess = currentGuess === correctNameLower;
+        const trimmedGuess = gameState.guess.trim().toLowerCase();
+        const correctNameLower = gameState.dailyPlayer.name.toLowerCase();
+        const isCorrectGuess = trimmedGuess === correctNameLower;
 
         const updatedGuessesMade = [...guessesMade];
         updatedGuessesMade[currentGuessIndex] = guess;
@@ -165,9 +164,9 @@ function UnlimitedMode() {
                                     </span>
                                 )}
                                 {gameState.hintdex[index] && (
-                                    <span style={{ margin: '10px auto', backgroundColor: 'white', borderRadius: '5px', padding: '10px'}}>{getHint(index)}{' '}
+                                    <span style={{ margin: '10px auto', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>{getHint(index)}{' '}
                                         {index === 0 && <img src={gameState.dailyPlayer.country_flag} alt="Country Flag" />}
-                                        {index === 3 && <img src={gameState.dailyPlayer.club_logo} alt="club logo" style={{ maxWidth: '100%', height: '6vh' }}/>}
+                                        {index === 3 && <img src={gameState.dailyPlayer.club_logo} alt="club logo" style={{ maxWidth: '100%', height: '6vh' }} />}
                                     </span>
                                 )}
                             </span>
@@ -188,7 +187,7 @@ function UnlimitedMode() {
                             )}
                             <span>
                                 <img src={gameState.dailyPlayer.image} style={{ maxWidth: '100%', height: '128px' }} />
-                                <span><img src={gameState.dailyPlayer.club_logo} style={{ maxWidth: '100%/', height: '64px'}} /></span>
+                                <span><img src={gameState.dailyPlayer.club_logo} style={{ maxWidth: '100%/', height: '64px' }} /></span>
                             </span>
                         </div>
                     )}
@@ -204,7 +203,7 @@ function UnlimitedMode() {
                             <Button onClick={goback}
                                 onMouseEnter={handleMouseEnter}
                                 onMouseLeave={handleMouseLeave}
-                                style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer' , border: '2px solid #000000', minWidth: '6vw'}}>
+                                style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}>
                                 Home
                             </Button>
                         </span>
