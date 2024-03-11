@@ -27,7 +27,8 @@ const Header = () => {
 
   <Navbar expand="lg" fixed="top">
       <Navbar.Brand>
-        <Nav.Link href="/">SOCCERDLE</Nav.Link>        
+        {/* still need to add the logic for clicking the navbar (if signed in, take to landing on click. otherwise, take to login on click) */}
+        <Nav.Link href="/">SOCCERDLE</Nav.Link>      
       </Navbar.Brand>
   </Navbar>
 

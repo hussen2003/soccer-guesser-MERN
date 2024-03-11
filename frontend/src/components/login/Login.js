@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import './login.css';
+import Nav from'react-bootstrap/Nav';
 
 function Login() {
   const signup = (event) => {
@@ -52,12 +53,8 @@ function Login() {
   };
 
   return (
+    <div>
     <div className='login-container'>
-      <Button onClick = {aboutus}
-    onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
-    onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}
-    style={{ position: 'fixed', top: '10.5vh', right: '4vw', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '150px', height: '40px', transition: 'background-color 0.3s', border: 'none'}}
-    >About Us</Button>
       <h2>Login</h2>
       <form onSubmit={doLogin}>
         <div className="form-group"> {/* Added a class for consistency */}
@@ -114,7 +111,48 @@ function Login() {
           Sign Up
         </Button>
       </form>
+      <div style={{ margin: '20px 0' }}></div> { }
+      <Button
+          type="submit"
+          variant="outline-primary"
+          onClick={aboutus}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#90ee90',
+            color: 'rgb(0, 0, 0)',
+            fontSize: '15px',
+            cursor: 'pointer',
+            width: '150px',
+            height: '40px',
+            transition: 'background-color 0.3s',
+          }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}>
+          About Us
+        </Button>
+
+
+      {/* <Nav variant="underline">
+        <Nav.Item>
+          <Nav.Link href="/AboutPage">About Us</Nav.Link>
+        </Nav.Item>
+      </Nav> */}
+      {/* <button class="shrink-border">About Us</button> */}
+      {/* <a href="/AboutPage" 
+  //  onMouseEnter={(e) => e.target.style.textDecoration = 'underline'} 
+  //  onMouseLeave={(e) => e.target.style.textDecoration = 'none'} 
+   //</div>style={{ textDecoration: 'none', color: 'inherit', fontSize: '15px', transition: 'text-decoration 0.3s', }}>About Us</a>
+   ></a> */}
+
+{/* <a href="/AboutPage" class="btn">
+        <svg width="130px" height="45px" viewBox="0 0 180 60" class="border">
+          <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+          <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+        </svg>
+        <span>About Us</span>
+      </a> */}
     </div>
+  </div>
   );
 };
 

@@ -30,7 +30,7 @@ body {
   }
   
   .login-container form > div{
-    display: flex;
+    display:block;
     flex-direction: column;
     margin-bottom: 15px;
   }
@@ -57,5 +57,42 @@ body {
   .login-container button:hover {
     background-color: #088f16;
   }
+/*   
+  .btn {
+    width: 150px;
+    height: 45px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #91C9FF;
+    outline: none;
+    transition: 1s ease-in-out;
+  }
   
+  svg {
+    position: relative;
+    left: 0;
+    top: 0;
+    fill: none;
+    stroke: #fff;
+    stroke-dasharray: 150 480;
+    stroke-dashoffset: 150;
+    transition: 1s ease-in-out;
+  }
+  
+  .btn:hover {
+    transition: 1s ease-in-out;
+    background: #4F95DA;
+  }
+  
+  .btn:hover svg {
+    stroke-dashoffset: -480;
+  }
+  
+  .btn span {
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    font-weight: 100;
+  }
+  
+   */
   
