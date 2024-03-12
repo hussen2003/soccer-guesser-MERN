@@ -1,5 +1,7 @@
 import React from 'react';
 import './aboutpage.css'; // Importing CSS for styling
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from'react-bootstrap/Nav';
 
 function AboutPage() {
     const teamMembers = [
@@ -38,8 +40,14 @@ function AboutPage() {
 
     return (
         <div>
+            <Navbar expand="lg" fixed="top">
+                    <Navbar.Brand>
+                        {/* still need to add the logic for clicking the navbar (if signed in, take to landing on click. otherwise, take to login on click) */}
+                        About Us     
+                    </Navbar.Brand>
+                </Navbar>
+            <div style={{ margin: '300px 0' }}></div> { }
             <div className='about-page'>
-                <h1 class="about-title">About Us</h1>
                 <div className="team-members">
                     {teamMembers.map((member, index) => (
                         <div key={index} className="member" onClick={() => redirectToLinkedIn(member.linkedin)} onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>

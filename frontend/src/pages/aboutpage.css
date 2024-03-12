@@ -1,19 +1,24 @@
 .about-page {
     margin: 50px auto;
     text-align: center;
-    position:fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position:relative;
     width: 75%;
     background-color: transparent;
 }
 
 .team-members {
-    display: flex;
-    flex-wrap: wrap;
+    display:flex;
+    width: relative;
+    flex-wrap:wrap;
     justify-content: center;
 }
+
+.navbar {
+    position:top;
+    top: 0;
+    width: 100%;
+    background-color: rgba(61, 61, 61, 0.6); /* Adjust the alpha value (0.5) for the desired transparency */
+  }  
 
 .member {
     margin: 20px;
@@ -25,6 +30,7 @@
 
 .about-title{
     text-align: center;
+    position:static;
     margin-bottom: 15px;
     font-size: 45px;
     letter-spacing: 0.1em;

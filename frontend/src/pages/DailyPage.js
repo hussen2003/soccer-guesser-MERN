@@ -61,7 +61,7 @@ function DailyPage() {
             return; // Do nothing if guess is empty
         }
 
-        const currentGuess = guess.toLowerCase();
+        const currentGuess = guess.trim().toLowerCase();
         const correctNameLower = dailyPlayer.name.toLowerCase();
         const isCorrectGuess = currentGuess === correctNameLower;
 
