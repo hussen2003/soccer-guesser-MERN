@@ -1,6 +1,20 @@
 import Header from '../components/header/Header.js';
 import React, { useState, useEffect } from 'react';
 
+
+const app_name = 'soccerdle-mern-ace81d4f14ec'
+function buildPath(route)
+{
+  if (process.env.NODE_ENV === 'production')
+  {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  }
+  else
+  {
+    return 'http://localhost:5001/' + route;
+  }
+}
+
 // will work on this later, this is for playing the daily game
 function DailyPage() {
     const [message, setMessage] = useState("");
@@ -8,7 +22,7 @@ function DailyPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5001/api/players/getDailyPlayer", {
+                const response = await fetch(buildPath('api/players/getDailyPlayer'), {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });
