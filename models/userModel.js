@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  currentGuesses: {
+    type: [String],
+    default: ["", "", "", "", "", ""],
+  },
 });
 
 const User = mongoose.model("users", userSchema);
