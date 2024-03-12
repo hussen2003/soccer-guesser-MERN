@@ -40,6 +40,7 @@ export const updateGuess = async (req, res) => {
 
         const user = await User.findOne({ username });
 
+        
         if(tryAmount == 1){
           user.currentGuesses.fill("");
         }
@@ -48,7 +49,7 @@ export const updateGuess = async (req, res) => {
 
         res.status(201).json({
           
-          });
+        });
 
     } catch (error) {
       console.log("Error in daily controller", error.message);
@@ -71,8 +72,12 @@ export const endGame = async (req, res) => {
       user.score += score;
       user.amountGamesPlayed++;
       
-      const lastDatePlayed = new Date(user.lastDatePlayed);
-      if((date - lastDatePlayed) == 86000000){
+      if(user.lastDateFinished == ""){
+        user.lastDateFinished = date;
+      }
+      const lastDateFinished = new Date(user.lastDateFinished);
+      
+      if((date - lastDateFinished) == 86000000){
         user.streak++;
       }else{
         user.streak = 0;
@@ -87,7 +92,7 @@ export const endGame = async (req, res) => {
 
       const winRate = 100 * (parseFloat(user.amountGamesWon)/user.amountGamesPlayed);
 
-      user.lastDatePlayed = date;
+      user.lastDateFinished = date;
       await user.save();
 
       res.status(201).json({
