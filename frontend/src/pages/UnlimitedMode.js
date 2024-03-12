@@ -141,6 +141,7 @@ function UnlimitedMode() {
     return (
         <div>
             <Header />
+            <div style = {{margin: '50px'}}/>
             <h3 style={{ color: 'white' }}>Soccerdle Unlimited</h3>
             <div style={{
                 minHeight: '75vh',
