@@ -50,12 +50,32 @@ function DailyPage() {
     }
   };
 
+  const updateGuess = async (input) => {
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, guess: input, tryAmount: guessesMade.length + 1 };
+    var js = JSON.stringify(obj);
+    try {
+      const response = await fetch(buildPath("api/daily/updateGuess"), {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update guess!");
+      }
+    } catch (e) {
+      alert(e.toString());
+      setMessage("Error occurred. Please try again later!");
+      return;
+    }
+  }
+
   const checkGuess = () => {
     // Check if guess is not empty string
     if (guess.trim() === "") {
       return; // Do nothing if guess is empty
     }
 
+    updateGuess(guess);
     const currentGuess = guess.trim().toLowerCase();
     const correctNameLower = dailyPlayer.name.toLowerCase();
     const isCorrectGuess = currentGuess === correctNameLower;
@@ -199,9 +219,8 @@ function DailyPage() {
                 borderRadius: "5px",
               }}
             >
-              <p style={{ margin: "0" }}>{`Guess ${
-                guessesMade.length + 1
-              }:`}</p>
+              <p style={{ margin: "0" }}>{`Guess ${guessesMade.length + 1
+                }:`}</p>
               <input
                 type="text"
                 value={guess}
@@ -222,10 +241,9 @@ function DailyPage() {
                 padding: "10px",
               }}
             >
-              {guess.toLowerCase() === dailyPlayer.name.toLowerCase() ? (
-                <p style={{ margin: "0" }}>{`You guessed it in ${
-                  guessesMade.length
-                } ${guessesMade.length === 1 ? "try!" : "tries!"}`}</p>
+              {guess.trim().toLowerCase() === dailyPlayer.name.trim().toLowerCase() ? (
+                <p style={{ margin: "0" }}>{`You guessed it in ${guessesMade.length
+                  } ${guessesMade.length === 1 ? "try!" : "tries!"}`}</p>
               ) : (
                 <p
                   style={{ margin: "0" }}
