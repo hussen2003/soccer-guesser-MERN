@@ -25,7 +25,7 @@ class RegisterPageService {
       );
 
       http.Response res = await http.post(
-        Uri.parse('http://192.168.56.1:5001/api/auth/signup'),
+        Uri.parse('http://127.0.0.1/:5001/api/auth/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
