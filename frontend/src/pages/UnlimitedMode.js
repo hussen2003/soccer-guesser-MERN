@@ -196,7 +196,7 @@ function UnlimitedMode() {
                     )}
                     {gameState.gameEnded && (
                         <div style={{ margin: '10px auto', width: '50%', backgroundColor: 'white', borderRadius: '5px', padding: '10px' }}>
-                            {gameState.guess.toLowerCase() === gameState.dailyPlayer.name.toLowerCase() ? (
+                            {gameState.guess.trim().toLowerCase() === gameState.dailyPlayer.name.trim().toLowerCase() ? (
                                 <p style={{ margin: '0' }}>{`You guessed it in ${gameState.guessesMade.length} ${gameState.guessesMade.length === 1 ? 'try!' : 'tries!'}`}</p>
                             ) : (
                                 <p style={{ margin: '0' }}>{`The player was ${gameState.dailyPlayer.name}`}</p>
