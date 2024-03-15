@@ -116,7 +116,7 @@ function Leaderboard() {
             </span>
           </div>
           {players
-            .filter((player) => player.score > 0)
+            .filter((player) => player.dailyScore > 0)
             .map((player, index) => (
               <div
                 key={index}
@@ -137,7 +137,7 @@ function Leaderboard() {
                   )}
                   <span>{player.name}</span>
                 </div>
-                <span>{player.score}</span>
+                <span>{player.dailyScore}</span>
               </div>
             ))}
         </div>
