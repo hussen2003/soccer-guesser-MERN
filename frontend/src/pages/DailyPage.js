@@ -86,7 +86,35 @@ function DailyPage() {
 
     if (isCorrectGuess || currentGuessIndex === 5) {
       setGameEnded(true);
-      Score(currentGuessIndex + 1);
+      let s = 0;
+      if (isCorrectGuess) {
+        switch (currentGuessIndex) {
+          case 0:
+            s = 100;
+            break;
+          case 1:
+            s = 90;
+            break;
+          case 2:
+            s = 75;
+            break;
+          case 3:
+            s = 55;
+            break;
+          case 4:
+            s = 35;
+            break;
+          case 5:
+            s = 15;
+            break;
+          default:
+            s = 0;
+            break;
+        }
+        Score(s);
+      } else {
+        Score(0);
+      }
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setGuess("");
@@ -135,8 +163,8 @@ function DailyPage() {
     }
   };
 
-  const Score = async (input) =>{
-    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, dailyScore: ((6 - input)/5 * 100) };
+  const Score = async (input) => {
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, dailyScore: input };
     var js = JSON.stringify(obj);
     try {
       const response = await fetch(buildPath("api/daily/updateScore"), {
