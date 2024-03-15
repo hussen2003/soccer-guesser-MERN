@@ -9,12 +9,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => const LoginPage(),
       );
 
-    // case HomeScreen.routeName:
-    //   return MaterialPageRoute(
-    //     settings: routeSettings,
-    //     builder: (_) => const HomeScreen(),
-    //   );
-
     default:
       return MaterialPageRoute(
         settings: routeSettings,
