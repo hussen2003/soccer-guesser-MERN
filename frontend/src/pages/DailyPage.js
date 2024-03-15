@@ -86,6 +86,7 @@ function DailyPage() {
 
     if (isCorrectGuess || currentGuessIndex === 5) {
       setGameEnded(true);
+      Score(currentGuessIndex + 1);
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setGuess("");
@@ -133,6 +134,25 @@ function DailyPage() {
         return "";
     }
   };
+
+  const Score = async (input) =>{
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, dailyScore: ((6 - input)/5 * 100) };
+    var js = JSON.stringify(obj);
+    try {
+      const response = await fetch(buildPath("api/daily/updateScore"), {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update score!");
+      }
+    } catch (e) {
+      alert(e.toString());
+      setMessage("Error occurred. Please try again later!");
+      return;
+    }
+  }
 
   return (
     <div>
