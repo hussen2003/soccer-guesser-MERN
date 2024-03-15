@@ -17,7 +17,7 @@ class LoginPageService {
   }) async {
     try {
       http.Response res = await http.post(
-        Uri.parse('http://127.0.0.1/:5001/api/auth/login'),
+        Uri.parse('http://127.0.0.1:5001/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
