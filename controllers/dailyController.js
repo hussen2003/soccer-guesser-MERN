@@ -91,7 +91,8 @@ export const getGuesses = async (req, res) => {
       res.status(201).json({
         playedToday, 
         finishedToday,
-        guesses: user.currentGuesses
+        guesses: user.currentGuesses,
+        dailyScore: user.dailyScore || 0
       });
 
   } catch (error) {
