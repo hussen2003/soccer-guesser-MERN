@@ -50,12 +50,32 @@ function DailyPage() {
     }
   };
 
+  const updateGuess = async (input) => {
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, guess: input, tryAmount: guessesMade.length + 1 };
+    var js = JSON.stringify(obj);
+    try {
+      const response = await fetch(buildPath("api/daily/updateGuess"), {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update guess!");
+      }
+    } catch (e) {
+      alert(e.toString());
+      setMessage("Error occurred. Please try again later!");
+      return;
+    }
+  }
+
   const checkGuess = () => {
     // Check if guess is not empty string
     if (guess.trim() === "") {
       return; // Do nothing if guess is empty
     }
 
+    updateGuess(guess);
     const currentGuess = guess.trim().toLowerCase();
     const correctNameLower = dailyPlayer.name.toLowerCase();
     const isCorrectGuess = currentGuess === correctNameLower;
@@ -66,6 +86,35 @@ function DailyPage() {
 
     if (isCorrectGuess || currentGuessIndex === 5) {
       setGameEnded(true);
+      let s = 0;
+      if (isCorrectGuess) {
+        switch (currentGuessIndex) {
+          case 0:
+            s = 100;
+            break;
+          case 1:
+            s = 90;
+            break;
+          case 2:
+            s = 75;
+            break;
+          case 3:
+            s = 55;
+            break;
+          case 4:
+            s = 35;
+            break;
+          case 5:
+            s = 15;
+            break;
+          default:
+            s = 0;
+            break;
+        }
+        Score(s);
+      } else {
+        Score(0);
+      }
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setGuess("");
@@ -113,6 +162,25 @@ function DailyPage() {
         return "";
     }
   };
+
+  const Score = async (input) => {
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, dailyScore: input };
+    var js = JSON.stringify(obj);
+    try {
+      const response = await fetch(buildPath("api/daily/updateScore"), {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update score!");
+      }
+    } catch (e) {
+      alert(e.toString());
+      setMessage("Error occurred. Please try again later!");
+      return;
+    }
+  }
 
   return (
     <div>
@@ -199,9 +267,8 @@ function DailyPage() {
                 borderRadius: "5px",
               }}
             >
-              <p style={{ margin: "0" }}>{`Guess ${
-                guessesMade.length + 1
-              }:`}</p>
+              <p style={{ margin: "0" }}>{`Guess ${guessesMade.length + 1
+                }:`}</p>
               <input
                 type="text"
                 value={guess}
@@ -222,10 +289,9 @@ function DailyPage() {
                 padding: "10px",
               }}
             >
-              {guess.toLowerCase() === dailyPlayer.name.toLowerCase() ? (
-                <p style={{ margin: "0" }}>{`You guessed it in ${
-                  guessesMade.length
-                } ${guessesMade.length === 1 ? "try!" : "tries!"}`}</p>
+              {guess.trim().toLowerCase() === dailyPlayer.name.trim().toLowerCase() ? (
+                <p style={{ margin: "0" }}>{`You guessed it in ${guessesMade.length
+                  } ${guessesMade.length === 1 ? "try!" : "tries!"}`}</p>
               ) : (
                 <p
                   style={{ margin: "0" }}
