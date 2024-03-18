@@ -3,16 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
 const app_name = 'soccerdle-mern-ace81d4f14ec'
-function buildPath(route)
-{
-  if (process.env.NODE_ENV === 'production')
-  {
-    return 'https://' + app_name + '.herokuapp.com/' + route;
-  }
-  else
-  {
-    return 'http://localhost:5001/' + route;
-  }
+function buildPath(route) {
+    if (process.env.NODE_ENV === 'production') {
+        return 'https://' + app_name + '.herokuapp.com/' + route;
+    }
+    else {
+        return 'http://localhost:5001/' + route;
+    }
 }
 
 
@@ -156,8 +153,18 @@ function UnlimitedMode() {
     return (
         <div>
             <Header />
-            <div style = {{margin: '50px'}}/>
+            <div style={{ margin: '50px' }} />
             <h3 style={{ color: 'white' }}>Soccerdle Unlimited</h3>
+            {!gameState.gameEnded && (<Button onClick={goback}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                    position: "relative",
+                    top: "0vw",
+                    left: "-17.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
+                }}>
+                Home
+            </Button>)}
             <div style={{
                 minHeight: '75vh',
                 minWidth: '75vh',

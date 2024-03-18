@@ -1,5 +1,6 @@
 import Header from "../components/header/Header.js";
 import React, { useState, useEffect } from "react";
+import Button from 'react-bootstrap/Button';
 
 const app_name = "soccerdle-mern-ace81d4f14ec";
 function buildPath(route) {
@@ -14,6 +15,16 @@ function buildPath(route) {
 function DailyPage() {
   const [message, setMessage] = useState("");
   const [dailyPlayer, setDailyPlayer] = useState(null);
+  var pToday, fToday;
+  const [guess, setGuess] = useState("");
+  const [gameEnded, setGameEnded] = useState(false);
+  const [guessesMade, setGuessesMade] = useState([]);
+  const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
+  const [hint, setHint] = useState("");
+  const [hintdex, setHindex] = useState(Array(5).fill(false));
+  const [showModal, setShowModal] = useState(false);
+  const [gameSummary, setGameSummary] = useState({});
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,23 +43,96 @@ function DailyPage() {
         return;
       }
     };
+
+    const fetchGuesses = async () => {
+      var obj = { username: JSON.parse(localStorage.getItem('user_data')).username };
+      var js = JSON.stringify(obj);
+      try {
+        const res = await fetch(buildPath("api/daily/getGuesses"), {
+          method: "POST",
+          body: js,
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          throw new Error("Failed to obtain daily player data!");
+        }
+        const guessdata = JSON.parse(await res.text());
+        pToday = guessdata.playedToday;
+        fToday = guessdata.finishedToday;
+        if (!pToday) {
+          var object = { username: JSON.parse(localStorage.getItem('user_data')).username, guess: null, tryAmount: 0 };
+          var js = JSON.stringify(object);
+          try {
+            const response2 = await fetch(buildPath("api/daily/updateGuess"), {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+            if (!response2.ok) {
+              throw new Error("Failed to obtain daily player data!");
+            }
+          } catch (e) {
+            alert(e.toString());
+            setMessage("Error occurred. Please try again later!");
+            return;
+          }
+        } else if (pToday && !fToday) {
+          const updatedGuessesMade = guessdata.guesses || [];
+          const updatedCurrentGuessIndex = updatedGuessesMade.length;
+          setGuessesMade(updatedGuessesMade);
+          setCurrentGuessIndex(updatedCurrentGuessIndex);
+          const storedHintdex = JSON.parse(localStorage.getItem('hintdex'));
+          if (storedHintdex) {
+            setHindex(storedHintdex);
+          }
+        } else if (fToday) {
+          const updatedGuessesMade = guessdata.guesses || [];
+          const updatedCurrentGuessIndex = updatedGuessesMade.length;
+          setGuessesMade(updatedGuessesMade);
+          setCurrentGuessIndex(updatedCurrentGuessIndex);
+          const storedHintdex = JSON.parse(localStorage.getItem('hintdex'));
+          if (storedHintdex) {
+            setHindex(storedHintdex);
+          }
+          setGameEnded(true);
+        }
+      } catch (e) {
+        alert(e.toString());
+        setMessage("Error occurred. Please try again later!");
+        return;
+      }
+    };
+
     fetchData();
+    fetchGuesses();
+
   }, []);
 
-  const [guess, setGuess] = useState("");
-  const [gameEnded, setGameEnded] = useState(false);
-  const [guessesMade, setGuessesMade] = useState([]);
-  const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
-  const [hint, setHint] = useState("");
-  const [hintdex, setHindex] = useState(Array(5).fill(false));
-
   if (!dailyPlayer) return null;
+
+  const updateHintdex = (updatedHintdex) => {
+    setHindex(updatedHintdex);
+    localStorage.setItem('hintdex', JSON.stringify(updatedHintdex));
+  };
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       checkGuess();
     }
   };
+
+  const goback = async (event) => {
+    event.preventDefault();
+    window.location.href = "/LandingPage";
+  }
+
+  function handleMouseEnter(event) {
+    event.target.style.backgroundColor = '#3dea76';
+  }
+
+  function handleMouseLeave(event) {
+    event.target.style.backgroundColor = '#efeee9';
+  }
 
   const updateGuess = async (input) => {
     var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, guess: input, tryAmount: guessesMade.length + 1 };
@@ -115,6 +199,7 @@ function DailyPage() {
       } else {
         Score(0);
       }
+      handleGameEnd(s, guessesMade.length);
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setGuess("");
@@ -182,9 +267,39 @@ function DailyPage() {
     }
   }
 
+  const handleGameEnd = async (scores, tries) => {
+    try {
+      const responseEnd = await fetch(buildPath("api/daily/endGame"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: JSON.parse(localStorage.getItem('user_data')).username, score: scores, tryAmount: tries }),
+      });
+      if (!responseEnd.ok) {
+        throw new Error("Failed to fetch game summary stats!");
+      }
+      const data = JSON.parse(await responseEnd.text());
+      setGameSummary(data);
+      setShowModal(true);
+    } catch (error) {
+      alert(error.toString());
+      setMessage("Error occurred. Please try again later!");
+      return;
+    }
+  };
+
   return (
     <div>
       <Header />
+      {!gameEnded && (<Button onClick={goback}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          position: "relative",
+          top: ".3vw",
+          left: "-17.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
+        }}>
+        Home
+      </Button>)}
       <div
         style={{
           minHeight: "75vh",
@@ -218,11 +333,14 @@ function DailyPage() {
               >
                 <p
                   style={{ fontSize: "20px", color: "black", margin: "0" }}
-                >{`Guess ${index + 1}: ${guess}`}</p>
+                >{`Guess ${index + 1}: ${guessesMade[index]}`}</p>
                 {index >= 0 && !hintdex[index] && !gameEnded && (
                   <span>
                     <button
-                      onClick={() => revealHint(index)}
+                      onClick={() => {
+                        revealHint(index);
+                        updateHintdex([...hintdex.slice(0, index), true, ...hintdex.slice(index + 1)]);
+                      }}
                       style={{
                         padding: "5px 10px",
                         borderRadius: "5px",
@@ -309,6 +427,18 @@ function DailyPage() {
                   />
                 </span>
               </span>
+            </div>
+          )}
+          {showModal && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                {}
+                <h2>Game Summary</h2>
+                <p>Streak: {gameSummary.streak}</p>
+                <p>Win Rate: {gameSummary.winRate}%</p>
+                {}
+                <button onClick={() => setShowModal(false)}>Close</button>
+              </div>
             </div>
           )}
         </span>

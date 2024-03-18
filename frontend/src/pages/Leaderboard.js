@@ -54,9 +54,9 @@ function Leaderboard() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundColor: "rgba(255, 255, 255, .1)",
-        minHeight: "70vh",
-        minWidth: "60vh",
-        display: "flex",
+        minHeight: "75vh",
+        minWidth: "70vh",
+        display: "relative",
         flexDirection: "column",
         alignItems: "center",
         padding: "20px",
@@ -79,9 +79,9 @@ function Leaderboard() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           style={{
-            position: "absolute",
-            top: "9vw",
-            left: "15vw",
+            position: "relative",
+            top: "0vw",
+            left: "-16vw",
             padding: "10px",
             backgroundColor: "#efeee9",
             color: "#000",
