@@ -36,26 +36,65 @@ export const updateScore = async (req, res) => {
 
 export const updateGuess = async (req, res) => {
     try {
+        const date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+      
         const { username, guess, tryAmount } = req.body;
 
         const user = await User.findOne({ username });
-
         
-        if(tryAmount == 1){
+        if(tryAmount == 0){
           user.currentGuesses.fill("");
+        } else {
+          user.currentGuesses[tryAmount - 1] = guess;
         }
 
-        user.currentGuesses[tryAmount - 1] = guess;
-
-        res.status(201).json({
-          
-        });
+        user.lastDatePlayed = date;
+        user.save();
+        res.status(201).json({});
 
     } catch (error) {
       console.log("Error in daily controller", error.message);
       res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+export const getGuesses = async (req, res) => {
+  try {
+      const { username } = req.body;
+      const user = await User.findOne({ username });
+
+      const date = new Date();
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
+      const finishedDate = new Date(user.lastDateFinished);
+      const lastDate = new Date(user.lastDatePlayed);
+
+      var finishedToday, playedToday;
+      
+      if((lastDate - finishedDate) > 0){
+        playedToday = true;
+        finishedToday = false;
+      }else if({
+        
+      }
+
+      res.status(201).json({
+        playedToday: true,
+        finishedToday: true,
+        guesses: user.currentGuesses
+      });
+
+  } catch (error) {
+    console.log("Error in daily controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }  
+}
 
 export const endGame = async (req, res) => {
   try {
