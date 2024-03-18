@@ -9,5 +9,9 @@ router.post("/updateScore", updateScore);
 
 router.post("/endGame", endGame);
 
+router.post("/updateGuess", updateGuess);
+
+router.post("/getGuesses", getGuesses);
+
 
 export default router;

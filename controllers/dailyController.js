@@ -80,13 +80,17 @@ export const getGuesses = async (req, res) => {
       if((lastDate - finishedDate) > 0){
         playedToday = true;
         finishedToday = false;
-      }else if({
-        
+      }else if(finishedDate == date){
+        playedToday = true;
+        finishedToday = true;
+      }else{
+        playedToday = false;
+        finishedToday = false;
       }
 
       res.status(201).json({
-        playedToday: true,
-        finishedToday: true,
+        playedToday, 
+        finishedToday,
         guesses: user.currentGuesses
       });
 
