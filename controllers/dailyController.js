@@ -53,8 +53,8 @@ export const updateGuess = async (req, res) => {
         }
 
         user.lastDatePlayed = date;
-        user.save();
-        res.status(201).json({});
+        await user.save();
+        res.status(201).json({ guesses: user.currentGuesses });
 
     } catch (error) {
       console.log("Error in daily controller", error.message);
@@ -80,7 +80,7 @@ export const getGuesses = async (req, res) => {
       if((lastDate - finishedDate) > 0){
         playedToday = true;
         finishedToday = false;
-      }else if(finishedDate == date){
+      }else if((finishedDate - date) == 0){
         playedToday = true;
         finishedToday = true;
       }else{
@@ -92,7 +92,7 @@ export const getGuesses = async (req, res) => {
         playedToday, 
         finishedToday,
         guesses: user.currentGuesses,
-        dailyScore: user.dailyScore || 0
+        dailyScore: user.dailyScore || 0,
       });
 
   } catch (error) {
