@@ -43,96 +43,130 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#4c8527"),
-        body: _registerUI(context),
-      ),
-    );
-  }
-
-  Widget _registerUI(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 5.2,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.white,
-                  Colors.white,
-                ],
-              ),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(100),
-                bottomLeft: Radius.circular(100),
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/images/app.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
-            child: Text(
-              "Register",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+            Column(
+              children: [
+                Container(
+                  color: Colors.grey.shade200.withOpacity(0.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        color: Colors.black,
+                      ),
+                      const Text(
+                        'Soocerdle',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 52), // Adjust as needed
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200.withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0),
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Form(
+                        key: _signUpFormKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            CustomTextField(
+                              controller: _nameController,
+                              hintText: 'Full Name',
+                              prefixIcon: const Icon(Icons.person),
+                              obscureText: false,
+                              borderRadius: BorderRadius.circular(10),
+                              fillColor: Colors.white,
+                            ),
+                            const SizedBox(height: 20),
+                            CustomTextField(
+                              controller: _emailController,
+                              hintText: 'Email',
+                              prefixIcon: const Icon(Icons.email),
+                              obscureText: false,
+                              borderRadius: BorderRadius.circular(10),
+                              fillColor: Colors.white,
+                            ),
+                            const SizedBox(height: 20),
+                            CustomTextField(
+                              controller: _usernameController,
+                              hintText: 'Username',
+                              prefixIcon: const Icon(Icons.person),
+                              obscureText: false,
+                              borderRadius: BorderRadius.circular(10),
+                              fillColor: Colors.white,
+                            ),
+                            const SizedBox(height: 20),
+                            CustomTextField(
+                              controller: _passwordController,
+                              hintText: 'Password',
+                              prefixIcon: const Icon(Icons.lock),
+                              obscureText: true,
+                              borderRadius: BorderRadius.circular(10),
+                              fillColor: Colors.white,
+                            ),
+                            const SizedBox(height: 30),
+                            CustomButton(
+                              text: 'Sign Up',
+                              onTap: () {
+                                if (_signUpFormKey.currentState!.validate()) {
+                                  signUpUser();
+                                  Navigator.pushNamed(context, '/login');
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Form(
-              key: _signUpFormKey,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    controller: _nameController,
-                    hintText: 'Full Name',
-                    prefixIcon: const Icon(Icons.person),
-                    obscureText: false,
-                  ),
-                  const SizedBox(height: 10),
-                  CustomTextField(
-                    controller: _emailController,
-                    hintText: 'Email',
-                    prefixIcon: const Icon(Icons.email),
-                    obscureText: false,
-                  ),
-                  const SizedBox(height: 10),
-                  CustomTextField(
-                    controller: _usernameController,
-                    hintText: 'Username',
-                    prefixIcon: const Icon(Icons.person),
-                    obscureText: false,
-                  ),
-                  const SizedBox(height: 10),
-                  CustomTextField(
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    prefixIcon: const Icon(Icons.lock),
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 10),
-                  CustomButton(
-                    text: 'Sign Up',
-                    onTap: () {
-                      if (_signUpFormKey.currentState!.validate()) {
-                        signUpUser();
-                        Navigator.pushNamed(context, '/login');
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 1),
-                ],
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

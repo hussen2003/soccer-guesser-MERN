@@ -1,9 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:soccerdle/common/customButton.dart';
-import 'package:soccerdle/common/customTextfiled.dart';
-import 'package:soccerdle/common/squareTile.dart';
 import 'package:soccerdle/services/loginPageServices.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,208 +13,164 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _signInFormKey = GlobalKey<FormState>();
   final LoginPageService loginService = LoginPageService();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    _nameController.dispose();
-    _emailController.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
   }
 
-  void signInUser() {
-    loginService.signInUser(
-      context: context,
-      username: _usernameController.text,
-      password: _passwordController.text,
-    );
+  void signInUser() async {
+    if (_signInFormKey.currentState!.validate()) {
+      loginService.signInUser(
+        context: context,
+        username: _usernameController.text,
+        password: _passwordController.text,
+      );
+      Navigator.pushNamed(context, '/home');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#4c8527"),
-        body: _loginUI(context),
+        body: Stack(
+          children: [
+            _buildBackgroundImage(),
+            _loginUI(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundImage() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('lib/images/app.jpg'),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
 
   Widget _loginUI(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 5.2,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.white,
-                  Colors.white,
-                ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 120),
+        color: Colors.black.withOpacity(0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(40),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(20),
               ),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(100),
-                bottomLeft: Radius.circular(100),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
-            child: Text(
-              "Login",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Form(
-              key: _signInFormKey,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    controller: _usernameController,
-                    hintText: 'Username',
-                    prefixIcon: const Icon(Icons.person),
-                    obscureText: false,
-                  ),
-                  const SizedBox(height: 10),
-                  CustomTextField(
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    prefixIcon: const Icon(Icons.lock),
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 10),
-                  Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        right: 35,
-                      ),
-                      child: RichText(
-                        text: TextSpan(
-                          style: const TextStyle(
-                              color: Colors.grey, fontSize: 14.0),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Forget Password ?',
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
-                              recognizer: TapGestureRecognizer()..onTap = () {},
-                            ),
-                          ],
-                        ),
+              child: Form(
+                key: _signInFormKey,
+                child: Column(
+                  children: [
+                    const Text(
+                      "Login",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Colors.black,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  CustomButton(
-                    text: 'Sign In',
-                    onTap: () {
-                      if (_signInFormKey.currentState!.validate()) {
-                        signInUser();
-                        Navigator.pushNamed(
-                          context,
-                          '/home',
-                        );
-                      }
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
+                    const SizedBox(height: 30),
+                    _buildTextField(
+                      controller: _usernameController,
+                      hintText: 'Username',
+                      prefixIcon: Icons.person,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildTextField(
+                      controller: _passwordController,
+                      hintText: 'Password',
+                      prefixIcon: Icons.lock,
+                      isPassword: true,
+                    ),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: GestureDetector(
+                        onTap: () {
+                          
+                        },
+                        child: const Text('Forget Password ?'),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: signInUser,
+                      child: const Text('Sign In'),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          ),
-                        ),
-                        const SizedBox(height: 80),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0),
-                          child: Text(
-                            'Or Sign In with',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
+                        const Text("Don't have an account? "),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/register');
+                          },
+                          child: const Text(
+                            'Sign up',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  const SizedBox(height: 1),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SquareTile(imagePath: 'lib/images/google_logo.png'),
-                      SizedBox(width: 25),
-                      SquareTile(imagePath: 'lib/images/apple_logo.png'),
-                      SizedBox(width: 25),
-                      SquareTile(imagePath: 'lib/images/instagram_logo.png'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                right: 5,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(color: Colors.white, fontSize: 14.0),
-                  children: <TextSpan>[
-                    const TextSpan(
-                      text: "Don't have an account? ",
-                    ),
-                    TextSpan(
-                      text: 'Sign up',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pushNamed(
-                            context,
-                            '/register',
-                          );
-                        },
                     ),
                   ],
                 ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 9),
+            ElevatedButton(
+              onPressed: () {
+                // Handle About Us navigation
+              },
+              child: const Text('About Us'),//not done yet :p
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData prefixIcon,
+    bool isPassword = false, // Added optional parameter for password field
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword, // Set obscureText property for password field
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefixIcon: Icon(prefixIcon),
+        filled: true,
+        fillColor: Colors.grey.shade200,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.grey), // Set border color
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your $hintText';
+        }
+        return null;
+      },
     );
   }
 }

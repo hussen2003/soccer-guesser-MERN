@@ -13,7 +13,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     required this.prefixIcon,
-    this.maxLines = 1,
+    this.maxLines = 1, required BorderRadius borderRadius, required Color fillColor,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: Colors.black),
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           focusedBorder: const OutlineInputBorder(
