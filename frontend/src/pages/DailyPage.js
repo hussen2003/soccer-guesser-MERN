@@ -77,6 +77,7 @@ function DailyPage() {
             setMessage("Error occurred. Please try again later!");
             return;
           }
+          localStorage.removeItem('hindex');
         } else if (pToday && !fToday) {
           const updatedGuessesMade = guessdata.guesses || [];
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
@@ -197,10 +198,11 @@ function DailyPage() {
             break;
         }
         Score(s);
+        handleGameEnd(s, guessesMade.length + 1);
       } else {
         Score(0);
+        handleGameEnd(s, 7);
       }
-      handleGameEnd(s, guessesMade.length + 1);
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setGuess("");
