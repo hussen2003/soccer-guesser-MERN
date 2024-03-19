@@ -1,6 +1,7 @@
 import Header from "../components/header/Header.js";
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
+import './dailypage.css';
 
 const app_name = "soccerdle-mern-ace81d4f14ec";
 function buildPath(route) {
@@ -135,7 +136,7 @@ function DailyPage() {
   }
 
   const updateGuess = async (input) => {
-    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, guess: input, tryAmount: guessesMade.length + 1 };
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, guess: input.trim(), tryAmount: guessesMade.length + 1 };
     var js = JSON.stringify(obj);
     try {
       const response = await fetch(buildPath("api/daily/updateGuess"), {
@@ -159,7 +160,7 @@ function DailyPage() {
       return; // Do nothing if guess is empty
     }
 
-    updateGuess(guess);
+    updateGuess(guess.trim());
     const currentGuess = guess.trim().toLowerCase();
     const correctNameLower = dailyPlayer.name.toLowerCase();
     const isCorrectGuess = currentGuess === correctNameLower;
@@ -199,7 +200,7 @@ function DailyPage() {
       } else {
         Score(0);
       }
-      handleGameEnd(s, guessesMade.length);
+      handleGameEnd(s, guessesMade.length + 1);
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setGuess("");
@@ -286,6 +287,16 @@ function DailyPage() {
       return;
     }
   };
+
+  const close = async (event) => {
+    event.preventDefault();
+    setShowModal(false);
+  }
+
+  const open = async (event) => {
+    event.preventDefault();
+    setShowModal(true);
+  }
 
   return (
     <div>
@@ -423,26 +434,54 @@ function DailyPage() {
                 <span>
                   <img
                     src={dailyPlayer.club_logo}
-                    style={{ maxWidth: "100%/", height: "auto" }}
+                    style={{ maxWidth: "100%", height: "auto" }}
                   />
                 </span>
               </span>
             </div>
           )}
-          {showModal && (
-            <div className="modal-overlay">
-              <div className="modal-content">
-                {}
-                <h2>Game Summary</h2>
-                <p>Streak: {gameSummary.streak}</p>
-                <p>Win Rate: {gameSummary.winRate}%</p>
-                {}
-                <button onClick={() => setShowModal(false)}>Close</button>
-              </div>
+          {gameEnded && (
+            <div>
+              <span>
+                <Button onClick={open}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}>
+                  Stats
+                </Button>
+                {' '}
+                <Button onClick={goback}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}>
+                  Home
+                </Button>
+              </span>
             </div>
           )}
         </span>
       </div>
+      {gameEnded && showModal && (<div className={`modal-overlay ${showModal ? 'visible' : ''}`}>
+        <div className={`modal-content ${showModal ? 'visible' : ''}`}>
+          {/* Your modal content */}
+          <h2>Game Summary</h2>
+          <p>Streak: {gameSummary.streak}</p>
+          <p>Win Rate: {gameSummary.winRate}%</p>
+          <p>Score for Today: {gameSummary.score}</p>
+          <p>All Time Score: {gameSummary.allTimeScore}</p>
+          <h3>Guess Distribution</h3>
+          <ul>
+            {gameSummary.guessDistribution.map((count, index) => (
+              <li key={index}>{index + 1} : {count}</li>
+            ))}
+          </ul>
+          <button onClick={close}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{ padding: '5px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', position: 'relative', maxWidth: '12vw' }}
+          >Close</button>
+        </div>
+      </div>)}
     </div>
   );
 }
