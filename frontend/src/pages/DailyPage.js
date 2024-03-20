@@ -79,7 +79,7 @@ function DailyPage() {
           }
           localStorage.removeItem('hindex');
         } else if (pToday && !fToday) {
-          const updatedGuessesMade = guessdata.guesses || [];
+          const updatedGuessesMade = (guessdata.guesses || []).filter(guess => guess.trim() !== '');
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
           setGuessesMade(updatedGuessesMade);
           setCurrentGuessIndex(updatedCurrentGuessIndex);
@@ -88,7 +88,7 @@ function DailyPage() {
             setHindex(storedHintdex);
           }
         } else if (fToday) {
-          const updatedGuessesMade = guessdata.guesses || [];
+          const updatedGuessesMade = (guessdata.guesses || []).filter(guess => guess.trim() !== '');
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
           setGuessesMade(updatedGuessesMade);
           setCurrentGuessIndex(updatedCurrentGuessIndex);
@@ -97,6 +97,23 @@ function DailyPage() {
             setHindex(storedHintdex);
           }
           setGameEnded(true);
+          try {
+            const responseEnd = await fetch(buildPath("api/daily/endGame"), {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username: JSON.parse(localStorage.getItem('user_data')).username, score: 0, tryAmount: updatedGuessesMade.length + 1 }),
+            });
+            if (!responseEnd.ok) {
+              throw new Error("Failed to fetch game summary stats!");
+            }
+            const data = JSON.parse(await responseEnd.text());
+            setGameSummary(data);
+            setShowModal(true);
+          } catch (error) {
+            alert(error.toString());
+            setMessage("Error occurred. Please try again later!");
+            return;
+          }
         }
       } catch (e) {
         alert(e.toString());
