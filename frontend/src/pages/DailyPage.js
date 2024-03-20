@@ -485,7 +485,7 @@ function DailyPage() {
           {/* Your modal content */}
           <h2>Game Summary</h2>
           <p>Streak: {gameSummary.streak}</p>
-          <p>Win Rate: {gameSummary.winRate}%</p>
+          <p>Win Rate: {gameSummary.winRate.toFixed(2)}%</p>
           <p>Score for Today: {gameSummary.score}</p>
           <p>All Time Score: {gameSummary.allTimeScore}</p>
           <h3>Guess Distribution</h3>
