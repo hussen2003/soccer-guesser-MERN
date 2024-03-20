@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soccerdle/components/dailyGame.dart';
 import 'package:soccerdle/components/leaderBoard.dart';
 import 'package:soccerdle/components/unlimitedModePage.dart';
+import 'package:soccerdle/pages/aboutusPage.dart';
 import 'package:soccerdle/pages/homePage.dart';
 import 'package:soccerdle/pages/registerPage.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/dailyGamePage': (context) => const DailyGamePage(),
         '/unlimitedModePage': (context) => const UnlimitedModePage(),
         '/leaderBoard': (context) => const LeaderBoardPage(),
+        '/aboutUs': (context) => const AboutUsPage(),
       },
     );
   }

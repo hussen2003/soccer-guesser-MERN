@@ -34,6 +34,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void navigateToAboutUs() {
+    Navigator.pushNamed(context, '/aboutUs');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -135,10 +139,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 9),
             ElevatedButton(
-              onPressed: () {
-                // Handle About Us navigation
-              },
-              child: const Text('About Us'),//not done yet :p
+              onPressed: navigateToAboutUs, // Navigating to AboutUsPage
+              child: const Text('About Us'),
             ),
           ],
         ),

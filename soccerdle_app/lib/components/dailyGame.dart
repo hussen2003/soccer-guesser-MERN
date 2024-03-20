@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class DailyGamePage extends StatefulWidget {
-  static const String routeName = '/dailGamePage';
+  static const String routeName = '/dailyGamePage';
   const DailyGamePage({Key? key}) : super(key: key);
 
   @override

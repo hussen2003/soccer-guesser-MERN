@@ -10,10 +10,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = "Jacqueline"; // need actual name idk
+  // need actual name idk
+  String? _name;
 
   void playDailyGame() {
-    Navigator.pushNamed(context, '/dailyGame');
+    Navigator.pushNamed(context, '/dailyGamePage');
   }
 
   void goToUnlimitedMode() {
@@ -25,19 +26,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   void logout() {
-    Navigator.pushReplacementNamed(context, '/loginPage');
+    Navigator.pushNamed(context, '/login');
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar: true, // This allows the AppBar to overlay the background image
+        extendBodyBehindAppBar:
+            true, 
         appBar: AppBar(
           title: const Text('Soccerdle',
-          style: TextStyle(fontWeight: FontWeight.bold)),
+              style: TextStyle(fontWeight: FontWeight.bold)),
           centerTitle: true, // This centers the title
-          backgroundColor: Colors.grey.shade200.withOpacity(0.5), // Make AppBar translucent
+          backgroundColor:
+              Colors.grey.shade200.withOpacity(0.5), // Make AppBar translucent
           elevation: 0,
           actions: [
             IconButton(
@@ -50,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/images/app.jpg'), 
+              image: AssetImage('lib/images/app.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -58,8 +61,8 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               padding: const EdgeInsets.all(60),
               decoration: BoxDecoration(
-                color: Colors.grey.shade200.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey.shade200.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.1),
@@ -73,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Hello, $name!',
+                    'Hello, $_name!',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,
@@ -85,7 +88,8 @@ class _HomePageState extends State<HomePage> {
                     onPressed: playDailyGame,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[100],
-                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Play Daily Game',
@@ -100,7 +104,8 @@ class _HomePageState extends State<HomePage> {
                     onPressed: goToUnlimitedMode,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[100],
-                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Unlimited Mode',
@@ -115,7 +120,8 @@ class _HomePageState extends State<HomePage> {
                     onPressed: goToLeaderboard,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[100],
-                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Leaderboard',
