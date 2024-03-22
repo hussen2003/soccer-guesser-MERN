@@ -20,12 +20,7 @@ export const signup = async (req, res) => {
       });
 
       await newUser.save();
-      res.status(201).json({
-        _id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        username: newUser.username,
-      });
+      res.status(201).json({message: 'User created successfully, verification email sent'});
     }
   } catch (error) {
     console.log("Error in signup controller", error.message);
