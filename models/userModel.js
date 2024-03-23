@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: ["", "", "", "", "", ""],
   },
+  usedHint: {
+    type: [Boolean],
+    default: [false, false, false, false, false],
+  },
 });
 
 const User = mongoose.model("users", userSchema);

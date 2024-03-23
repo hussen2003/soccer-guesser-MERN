@@ -48,13 +48,18 @@ export const updateGuess = async (req, res) => {
         
         if(tryAmount == 0){
           user.currentGuesses.fill("");
+          user.usedHint.fill(false);
         } else {
           user.currentGuesses[tryAmount - 1] = guess;
+          user.usedHint[tryAmount - 1] = true;
         }
 
         user.lastDatePlayed = date;
         await user.save();
-        res.status(201).json({ guesses: user.currentGuesses });
+        res.status(201).json({ 
+          guesses: user.currentGuesses,
+          hints: user.hints
+         });
 
     } catch (error) {
       console.log("Error in daily controller", error.message);
@@ -92,6 +97,7 @@ export const getGuesses = async (req, res) => {
         playedToday, 
         finishedToday,
         guesses: user.currentGuesses,
+        hints: user.hints,
         dailyScore: user.dailyScore || 0,
       });
 
@@ -112,27 +118,31 @@ export const endGame = async (req, res) => {
       const { username, score, tryAmount } = req.body;
 
       const user = await User.findOne({ username });
-      user.dailyScore = score;
-      user.score += score;
-      user.amountGamesPlayed++;
-      
-      if(user.lastDateFinished == ""){
-        user.lastDateFinished = date;
-      }
       const lastDateFinished = new Date(user.lastDateFinished);
-      
-      if((date - lastDateFinished) == 86000000){
-        user.streak++;
-      }else{
-        user.streak = 0;
+      if(user.lastDateFinished == ""){
+          user.lastDateFinished = date;
+          user.lastDateFinished.setDate(date.getDate() - 2)
       }
 
-      if(tryAmount < 7){
-        user.guessDistribution[tryAmount - 1]++;
-        user.amountGamesWon++;
-      }else{
-        user.streak = 0;
-      }
+      if((date - lastDateFinished) > 0){
+        user.dailyScore = score;
+        user.score += score;
+        user.amountGamesPlayed++;
+      
+        if((date - lastDateFinished) == 86000000){
+          user.streak++;
+        }else{
+          user.streak = 0;
+        }
+      
+        if(tryAmount < 7){
+          user.guessDistribution[tryAmount - 1]++;
+          user.amountGamesWon++;
+        }else{
+          user.streak = 0;
+        }
+      
+      }  
 
       const winRate = 100 * (parseFloat(user.amountGamesWon)/user.amountGamesPlayed);
 
