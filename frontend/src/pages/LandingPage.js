@@ -40,7 +40,7 @@ function LandingPage() {
             <Header />
             <div className='landing-page' style={{
                 position: 'relative',
-                maxWidth: '60vw',
+                minWidth: '40vw',
                 margin: 'auto',
                 padding: '60px',
                 backgroundColor: 'rgba(224, 224, 224, .9)',
