@@ -22,7 +22,7 @@ function DailyPage() {
   const [guessesMade, setGuessesMade] = useState([]);
   const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
   const [hint, setHint] = useState("");
-  const [hintdex, setHindex] = useState(Array(5).fill(false));
+  const [hintdex, setHindex] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [gameSummary, setGameSummary] = useState({});
 
@@ -77,25 +77,20 @@ function DailyPage() {
             setMessage("Error occurred. Please try again later!");
             return;
           }
-          localStorage.removeItem('hindex');
         } else if (pToday && !fToday) {
           const updatedGuessesMade = (guessdata.guesses || []).filter(guess => guess.trim() !== '');
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
+          const updatedHintdex = guessdata.hints;
           setGuessesMade(updatedGuessesMade);
           setCurrentGuessIndex(updatedCurrentGuessIndex);
-          const storedHintdex = JSON.parse(localStorage.getItem('hintdex'));
-          if (storedHintdex) {
-            setHindex(storedHintdex);
-          }
+          setHindex(updatedHintdex);
         } else if (fToday) {
           const updatedGuessesMade = (guessdata.guesses || []).filter(guess => guess.trim() !== '');
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
+          const updatedHintdex = guessdata.hints;
           setGuessesMade(updatedGuessesMade);
           setCurrentGuessIndex(updatedCurrentGuessIndex);
-          const storedHintdex = JSON.parse(localStorage.getItem('hintdex'));
-          if (storedHintdex) {
-            setHindex(storedHintdex);
-          }
+          setHindex(updatedHintdex);
           setGameEnded(true);
           try {
             const responseEnd = await fetch(buildPath("api/daily/endGame"), {
@@ -129,9 +124,26 @@ function DailyPage() {
 
   if (!dailyPlayer) return null;
 
-  const updateHintdex = (updatedHintdex) => {
-    setHindex(updatedHintdex);
-    localStorage.setItem('hintdex', JSON.stringify(updatedHintdex));
+  const updateHintdex = async (i) => {
+    var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, dex: i};
+    var js = JSON.stringify(obj);
+    try {
+      const response = await fetch(buildPath("api/daily/updateHints"), {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update hints!");
+      }
+      const data = JSON.parse(await response.text());
+      const updateHintdex = data.hints;
+      setHindex(updateHintdex);
+    } catch (e) {
+      alert(e.toString());
+      setMessage("Error occurred. Please try again later!");
+      return;
+    }
   };
 
   const handleKeyPress = (event) => {
@@ -202,18 +214,28 @@ function DailyPage() {
             s = 75;
             break;
           case 3:
-            s = 55;
+            s = 60;
             break;
           case 4:
-            s = 35;
+            s = 45;
             break;
           case 5:
-            s = 15;
+            s = 30;
             break;
           default:
             s = 0;
             break;
         }
+        if(hintdex[0])
+          s -= 1;
+        if(hintdex[1])
+          s -= 3;
+        if(hintdex[2])
+          s -= 3;
+        if(hintdex[3])
+          s -= 3;
+        if(hintdex[4])
+          s -= 5;
         Score(s);
         handleGameEnd(s, guessesMade.length + 1);
       } else {
@@ -230,6 +252,7 @@ function DailyPage() {
     const updatedHintdex = [...hintdex];
     updatedHintdex[index] = true; // Marking the index of the hint as true to indicate it has been revealed
     setHindex(updatedHintdex); // Update the hintdex state
+    updateHintdex(index);
     switch (index) {
       case 0:
         setHint(`Nationality: ${dailyPlayer.nationality}`);
@@ -369,7 +392,6 @@ function DailyPage() {
                     <button
                       onClick={() => {
                         revealHint(index);
-                        updateHintdex([...hintdex.slice(0, index), true, ...hintdex.slice(index + 1)]);
                       }}
                       style={{
                         padding: "5px 10px",

@@ -51,14 +51,12 @@ export const updateGuess = async (req, res) => {
           user.usedHint.fill(false);
         } else {
           user.currentGuesses[tryAmount - 1] = guess;
-          user.usedHint[tryAmount - 1] = true;
         }
 
         user.lastDatePlayed = date;
         await user.save();
         res.status(201).json({ 
-          guesses: user.currentGuesses,
-          hints: user.hints
+          guesses: user.currentGuesses
          });
 
     } catch (error) {
@@ -97,7 +95,7 @@ export const getGuesses = async (req, res) => {
         playedToday, 
         finishedToday,
         guesses: user.currentGuesses,
-        hints: user.hints,
+        hints: user.usedHint,
         dailyScore: user.dailyScore || 0,
       });
 
@@ -160,5 +158,22 @@ export const endGame = async (req, res) => {
   } catch (error) {
     console.log("Error in daily controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updateHints = async (req, res) => {
+  try {
+    const { username , dex } = req.body;
+
+    const user = await User.findOne({ username });
+    user.usedHint[dex] = true;
+    await user.save();
+    res.status(201).json({
+        hints: user.usedHint
+      });
+
+  } catch (error) {
+  console.log("Error in daily controller", error.message);
+  res.status(500).json({ error: "Internal Server Error" });
   }
 };
