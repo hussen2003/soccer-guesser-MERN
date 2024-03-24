@@ -8,6 +8,7 @@ import Leaderboard from './pages/Leaderboard';
 import AboutPage from './pages/AboutPage.js';
 import SignUpPage from './pages/SignUpPage.js';
 import UnlimitedMode from './pages/UnlimitedMode.js';
+import AllTimeLB from './pages/AllTimeLB.js';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path = "/Leaderboard" index element = {<Leaderboard />} />
           <Route path = "/AboutPage" index element = {<AboutPage />} />
           <Route path = "/UnlimitedMode" index element = {<UnlimitedMode />} />
+          <Route path = "/AllTimeLB" index element = {<AllTimeLB />} />
         </Routes>
       </BrowserRouter>
     </div>
