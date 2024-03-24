@@ -71,8 +71,8 @@ function LandingPage() {
                 <Button onClick={goleaderboard}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}>
-                    LeaderBoard
+                    style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '23px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                    Daily LeaderBoard
                 </Button>
                 <div style={{ margin: '20px 0' }}></div> { }
                 <Button onClick={goAllTime}
