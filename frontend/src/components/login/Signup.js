@@ -45,6 +45,7 @@ function SignUp() {
         var res = JSON.parse(await response.text());
   
         if (res.error) {
+          alert(res.error);
           return;
         } else {
           var user = {
@@ -57,7 +58,7 @@ function SignUp() {
           localStorage.setItem("user_data", JSON.stringify(user));
           setMessage("success?");
           window.location.href = "/";
-          alert("Successfully created account");
+          alert(res.error);
         }
       } catch (e) {
         alert(e.toString());

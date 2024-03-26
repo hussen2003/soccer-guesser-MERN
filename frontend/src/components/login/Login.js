@@ -45,6 +45,7 @@ function Login() {
       var res = JSON.parse(await response.text());
 
       if (res.error) {
+        alert(res.error);
         return;
       } else {
         var user = {
