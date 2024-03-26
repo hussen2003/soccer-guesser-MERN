@@ -1,31 +1,45 @@
 //authentification api
-
 import User from "../models/userModel.js";
+import bcrypt from "bcryptjs"
+import nodemailer from "nodemailer";
+import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res) => {
   try {
     const { name, email, username, password } = req.body;
-    //implement confirm password
-    const user = await User.findOne({ username });
-    //hash password
 
+    const user = await User.findOne({ username });
+  
     if (user) {
       return res.status(400).json({ error: "Username already exists" });
     } else {
+      const hashedPassword = await bcrypt.hash(password, 10)
       const newUser = new User({
         name,
         email,
         username,
-        password,
+        password: hashedPassword,
       });
 
       await newUser.save();
-      res.status(201).json({
-        _id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        username: newUser.username,
+      const token = jwt.sign({ id: newUser._id }, process.env.ACCESS_TOKEN_SECRET);
+
+      let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'hussenpremier03@gmail.com',
+          pass: 'ocvs kwql xzht fcax'
+        }
       });
+
+      let info = await transporter.sendMail({
+      from: '"Soccerdle" <hussenpremier03@gmail.com>',
+      to: newUser.email,
+      subject: 'Please verify your email',
+      text: `Please verify your email by clicking on the following link: http://localhost:3000/VerifyEmail/${token}`
+    });
+
+      res.status(201).json({message: 'User created successfully, verification email sent'});
     }
   } catch (error) {
     console.log("Error in signup controller", error.message);
@@ -42,7 +56,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ error: "Username does not exist" });
     }
 
-    if (password != user.password) {
+    if (!user.emailVerified) {
+      return res.status(400).json({ error: "Email not verified" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+
+    if (!isPasswordValid) {
       return res.status(400).json({ error: "Incorrect password" });
     }
 
@@ -57,6 +77,25 @@ export const login = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const verifyEmail = async (req, res) => {
+  try {
+    const token = req.body.token;
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const updatedUser = await User.updateOne({ _id: payload.id }, { emailVerified: true });
+
+    if (!updatedUser) {
+      console.log("Error updating user: User not found");
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Email verified successfully" });
+  } catch (error) {
+    console.log("Error in email verification", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  } 
+}
+
 
 export const getUsers = async (req, res) => {
   try {
