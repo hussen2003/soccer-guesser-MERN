@@ -5,10 +5,9 @@ import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage';
 import DailyPage from './pages/DailyPage';
 import Leaderboard from './pages/Leaderboard';
-import AboutPage from './pages/AboutPage';
-import SignUpPage from './pages/SignUpPage';
-import UnlimitedMode from './pages/UnlimitedMode';
-import VerifyEmail from "./pages/VerifyEmail";
+import AboutPage from './pages/AboutPage.js';
+import SignUpPage from './pages/SignUpPage.js';
+import UnlimitedMode from './pages/UnlimitedMode.js';
 
 function App() {
   return (
@@ -22,8 +21,9 @@ function App() {
           <Route path = "/Leaderboard" index element = {<Leaderboard />} />
           <Route path = "/AboutPage" index element = {<AboutPage />} />
           <Route path = "/UnlimitedMode" index element = {<UnlimitedMode />} />
+          <Route path = "/AllTimeLB" index element = {<AllTimeLB />} />
           <Route path="/VerifyEmail/:token" element={<VerifyEmail />} />
-        </Routes>
+          </Routes>
       </BrowserRouter>
     </div>
   );

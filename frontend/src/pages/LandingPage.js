@@ -26,6 +26,11 @@ function LandingPage() {
         setMessage("success?");
         window.location.href = "/UnlimitedMode";
     }
+    const goAllTime = (event) => {
+        event.preventDefault();
+        setMessage("success?");
+        window.location.href = "/AllTimeLB";
+    }
     function handleMouseEnter(event) {
         event.target.style.backgroundColor = '#3dea76'; // Change background color on hover
     }
@@ -40,7 +45,7 @@ function LandingPage() {
             <Header />
             <div className='landing-page' style={{
                 position: 'relative',
-                maxWidth: '60vw',
+                minWidth: '40vw',
                 margin: 'auto',
                 padding: '60px',
                 backgroundColor: 'rgba(224, 224, 224, .9)',
@@ -66,10 +71,17 @@ function LandingPage() {
                 <Button onClick={goleaderboard}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    style={{ padding: '20px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}>
-                    LeaderBoard
+                    style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '23px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                    Daily LeaderBoard
                 </Button>
-                <div style={{ margin: '80px 0' }}></div> { }
+                <div style={{ margin: '20px 0' }}></div> { }
+                <Button onClick={goAllTime}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '20px', width: '225px', height: '80px', cursor: 'pointer' }}>
+                    All Time Leaderboard
+                </Button>
+                <div style={{ margin: '20px 0' }}></div> { }
                 <Button onClick={logout}
                     onMouseEnter={handleMouseEnterlog}
                     onMouseLeave={handleMouseLeave}

@@ -48,13 +48,16 @@ export const updateGuess = async (req, res) => {
         
         if(tryAmount == 0){
           user.currentGuesses.fill("");
+          user.usedHint.fill(false);
         } else {
           user.currentGuesses[tryAmount - 1] = guess;
         }
 
         user.lastDatePlayed = date;
         await user.save();
-        res.status(201).json({ guesses: user.currentGuesses });
+        res.status(201).json({ 
+          guesses: user.currentGuesses
+         });
 
     } catch (error) {
       console.log("Error in daily controller", error.message);
@@ -92,6 +95,7 @@ export const getGuesses = async (req, res) => {
         playedToday, 
         finishedToday,
         guesses: user.currentGuesses,
+        hints: user.usedHint,
         dailyScore: user.dailyScore || 0,
       });
 
@@ -112,27 +116,31 @@ export const endGame = async (req, res) => {
       const { username, score, tryAmount } = req.body;
 
       const user = await User.findOne({ username });
-      user.dailyScore = score;
-      user.score += score;
-      user.amountGamesPlayed++;
-      
-      if(user.lastDateFinished == ""){
-        user.lastDateFinished = date;
-      }
       const lastDateFinished = new Date(user.lastDateFinished);
-      
-      if((date - lastDateFinished) == 86000000){
-        user.streak++;
-      }else{
-        user.streak = 0;
+      if(user.lastDateFinished == ""){
+          user.lastDateFinished = date;
+          user.lastDateFinished.setDate(date.getDate() - 2)
       }
 
-      if(tryAmount < 7){
-        user.guessDistribution[tryAmount - 1]++;
-        user.amountGamesWon++;
-      }else{
-        user.streak = 0;
-      }
+      if((date - lastDateFinished) > 0){
+        user.dailyScore = score;
+        user.score += score;
+        user.amountGamesPlayed++;
+      
+        if((date - lastDateFinished) == 86000000){
+          user.streak++;
+        }else{
+          user.streak = 0;
+        }
+      
+        if(tryAmount < 7){
+          user.guessDistribution[tryAmount - 1]++;
+          user.amountGamesWon++;
+        }else{
+          user.streak = 0;
+        }
+      
+      }  
 
       const winRate = 100 * (parseFloat(user.amountGamesWon)/user.amountGamesPlayed);
 
@@ -150,5 +158,22 @@ export const endGame = async (req, res) => {
   } catch (error) {
     console.log("Error in daily controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updateHints = async (req, res) => {
+  try {
+    const { username , dex } = req.body;
+
+    const user = await User.findOne({ username });
+    user.usedHint[dex] = true;
+    await user.save();
+    res.status(201).json({
+        hints: user.usedHint
+      });
+
+  } catch (error) {
+  console.log("Error in daily controller", error.message);
+  res.status(500).json({ error: "Internal Server Error" });
   }
 };

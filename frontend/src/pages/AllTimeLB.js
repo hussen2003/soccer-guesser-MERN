@@ -1,7 +1,6 @@
 import Header from "../components/header/Header.js";
 import React, { useState, useEffect } from "react";
 import BirdsEyeViewSoccerField from "../components/login/BirdsEyeViewSoccerField.jpg";
-import Wallpaper3 from "../components/login/wallpaper3.jpg";
 
 const app_name = "soccerdle-mern-ace81d4f14ec";
 function buildPath(route) {
@@ -13,7 +12,7 @@ function buildPath(route) {
 }
 
 // will be used for displaying leaderboard
-function Leaderboard() {
+function AllTimeLB() {
   const [message, setMessage] = useState("");
   const [players, setPlayers] = useState([]);
   const goback = async (event) => {
@@ -30,7 +29,7 @@ function Leaderboard() {
   useEffect(() => {
     async function grabdata() {
       try {
-        const response = await fetch(buildPath("api/daily/leaderboard"), {
+        const response = await fetch(buildPath("api/unlimited/leaderboard"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
@@ -91,7 +90,7 @@ function Leaderboard() {
         >
           Home
         </button>
-        <h1 style={{ textAlign: "center" }}>Daily Top Players</h1>
+        <h1 style={{ textAlign: "center" }}>Top Players</h1>
         <div style={{ margin: "20px 0" }}></div>
         <div
           style={{
@@ -116,7 +115,7 @@ function Leaderboard() {
             </span>
           </div>
           {players
-            .filter((player) => player.dailyScore > 0)
+            .filter((player) => player.score > 0)
             .map((player, index) => (
               <div
                 key={index}
@@ -137,7 +136,7 @@ function Leaderboard() {
                   )}
                   <span>{player.name}</span>
                 </div>
-                <span>{player.dailyScore}</span>
+                <span>{player.score}</span>
               </div>
             ))}
         </div>
@@ -146,4 +145,4 @@ function Leaderboard() {
   );
 }
 
-export default Leaderboard;
+export default AllTimeLB;
