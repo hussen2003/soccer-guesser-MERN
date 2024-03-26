@@ -8,6 +8,8 @@ import Leaderboard from './pages/Leaderboard';
 import AboutPage from './pages/AboutPage.js';
 import SignUpPage from './pages/SignUpPage.js';
 import UnlimitedMode from './pages/UnlimitedMode.js';
+import VerifyEmail from './pages/VerifyEmail.js';
+import AllTimeLB from './pages/AllTimeLB.js';
 
 function App() {
   return (
