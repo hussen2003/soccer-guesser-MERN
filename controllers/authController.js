@@ -39,7 +39,7 @@ export const signup = async (req, res) => {
       text: `Please verify your email by clicking on the following link: http://localhost:3000/VerifyEmail/${token}`
     });
 
-      res.status(201).json({message: 'User created successfully, verification email sent'});
+      res.status(201).json({error: 'User created successfully, verification email sent'});
     }
   } catch (error) {
     console.log("Error in signup controller", error.message);
@@ -89,7 +89,7 @@ export const verifyEmail = async (req, res) => {
       return res.status(400).json({ error: "User not found" });
     }
 
-    res.status(200).json({ message: "Email verified successfully" });
+    res.status(200).json({ error: "Email verified successfully" });
   } catch (error) {
     console.log("Error in email verification", error.message);
     res.status(500).json({ error: "Internal Server Error" });
