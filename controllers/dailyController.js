@@ -25,7 +25,7 @@ export const updateScore = async (req, res) => {
 
         res.status(201).json({
             username: username,
-            dailScore: dailyScore || 0
+            dailyScore: dailyScore || 0
           });
 
     } catch (error) {
@@ -140,7 +140,7 @@ export const endGame = async (req, res) => {
           user.streak = 0;
         }
       
-      }  
+      }
 
       const winRate = 100 * (parseFloat(user.amountGamesWon)/user.amountGamesPlayed);
 
