@@ -4,6 +4,19 @@ import bcrypt from "bcryptjs"
 import nodemailer from "nodemailer";
 import jwt from 'jsonwebtoken';
 
+const app_name = 'soccerdle-mern-ace81d4f14ec'
+function buildPath(route)
+{
+  if (process.env.NODE_ENV === 'production')
+  {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  }
+  else
+  {
+    return 'http://localhost:3000/' + route;
+  }
+}
+
 export const signup = async (req, res) => {
   try {
     const { name, email, username, password } = req.body;
@@ -36,7 +49,7 @@ export const signup = async (req, res) => {
       from: '"Soccerdle" <hussenpremier03@gmail.com>',
       to: newUser.email,
       subject: 'Please verify your email',
-      text: `Please verify your email by clicking on the following link: http://localhost:3000/VerifyEmail/${token}`
+      text: `Please verify your email by clicking on the following link: ${buildPath(`VerifyEmail/${token}`)}`
     });
 
       res.status(201).json({error: 'User created successfully, verification email sent'});
