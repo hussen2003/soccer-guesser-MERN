@@ -1,6 +1,8 @@
 import './signup.css';
 import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'; 
+import Alert from'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 
 const app_name = 'soccerdle-mern-ace81d4f14ec'
 function buildPath(route)
@@ -16,15 +18,13 @@ function buildPath(route)
 }
 
 function SignUp() {
-    // var SignUpName;
-    // var SignUpPassword;
-    // var SignUpUsername;
-    // var SignUpEmail;
     const [SignUpName, setSignUpName] = useState("");
     const [SignUpPassword, setSignUpPassword] = useState("");
     const [SignUpUsername, setSignUpUsername] = useState("");
     const [SignUpEmail, setSignUpEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+    const [show, setShow] = useState(true);
 
     const aboutus = async (event) => {
       event.preventDefault();
@@ -45,7 +45,8 @@ function SignUp() {
         var res = JSON.parse(await response.text());
   
         if (res.error) {
-          alert(res.error);
+          //alert(res.error);
+          setError(res.error);
           return;
         } else {
           var user = {
@@ -66,12 +67,13 @@ function SignUp() {
       }
     };
     const goHome = () => {
-        window.location.href = "/"; // Navigate to the home page
+        window.location.href = "/"; 
     };
 
     return (
         <div className="signup-container"> 
             <h2>Sign Up</h2> 
+            {error && (error!=="Username already exists") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>Make sure every field is filled out</p>)}
             <form onSubmit={doSignup}> 
                 <div className="form-group">
                     <label htmlFor="name">Name:</label>
@@ -90,10 +92,10 @@ function SignUp() {
                         type="text"
                         id="username" 
                         value={SignUpUsername} 
-                        // ref={(c) => (SignUpUsername = c)}
                         onChange={(e) => setSignUpUsername(e.target.value)}
                         required
                     />
+                    {error && (error==="Username already exists") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>{error}</p>)}
                 </div>
                 <div className="form-group"> 
                     <label htmlFor="email">Email:</label> 

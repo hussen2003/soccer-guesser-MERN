@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 import './login.css';
-import Nav from'react-bootstrap/Nav';
+import Alert from 'react-bootstrap/Alert';
 
 const app_name = 'soccerdle-mern-ace81d4f14ec'
 function buildPath(route)
@@ -17,6 +16,7 @@ function buildPath(route)
   }
 }
 function Login() {
+  const [error, setError] = useState("");
   const signup = (event) => {
     event.preventDefault();
     setMessage("success?");
@@ -45,9 +45,10 @@ function Login() {
       var res = JSON.parse(await response.text());
 
       if (res.error) {
-        alert(res.error);
+        setError(res.error);
         return;
-      } else {
+      } 
+      else {
         var user = {
           _id: res._id,
           name: res.name,
@@ -69,6 +70,9 @@ function Login() {
     <div>
     <div className='login-container'>
       <h2>Login</h2>
+      {(error==="Email not verified") && (<Alert key={'danger'} variant={'danger'}>
+          {error}
+        </Alert>)}
       <form onSubmit={doLogin}>
         <div className="form-group"> {/* Added a class for consistency */}
           <label htmlFor="username">Username:</label>
@@ -79,6 +83,7 @@ function Login() {
             ref={(c) => (loginName = c)}
             required
           />
+          {(error==="Username does not exist") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>{error}</p>)}
         </div>
         <div className="form-group"> {/* Added a class for consistency */}
           <label htmlFor="password">Password:</label>
@@ -89,6 +94,7 @@ function Login() {
             ref={(c) => (loginPassword = c)}
             required
           />
+          {(error==="Incorrect password") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>{error}</p>)}
         </div>
         <Button type="submit" variant="outline-primary" onClick={doLogin} style={{
           padding: '10px 20px',
