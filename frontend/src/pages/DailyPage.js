@@ -1,4 +1,3 @@
-
 import Header from "../components/header/Header.js";
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
@@ -120,10 +119,9 @@ function DailyPage() {
 
     fetchData();
     fetchGuesses();
+    if(dailyPlayer == null) fetchData();
 
   }, []);
-
-  // if (!dailyPlayer) return null;
 
   const updateHintdex = async (i) => {
     var obj = { username: JSON.parse(localStorage.getItem('user_data')).username, dex: i};
