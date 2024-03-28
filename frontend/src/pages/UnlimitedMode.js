@@ -37,7 +37,7 @@ function UnlimitedMode() {
                     headers: { "Content-Type": "application/json" },
                 });
                 if (!response.ok) {
-                    throw new Error('Failed to obtain daily player data!');
+                    throw new Error('Failed to obtain random player data!');
                 }
                 const data = JSON.parse(await response.text());
                 setGameState(prevState => ({ ...prevState, dailyPlayer: data }));
