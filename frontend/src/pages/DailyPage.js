@@ -12,7 +12,6 @@ function buildPath(route) {
   }
 }
 
-// will work on this later, this is for playing the daily game
 function DailyPage() {
   const [message, setMessage] = useState("");
   const [dailyPlayer, setDailyPlayer] = useState(null);
@@ -37,15 +36,13 @@ function DailyPage() {
           throw new Error("Failed to obtain daily player data!");
         }
         const data = JSON.parse(await response.text());
+        console.log(data);
         setDailyPlayer(data);
       } catch (e) {
         alert(e.toString());
         setMessage("Error occurred. Please try again later!");
         return;
       }
-    };
-
-    const fetchGuesses = async () => {
       var obj = { username: JSON.parse(localStorage.getItem('user_data')).username };
       var js = JSON.stringify(obj);
       try {
@@ -118,9 +115,6 @@ function DailyPage() {
     };
 
     fetchData();
-    fetchGuesses();
-    if(dailyPlayer == null) fetchData();
-
   }, []);
 
   const updateHintdex = async (i) => {
@@ -339,6 +333,7 @@ function DailyPage() {
     setShowModal(true);
   }
 
+  if(!dailyPlayer) return null;
   return (
     <div>
       <Header />
