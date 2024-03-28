@@ -9,7 +9,7 @@ function LandingPage() {
     const playdaily = (event) => {
         event.preventDefault();
         setMessage("success?");
-        window.location.href = "/DailyPage";
+        window.location.href = "/DayPage";
     }
     const goleaderboard = (event) => {
         event.preventDefault();

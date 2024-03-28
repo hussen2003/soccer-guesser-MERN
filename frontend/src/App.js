@@ -10,6 +10,7 @@ import SignUpPage from './pages/SignUpPage.js';
 import UnlimitedMode from './pages/UnlimitedMode.js';
 import VerifyEmail from './pages/VerifyEmail.js';
 import AllTimeLB from './pages/AllTimeLB.js';
+import DayPage from './pages/DayPage.js';
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
           <Route path = "/AboutPage" index element = {<AboutPage />} />
           <Route path = "/UnlimitedMode" index element = {<UnlimitedMode />} />
           <Route path = "/AllTimeLB" index element = {<AllTimeLB />} />
-          <Route path="/VerifyEmail/:token" element={<VerifyEmail />} />
+          <Route path ="/VerifyEmail/:token" element={<VerifyEmail />} />
+          <Route path = "/DayPage" index element = {<DayPage />} />
           </Routes>
       </BrowserRouter>
     </div>
