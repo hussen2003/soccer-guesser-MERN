@@ -119,7 +119,6 @@ export const endGame = async (req, res) => {
       const lastDateFinished = new Date(user.lastDateFinished);
       if(user.lastDateFinished == ""){
           user.lastDateFinished = date;
-          user.lastDateFinished.setDate(date.getDate() - 2)
       }
 
       if((date - lastDateFinished) > 0){
@@ -140,6 +139,19 @@ export const endGame = async (req, res) => {
           user.streak = 0;
         }
       
+      }
+
+      if(user.amountGamesPlayed == 0){
+        user.dailyScore = score;
+        user.score += score;
+        user.amountGamesPlayed++;
+        if(tryAmount < 7){
+          user.guessDistribution[tryAmount - 1]++;
+          user.amountGamesWon++;
+          user.streak = 1;
+        }else{
+          user.streak = 0;
+        }
       }
 
       const winRate = 100 * (parseFloat(user.amountGamesWon)/user.amountGamesPlayed);
