@@ -333,7 +333,6 @@ function DailyPage() {
     setShowModal(true);
   }
 
-  if(!dailyPlayer) return null;
   return (
     <div>
       <Header />
