@@ -126,7 +126,7 @@ export const endGame = async (req, res) => {
         user.score += score;
         user.amountGamesPlayed++;
       
-        if((date - lastDateFinished) == 86000000){
+        if((date - lastDateFinished) < 86400000){
           user.streak++;
         }else{
           user.streak = 0;
