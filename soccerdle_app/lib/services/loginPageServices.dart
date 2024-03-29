@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:network_info_plus/network_info_plus.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -16,8 +17,9 @@ class LoginPageService {
     required String password,
   }) async {
     try {
+      String? wifiIP = await NetworkInfo().getWifiIP();
       http.Response res = await http.post(
-        Uri.parse('http://192.168.1.247:5001/api/auth/login'),
+        Uri.parse('http://$wifiIP:5001/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
