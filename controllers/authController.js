@@ -40,13 +40,13 @@ export const signup = async (req, res) => {
       let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'hussenpremier03@gmail.com',
-          pass: 'ocvs kwql xzht fcax'
+          user: 'soccerdle.verify.email@gmail.com',
+          pass: 'dlom qktg fvci rgpl'
         }
       });
 
       let info = await transporter.sendMail({
-      from: '"Soccerdle" <hussenpremier03@gmail.com>',
+      from: '"Soccerdle" <soccerdle.verify.email@gmail.com>',
       to: newUser.email,
       subject: 'Please verify your email',
       text: `Please verify your email by clicking on the following link: ${buildPath(`VerifyEmail/${token}`)}`
