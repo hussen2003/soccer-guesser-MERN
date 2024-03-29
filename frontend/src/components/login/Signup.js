@@ -55,7 +55,7 @@ function SignUp() {
             username: res.username,
             score: res.score,
           };
-          localStorage.setItem("user_data", JSON.stringify(user));
+          sessionStorage.setItem("user_data", JSON.stringify(user));
           setMessage("success?");
           window.location.href = "/";
           //alert(res.error);

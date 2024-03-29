@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 function LandingPage() {
-    const name = (JSON.parse(localStorage.getItem('user_data')).name);
+    const name = (JSON.parse(sessionStorage.getItem('user_data')).name);
     const [message, setMessage] = useState("");
     const playdaily = (event) => {
         event.preventDefault();
