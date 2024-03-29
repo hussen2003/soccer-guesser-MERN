@@ -1,119 +1,203 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-class DailyPage extends StatefulWidget {
-  static const String routeName = '/dailyGamePage';
-  const DailyPage({super.key});
+class DailyGamePage extends StatefulWidget {
+  static const String routeName = '/dailygame';
+  const DailyGamePage({Key? key}) : super(key: key);
 
   @override
-  _DailyPageState createState() => _DailyPageState();
+  _DailyGamePageState createState() => _DailyGamePageState();
 }
 
-class _DailyPageState extends State<DailyPage> {
-  String message = "";
-  Map<String, dynamic>? dailyPlayer;
-  List<String> guesses = [
-    'Guess 1',
-    'Guess 2',
-    'Guess 3',
-    'Guess 4',
-    'Guess 5',
-    'Guess 6'
-  ];
-  String guess = '';
-  bool gameEnded = false;
-  List<String> guessesMade = [];
-  int currentGuessIndex = 0;
+class _DailyGamePageState extends State<DailyGamePage> {
+  final List<TextEditingController> guessControllers =
+      List.generate(6, (_) => TextEditingController());
+  List<bool> _showHints = List.generate(6, (_) => false);
+  int _currentGuessIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    try {
-      final response = await http.post(
-        Uri.parse('http://localhost:5001/api/players/getDailyPlayer'),
-        headers: {"Content-Type": "application/json"},
-      );
-      if (response.statusCode != 200) {
-        throw Exception('Failed to obtain daily player data!');
-      }
-      final data = jsonDecode(response.body);
-      setState(() {
-        dailyPlayer = data;
-      });
-    } catch (e) {
-      setState(() {
-        message = "Error occurred. Please try again later!";
-      });
-    }
-  }
-
-  void checkGuess() {
-    final currentGuess = guess.toLowerCase();
-    final correctNameLower = dailyPlayer!['name'].toLowerCase();
-    final isCorrectGuess = currentGuess == correctNameLower;
-
-    final updatedGuessesMade = [...guessesMade];
-    updatedGuessesMade[currentGuessIndex] = guess;
+  void _hintRevealed(int index) {
     setState(() {
-      guessesMade = updatedGuessesMade;
+      _showHints[index] = !_showHints[index];
     });
+  }
 
-    if (isCorrectGuess || currentGuessIndex == 5) {
-      setState(() {
-        gameEnded = true;
-      });
-    } else {
-      setState(() {
-        currentGuessIndex = currentGuessIndex + 1;
-        guess = '';
-      });
+  String _getHint(int index) {
+    switch (index) {
+      case 0:
+        return 'Nationality';
+      case 1:
+        return 'Age';
+      case 2:
+        return 'League';
+      case 3:
+        return 'Club';
+      case 4:
+        return 'Position';
+      default:
+        return 'Unknown';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (dailyPlayer == null) return Container();
-
-    final correctName = dailyPlayer!['name'];
-    final nationality = dailyPlayer!['nationality'];
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Daily Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            for (var i = 0; i < guessesMade.length; i++)
-              Text('Guess ${i + 1}: ${guessesMade[i]}'),
-            if (!gameEnded)
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    guess = value;
-                  });
-                },
-                onSubmitted: (value) {
-                  checkGuess();
-                },
-                decoration: InputDecoration(
-                  labelText: 'Guess ${guessesMade.length + 1}',
-                ),
-              ),
-            if (gameEnded)
-              Text(guess.toLowerCase() == correctName.toLowerCase()
-                  ? 'You guessed it in ${guessesMade.length} tries'
-                  : 'The player was $correctName'),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Daily Game'),
+        ),
+        body: Stack(
+          children: [
+            _buildBackgroundImage(),
+            unlimitedModeScreen(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBackgroundImage() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('lib/images/app.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget unlimitedModeScreen(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTextFormField(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextFormField() {
+    List<Widget> previousGuessWidgets =
+        List.generate(_currentGuessIndex, (index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.green,
+                  width: 1.0,
+                ),
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Guess ${index + 1}: ${guessControllers[index].text}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: _showHints[index] ? Colors.green : Colors.blue,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: _showHints[index]
+                      ? Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              _getHint(index),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            _hintRevealed(index);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Show Hint',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+    });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 30),
+        Column(
+          children: <Widget>[
+            for (var widget in previousGuessWidgets) ...[
+              widget,
+              SizedBox(height: 10),
+            ],
+          ],
+        ),
+        Center(
+          child: Text(
+            'Guess ${_currentGuessIndex + 1}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        TextFormField(
+          controller: guessControllers[_currentGuessIndex],
+          onEditingComplete: () {
+            setState(() {
+              if (_currentGuessIndex < 5) {
+                _currentGuessIndex++;
+              }
+            });
+          },
+          decoration: InputDecoration(
+            hintText: 'Enter your guess here',
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.green),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            fillColor: Colors.grey.shade200,
+            filled: true,
+            hintStyle: const TextStyle(color: Colors.black),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
