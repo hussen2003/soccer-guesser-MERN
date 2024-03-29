@@ -24,7 +24,7 @@ function DailyPage() {
   const [hintdex, setHindex] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [gameSummary, setGameSummary] = useState({});
-  console.log(sessionStorage.getItem('user_data'));
+  const userData = JSON.parse(sessionStorage.getItem('user_data'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +43,7 @@ function DailyPage() {
         setMessage("Error occurred. Please try again later!");
         return;
       }
-      var obj = { username: JSON.parse(sessionStorage.getItem('user_data')).username };
+      var obj = { username: userData.username };
       var js = JSON.stringify(obj);
       try {
         const res = await fetch(buildPath("api/daily/getGuesses"), {
@@ -58,7 +58,7 @@ function DailyPage() {
         pToday = guessdata.playedToday;
         fToday = guessdata.finishedToday;
         if (!pToday) {
-          var object = { username: JSON.parse(sessionStorage.getItem('user_data')).username, guess: null, tryAmount: 0 };
+          var object = { username: userData.username, guess: null, tryAmount: 0 };
           var js = JSON.stringify(object);
           try {
             const response2 = await fetch(buildPath("api/daily/updateGuess"), {
@@ -93,7 +93,7 @@ function DailyPage() {
             const responseEnd = await fetch(buildPath("api/daily/endGame"), {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username: JSON.parse(sessionStorage.getItem('user_data')).username, score: 0, tryAmount: updatedGuessesMade.length + 1 }),
+              body: JSON.stringify({ username: userData.username, score: 0, tryAmount: updatedGuessesMade.length + 1 }),
             });
             if (!responseEnd.ok) {
               throw new Error("Failed to fetch game summary stats!");
@@ -118,7 +118,7 @@ function DailyPage() {
   }, []);
 
   const updateHintdex = async (i) => {
-    var obj = { username: JSON.parse(sessionStorage.getItem('user_data')).username, dex: i};
+    var obj = { username: userData.username, dex: i};
     var js = JSON.stringify(obj);
     try {
       const response = await fetch(buildPath("api/daily/updateHints"), {
@@ -159,7 +159,7 @@ function DailyPage() {
   }
 
   const updateGuess = async (input) => {
-    var obj = { username: JSON.parse(sessionStorage.getItem('user_data')).username, guess: input.trim(), tryAmount: guessesMade.length + 1 };
+    var obj = { username: userData.username, guess: input.trim(), tryAmount: guessesMade.length + 1 };
     var js = JSON.stringify(obj);
     try {
       const response = await fetch(buildPath("api/daily/updateGuess"), {
@@ -285,7 +285,7 @@ function DailyPage() {
   };
 
   const Score = async (input) => {
-    var obj = { username: JSON.parse(sessionStorage.getItem('user_data')).username, dailyScore: input };
+    var obj = { username: userData.username, dailyScore: input };
     var js = JSON.stringify(obj);
     try {
       const response = await fetch(buildPath("api/daily/updateScore"), {
@@ -308,7 +308,7 @@ function DailyPage() {
       const responseEnd = await fetch(buildPath("api/daily/endGame"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: JSON.parse(sessionStorage.getItem('user_data')).username, score: scores, tryAmount: tries }),
+        body: JSON.stringify({ username: userData.username, score: scores, tryAmount: tries }),
       });
       if (!responseEnd.ok) {
         throw new Error("Failed to fetch game summary stats!");
