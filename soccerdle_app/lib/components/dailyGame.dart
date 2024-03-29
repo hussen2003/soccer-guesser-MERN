@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DailyPage extends StatefulWidget {
+  static const String routeName = '/dailyGamePage';
+  const DailyPage({super.key});
+
   @override
   _DailyPageState createState() => _DailyPageState();
 }

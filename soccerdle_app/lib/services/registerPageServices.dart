@@ -11,21 +11,31 @@ class RegisterPageService {
     required String name,
     required String email,
     required String username,
-    required String password,
+    required String password
   }) async {
     try {
       User user = User(
-        id: '',
+        id: '', // Pass default or empty value for id
         name: name,
         email: email,
-        password: password,
+        emailVerified: false, // Set emailVerified to false
         username: username,
-        type: '',
-        token: '',
+        password: password,
+        score: 0, // Set score to 0
+        dailyScore: 0, // Set dailyScore to 0
+        dailyDate: '', // Pass default or empty value for dailyDate
+        lastDatePlayed: '', // Pass default or empty value for lastDatePlayed
+        lastDateFinished: '', // Pass default or empty value for lastDateFinished
+        guessDistribution: [0, 0, 0, 0, 0, 0], // Provide default values for guessDistribution
+        amountGamesPlayed: 0, // Set amountGamesPlayed to 0
+        amountGamesWon: 0, // Set amountGamesWon to 0
+        streak: 0, // Set streak to 0
+        currentGuesses: ["", "", "", "", "", ""], // Provide default values for currentGuesses
+        usedHint: [false, false, false, false, false], // Provide default values for usedHint
       );
 
       http.Response res = await http.post(
-        Uri.parse('http://127.0.0.1:5001/api/auth/signup'),
+        Uri.parse('http://192.168.1.247:5001/api/auth/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

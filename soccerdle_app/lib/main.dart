@@ -5,8 +5,7 @@ import 'package:soccerdle/components/unlimitedModePage.dart';
 import 'package:soccerdle/pages/aboutusPage.dart';
 import 'package:soccerdle/pages/homePage.dart';
 import 'package:soccerdle/pages/registerPage.dart';
-
-import 'pages/loginPage.dart';
+import 'package:soccerdle/pages/loginPage.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const HomePage(),
-        '/dailyGamePage': (context) => const DailyGamePage(),
+        '/dailyGamePage': (context) => const DailyPage(),
         '/unlimitedModePage': (context) => const UnlimitedModePage(),
         '/leaderBoard': (context) => const LeaderBoardPage(),
         '/aboutUs': (context) => const AboutUsPage(),
