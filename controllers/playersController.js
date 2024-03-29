@@ -23,7 +23,7 @@ export const getDailyPlayer = async (req, res) => {
       date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
-      const dailyDate = date + ""
+      const dailyDate = date
     
       const dailyPlayer = await Player.findOne({ dailyDate });
   
