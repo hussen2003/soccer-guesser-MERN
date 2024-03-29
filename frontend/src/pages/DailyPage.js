@@ -36,7 +36,6 @@ function DailyPage() {
           throw new Error("Failed to obtain daily player data!");
         }
         const data = JSON.parse(await response.text());
-        console.log(data);
         setDailyPlayer(data);
       } catch (e) {
         alert(e.toString());
