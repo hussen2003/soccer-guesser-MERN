@@ -1,5 +1,4 @@
 //import 'package:wifi/wifi.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:soccerdle/constants/errorHandling.dart';
@@ -8,6 +7,9 @@ import 'package:soccerdle/models/user.dart';
 
 class RegisterPageService {
   // sign up user
+  void main() async {
+    
+}
   void signUpUser({
     required BuildContext context,
     required String name,
@@ -16,7 +18,9 @@ class RegisterPageService {
     required String password
   }) async {
     try {
-      String? wifiIP = await NetworkInfo().getWifiIP();
+
+
+      // The response type can be text, json or jsonp
       User user = User(
         id: '', // Pass default or empty value for id
         name: name,
@@ -38,7 +42,7 @@ class RegisterPageService {
       );
 
       http.Response res = await http.post(
-        Uri.parse('http://$wifiIP:5001/api/auth/signup'),
+        Uri.parse('https://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

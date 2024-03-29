@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'package:network_info_plus/network_info_plus.dart';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -17,9 +15,8 @@ class LoginPageService {
     required String password,
   }) async {
     try {
-      String? wifiIP = await NetworkInfo().getWifiIP();
       http.Response res = await http.post(
-        Uri.parse('http://$wifiIP:5001/api/auth/login'),
+        Uri.parse('https://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
