@@ -29,6 +29,7 @@ function DailyPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Calling API");
         const response = await fetch(buildPath("api/players/getDailyPlayer"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -37,9 +38,12 @@ function DailyPage() {
           throw new Error("Failed to obtain daily player data!");
         }
         const data = JSON.parse(await response.text());
+        console.log("RESPONSE AWAITED!");
+        console.log(data);
         setDailyPlayer(data);
       } catch (e) {
         alert(e.toString());
+        console.log("Errors");
         setMessage("Error occurred. Please try again later!");
         return;
       }
@@ -54,6 +58,7 @@ function DailyPage() {
         if (!res.ok) {
           throw new Error("Failed to obtain daily player data!");
         }
+        console.log("GOT GUESSES DATA!");
         const guessdata = JSON.parse(await res.text());
         pToday = guessdata.playedToday;
         fToday = guessdata.finishedToday;
