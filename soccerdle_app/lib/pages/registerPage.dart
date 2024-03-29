@@ -5,7 +5,7 @@ import 'package:soccerdle/common/customTextfiled.dart';
 import 'package:soccerdle/services/registerPageServices.dart';
 
 class RegisterPage extends StatefulWidget {
-  static const String routeName = '/register_page';
+  static const String routeName = '/register';
   const RegisterPage({Key? key}) : super(key: key);
 
   @override

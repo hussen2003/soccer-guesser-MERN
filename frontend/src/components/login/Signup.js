@@ -45,7 +45,6 @@ function SignUp() {
         var res = JSON.parse(await response.text());
   
         if (res.error) {
-          //alert(res.error);
           setError(res.error);
           return;
         } else {
@@ -56,10 +55,11 @@ function SignUp() {
             username: res.username,
             score: res.score,
           };
-          localStorage.setItem("user_data", JSON.stringify(user));
+          sessionStorage.setItem("user_data", JSON.stringify(user));
           setMessage("success?");
           window.location.href = "/";
-          alert(res.error);
+          //alert(res.error);
+          setError(error);
         }
       } catch (e) {
         alert(e.toString());
@@ -73,7 +73,17 @@ function SignUp() {
     return (
         <div className="signup-container"> 
             <h2>Sign Up</h2> 
-            {error && (error!=="Username already exists") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>Make sure every field is filled out</p>)}
+            {(error!=="Username already exists") && (error === "Internal Server Error") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>Make sure every field is filled out</p>)}
+            {(error==="User created successfully, verification email sent") && (<Alert variant="success">
+              <Alert.Heading>GOAL!</Alert.Heading>
+              <p>
+                User created successfully. Navigate to your email to verify your account.
+              </p>
+              <hr />
+              <p className="mb-0">
+                Click the red Home button below to Log back in! 
+              </p>
+            </Alert>)}
             <form onSubmit={doSignup}> 
                 <div className="form-group">
                     <label htmlFor="name">Name:</label>

@@ -3,7 +3,7 @@ import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:soccerdle/services/loginPageServices.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String routeName = '/login_page';
+  static const String routeName = '/login';
   const LoginPage({Key? key}) : super(key: key);
 
   @override

@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:soccerdle/models/user.dart';
 
 class UserProvider extends ChangeNotifier {
-  User _user = User(
-    id: '',
-    name: '',
-    email: '',
-    password: '',
-    username: '',
-    type: '',
-    token: '',
-  );
+  late User _user; // Change to late variable since it's initialized in setUser
   User get user => _user;
 
-  void setUser(String user) {
-    _user = User.fromJson(user);
+  void setUser(String userData) {
+    _user = User.fromJson(userData);
     notifyListeners();
   }
 }

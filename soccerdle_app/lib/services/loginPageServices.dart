@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class LoginPageService {
   }) async {
     try {
       http.Response res = await http.post(
-        Uri.parse('http://127.0.0.1:5001/api/auth/login'),
+        Uri.parse('https://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
