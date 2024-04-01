@@ -19,14 +19,14 @@ class _DailyGamePageState extends State<DailyGamePage> {
   List<bool> _showHints = List.generate(6, (_) => false);
   int _currentGuessIndex = 0;
 
-  String message = "";
+  String message = '';
   var dailyPlayer;
   var pToday, fToday;
-  String guess = "";
+  String guess = '';
   bool gameEnded = false;
   List<String> guessesMade = [];
   int currentGuessIndex = 0;
-  String hint = "";
+  String hint = '';
   List<bool> hintdex = [];
   bool showModal = false;
   var gameSummary;
@@ -51,13 +51,12 @@ class _DailyGamePageState extends State<DailyGamePage> {
       setState(() {
         dailyPlayer = data;
       });
-      // print(dailyPlayer);
     } catch (e) {
       setState(() {
-        message = "Error occurred. Please try again later!";
+        message = 'Error occurred. Please try again later!';
       });
     }
-    var obj = {"username": userData["username"]};
+    var obj = {'username': userData['username']};
     var js = json.encode(obj);
     try {
       http.Response response = await http.post(
@@ -67,52 +66,52 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      //print(obj);
+
       if (response.statusCode != 200) {
-        throw Exception("Failed to obtain daily player data!");
+        throw Exception('Failed to obtain daily player data!');
       }
       var guessdata = json.decode(response.body);
-      pToday = guessdata["playedToday"];
-      fToday = guessdata["finishedToday"];
+      pToday = guessdata['playedToday'];
+      fToday = guessdata['finishedToday'];
       if (!pToday) {
         var object = {
-          "username": userData["username"],
-          "guess": null,
-          "tryAmount": 0
+          'username': userData['username'],
+          'guess': null,
+          'tryAmount': 0
         };
         var js = json.encode(object);
         try {
           var response2 = await http.post(
             Uri.parse('http://localhost:5001/api/daily/updateGuess'),
             body: js,
-            headers: {"Content-Type": "application/json"},
+            headers: {'Content-Type': 'application/json'},
           );
           if (response2.statusCode != 200) {
-            throw Exception("Failed to obtain daily player data!");
+            throw Exception('Failed to obtain daily player data!');
           }
         } catch (e) {
           setState(() {
-            message = "Error occurred. Please try again later!";
+            message = 'Error occurred. Please try again later!';
           });
           return;
         }
       } else if (pToday && !fToday) {
-        var updatedGuessesMade = (guessdata["guesses"] ?? [])
+        var updatedGuessesMade = (guessdata['guesses'] ?? [])
             .where((guess) => guess.trim() != '')
             .toList();
         var updatedCurrentGuessIndex = updatedGuessesMade.length;
-        var updatedHintdex = guessdata["hints"];
+        var updatedHintdex = guessdata['hints'];
         setState(() {
           guessesMade = updatedGuessesMade;
           currentGuessIndex = updatedCurrentGuessIndex;
           hintdex = updatedHintdex;
         });
       } else if (fToday) {
-        var updatedGuessesMade = (guessdata["guesses"] ?? [])
+        var updatedGuessesMade = (guessdata['guesses'] ?? [])
             .where((guess) => guess.trim() != '')
             .toList();
         var updatedCurrentGuessIndex = updatedGuessesMade.length;
-        var updatedHintdex = guessdata["hints"];
+        var updatedHintdex = guessdata['hints'];
         setState(() {
           guessesMade = updatedGuessesMade;
           currentGuessIndex = updatedCurrentGuessIndex;
@@ -123,14 +122,14 @@ class _DailyGamePageState extends State<DailyGamePage> {
           var responseEnd = await http.post(
             Uri.parse('http://localhost:5001/api/daily/endGame'),
             body: json.encode({
-              "username": userData["username"],
-              "score": 0,
-              "tryAmount": updatedGuessesMade.length + 1
+              'username': userData['username'],
+              'score': 0,
+              'tryAmount': updatedGuessesMade.length + 1
             }),
-            headers: {"Content-Type": "application/json"},
+            headers: {'Content-Type': 'application/json'},
           );
           if (responseEnd.statusCode != 200) {
-            throw Exception("Failed to fetch game summary stats!");
+            throw Exception('Failed to fetch game summary stats!');
           }
           var data = json.decode(responseEnd.body);
           setState(() {
@@ -139,39 +138,39 @@ class _DailyGamePageState extends State<DailyGamePage> {
           });
         } catch (error) {
           setState(() {
-            message = "Error occurred. Please try again later!";
+            message = 'Error occurred. Please try again later!';
           });
           return;
         }
       }
     } catch (e) {
       setState(() {
-        message = "Error occurred. Please try again later!";
+        message = 'Error occurred. Please try again later!';
       });
       return;
     }
   }
 
   updateHintdex(int i) async {
-    var obj = {"username": userData["username"], "dex": i};
+    var obj = {'username': userData['username'], 'dex': i};
     var js = json.encode(obj);
     try {
       var response = await http.post(
         Uri.parse('http://localhost:5001/api/daily/updateHints'),
         body: js,
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode != 200) {
-        throw Exception("Failed to update hints!");
+        throw Exception('Failed to update hints!');
       }
       var data = json.decode(response.body);
-      var updateHintdex = data["hints"];
+      var updateHintdex = data['hints'];
       setState(() {
         hintdex = updateHintdex;
       });
     } catch (e) {
       setState(() {
-        message = "Error occurred. Please try again later!";
+        message = 'Error occurred. Please try again later!';
       });
       return;
     }
@@ -184,32 +183,32 @@ class _DailyGamePageState extends State<DailyGamePage> {
     switch (index) {
       case 0:
         setState(() {
-          hint = 'Nationality: ${dailyPlayer["nationality"]}';
+          hint = 'Nationality: ${dailyPlayer['nationality']}';
         });
         break;
       case 1:
         setState(() {
-          hint = 'Age: ${dailyPlayer["age"]}';
+          hint = 'Age: ${dailyPlayer['age']}';
         });
         break;
       case 2:
         setState(() {
-          hint = 'League: ${dailyPlayer["league"]}';
+          hint = 'League: ${dailyPlayer['league']}';
         });
         break;
       case 3:
         setState(() {
-          hint = 'Club: ${dailyPlayer["club"]}';
+          hint = 'Club: ${dailyPlayer['club']}';
         });
         break;
       case 4:
         setState(() {
-          hint = 'Position: ${dailyPlayer["positions"]}';
+          hint = 'Position: ${dailyPlayer['positions']}';
         });
         break;
       default:
         setState(() {
-          hint = "";
+          hint = '';
         });
     }
   }
@@ -217,51 +216,51 @@ class _DailyGamePageState extends State<DailyGamePage> {
   String getHint(int index) {
     switch (index) {
       case 0:
-        return 'Nationality: ${dailyPlayer["nationality"]}';
+        return 'Nationality: ${dailyPlayer['nationality']}';
       case 1:
-        return 'Age: ${dailyPlayer["age"]}';
+        return 'Age: ${dailyPlayer['age']}';
       case 2:
-        return 'League: ${dailyPlayer["league"]}';
+        return 'League: ${dailyPlayer['league']}';
       case 3:
-        return 'Club: ${dailyPlayer["club"]}';
+        return 'Club: ${dailyPlayer['club']}';
       case 4:
-        return 'Position: ${dailyPlayer["positions"]}';
+        return 'Position: ${dailyPlayer['positions']}';
       default:
-        return "";
+        return '';
     }
   }
 
   updateGuess(input) async {
     var obj = {
-      "username": userData["username"],
-      "guess": input.trim(),
-      "tryAmount": guessesMade.length + 1
+      'username': userData['username'],
+      'guess': input.trim(),
+      'tryAmount': guessesMade.length + 1
     };
     var js = json.encode(obj);
     try {
       var response = await http.post(
         Uri.parse('http://localhost:5001/api/daily/updateGuess'),
         body: js,
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode != 200) {
-        throw Exception("Failed to update guess!");
+        throw Exception('Failed to update guess!');
       }
     } catch (e) {
       setState(() {
-        message = "Error occurred. Please try again later!";
+        message = 'Error occurred. Please try again later!';
       });
       return;
     }
   }
 
   checkGuess() {
-    if (guess.trim() == "") {
+    if (guess.trim() == '') {
       return;
     }
     updateGuess(guess.trim());
     var currentGuess = guess.trim().toLowerCase();
-    var correctNameLower = dailyPlayer["name"].toLowerCase();
+    var correctNameLower = dailyPlayer['name'].toLowerCase();
     var isCorrectGuess = currentGuess == correctNameLower;
     var updatedGuessesMade = List<String>.from(guessesMade);
     updatedGuessesMade[currentGuessIndex] = guess;
@@ -311,26 +310,26 @@ class _DailyGamePageState extends State<DailyGamePage> {
     } else {
       setState(() {
         currentGuessIndex += 1;
-        guess = "";
+        guess = '';
       });
     }
   }
 
   Score(int input) async {
-    var obj = {"username": userData["username"], "dailyScore": input};
+    var obj = {'username': userData['username'], 'dailyScore': input};
     var js = json.encode(obj);
     try {
       var response = await http.post(
         Uri.parse('http://localhost:5001/api/daily/updateScore'),
         body: js,
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode != 200) {
-        throw Exception("Failed to update score!");
+        throw Exception('Failed to update score!');
       }
     } catch (e) {
       setState(() {
-        message = "Error occurred. Please try again later!";
+        message = 'Error occurred. Please try again later!';
       });
       return;
     }
@@ -341,14 +340,14 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var responseEnd = await http.post(
         Uri.parse('http://localhost:5001/api/daily/endGame'),
         body: json.encode({
-          "username": userData["username"],
-          "score": scores,
-          "tryAmount": tries
+          'username': userData['username'],
+          'score': scores,
+          'tryAmount': tries
         }),
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
       );
       if (responseEnd.statusCode != 200) {
-        throw Exception("Failed to fetch game summary stats!");
+        throw Exception('Failed to fetch game summary stats!');
       }
       var data = json.decode(responseEnd.body);
       setState(() {
@@ -357,7 +356,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       });
     } catch (error) {
       setState(() {
-        message = "Error occurred. Please try again later!";
+        message = 'Error occurred. Please try again later!';
       });
       return;
     }
@@ -405,7 +404,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
   Widget _buildBackgroundImage() {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('lib/images/app.jpg'),
           fit: BoxFit.cover,
@@ -434,7 +433,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.white,
               border: Border(
                 bottom: BorderSide(
@@ -515,7 +514,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         Center(
           child: Text(
             'Guess ${_currentGuessIndex + 1}',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -535,14 +534,14 @@ class _DailyGamePageState extends State<DailyGamePage> {
           },
           decoration: InputDecoration(
             hintText: 'Enter your guess here',
-            enabledBorder: const OutlineInputBorder(
+            enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.green),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             fillColor: Colors.grey.shade200,
             filled: true,
-            hintStyle: const TextStyle(color: Colors.black),
-            border: const OutlineInputBorder(
+            hintStyle: TextStyle(color: Colors.black),
+            border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
