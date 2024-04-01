@@ -23,6 +23,8 @@ export const getDailyPlayer = async (req, res) => {
       date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
+      date.setMilliseconds(0);
+      date = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: "America/New_York"}));
       // const dailyDate = "Thu Mar 28 2024 00:00:00 GMT-0400 (Eastern Daylight Time)";
       const dailyDate = date + "";
     
@@ -70,6 +72,8 @@ export const giveDailyDate = async (req, res) => {
         end.setHours(0);
         end.setMinutes(0);
         end.setSeconds(0);
+        end.setMilliseconds(0);
+        end = new Date((typeof end === "string" ? new Date(end) : end).toLocaleString("en-US", {timeZone: "America/New_York"}));
         players[randomNum].dailyDate = "" + end;
         end = new Date();
         await players[randomNum].save();
