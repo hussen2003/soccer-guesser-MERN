@@ -116,35 +116,35 @@ export const endGame = async (req, res) => {
       const { username, score, tryAmount } = req.body;
 
       const user = await User.findOne({ username });
-      const lastDateFinished = new Date(user.lastDateFinished);
-      if(user.lastDateFinished == ""){
-          user.lastDateFinished = date;
-      }
 
-      if((date - lastDateFinished) > 0){
+      if(amountGamesPlayed != 0){
+        const lastDateFinished = new Date(user.lastDateFinished);
+
+        if((date - lastDateFinished) > 0){
+          user.dailyScore = score;
+          user.score += score;
+          user.amountGamesPlayed++;
+        
+          if(tryAmount < 7){
+            user.guessDistribution[tryAmount - 1]++;
+            user.amountGamesWon++;
+
+            if((date - lastDateFinished) == 86400000){
+              user.streak++;
+            }else{
+              user.streak = 1;
+            }
+
+          }else{
+            user.streak = 0;
+          }
+        
+        }
+      }else{
         user.dailyScore = score;
         user.score += score;
         user.amountGamesPlayed++;
-      
-        if((date - lastDateFinished) < 86400000){
-          user.streak++;
-        }else{
-          user.streak = 0;
-        }
-      
-        if(tryAmount < 7){
-          user.guessDistribution[tryAmount - 1]++;
-          user.amountGamesWon++;
-        }else{
-          user.streak = 0;
-        }
-      
-      }
 
-      if(user.amountGamesPlayed == 0){
-        user.dailyScore = score;
-        user.score += score;
-        user.amountGamesPlayed++;
         if(tryAmount < 7){
           user.guessDistribution[tryAmount - 1]++;
           user.amountGamesWon++;

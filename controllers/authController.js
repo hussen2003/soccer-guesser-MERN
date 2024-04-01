@@ -113,8 +113,8 @@ export const verifyEmail = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     //const { username, password } = req.body;
-    //const username = "Patrick";
-    const users = await User.find({});
+    const username = "test";
+    const users = await User.find({ username });
 
     res.status(201).json(users);
   } catch (error) {
