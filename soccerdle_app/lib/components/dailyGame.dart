@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -35,13 +34,13 @@ class _DailyGamePageState extends State<DailyGamePage> {
   @override
   void initState() {
     super.initState();
-    dailyUserGuess();
+    userData = {'username':'username'};
   }
 
   Future<void> dailyUserGuess() async {
     try {
       http.Response response = await http.post(
-        Uri.parse('http://localhost:5001/api/players/getDailyPlayer'),
+        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/players/getDailyPlayer'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -60,7 +59,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     var js = json.encode(obj);
     try {
       http.Response response = await http.post(
-        Uri.parse('http://localhost:5001/api/daily/getGuesses'),
+        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/getGuesses'),
         body: js,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -82,7 +81,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         var js = json.encode(object);
         try {
           var response2 = await http.post(
-            Uri.parse('http://localhost:5001/api/daily/updateGuess'),
+            Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateGuess'),
             body: js,
             headers: {'Content-Type': 'application/json'},
           );
@@ -120,7 +119,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         });
         try {
           var responseEnd = await http.post(
-            Uri.parse('http://localhost:5001/api/daily/endGame'),
+            Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/endGame'),
             body: json.encode({
               'username': userData['username'],
               'score': 0,
@@ -156,7 +155,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     var js = json.encode(obj);
     try {
       var response = await http.post(
-        Uri.parse('http://localhost:5001/api/daily/updateHints'),
+        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateHints'),
         body: js,
         headers: {'Content-Type': 'application/json'},
       );
@@ -239,7 +238,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     var js = json.encode(obj);
     try {
       var response = await http.post(
-        Uri.parse('http://localhost:5001/api/daily/updateGuess'),
+        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateGuess'),
         body: js,
         headers: {'Content-Type': 'application/json'},
       );
@@ -320,7 +319,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     var js = json.encode(obj);
     try {
       var response = await http.post(
-        Uri.parse('http://localhost:5001/api/daily/updateScore'),
+        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateScore'),
         body: js,
         headers: {'Content-Type': 'application/json'},
       );
@@ -338,7 +337,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
   handleGameEnd(int scores, int tries) async {
     try {
       var responseEnd = await http.post(
-        Uri.parse('http://localhost:5001/api/daily/endGame'),
+        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/endGame'),
         body: json.encode({
           'username': userData['username'],
           'score': scores,
