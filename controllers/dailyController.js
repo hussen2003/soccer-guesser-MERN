@@ -37,7 +37,8 @@ export const updateScore = async (req, res) => {
 export const updateGuess = async (req, res) => {
     try {
         const date = new Date();
-        date.setHours(19);
+        date.setHours(date.getHours() - 5);
+        date.setHours(0);
         date.setMinutes(0);
         date.setSeconds(0);
         date.setMilliseconds(0);
@@ -71,7 +72,8 @@ export const getGuesses = async (req, res) => {
       const user = await User.findOne({ username });
 
       const date = new Date();
-      date.setHours(19);
+      date.setHours(date.getHours() - 5);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
@@ -109,7 +111,8 @@ export const endGame = async (req, res) => {
   try {
       
       const date = new Date();
-      date.setHours(19);
+      date.setHours(date.getHours() - 5);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);

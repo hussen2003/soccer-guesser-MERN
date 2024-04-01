@@ -20,7 +20,8 @@ export const getDailyPlayer = async (req, res) => {
     try {
       
       const date = new Date();
-      date.setHours(19);
+      date.setHours(date.getHours() - 5);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
@@ -29,7 +30,7 @@ export const getDailyPlayer = async (req, res) => {
     
       const dailyPlayer = await Player.findOne({ dailyDate });
   
-      res.status(201).json(dailyPlayer);
+      res.status(201).json(dailyDate);
   
     } catch (error) {
       console.log("Error in players controller", error.message);
@@ -68,7 +69,8 @@ export const giveDailyDate = async (req, res) => {
         usedNumber = false;
         addedDaily.push(randomNum);
         end.setDate(startDate + i);
-        end.setHours(19);
+        end.setHours(end.getHours() - 5);
+        end.setHours(0);
         end.setMinutes(0);
         end.setSeconds(0);
         end.setMilliseconds(0);
