@@ -120,7 +120,7 @@ export const endGame = async (req, res) => {
 
       const user = await User.findOne({ username });
 
-      if(amountGamesPlayed != 0){
+      if(user.amountGamesPlayed != 0){
         const lastDateFinished = new Date(user.lastDateFinished);
 
         if((date - lastDateFinished) > 0){
