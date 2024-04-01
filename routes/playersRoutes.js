@@ -9,6 +9,6 @@ router.post("/getRandomPlayer", getRandomPlayer);
 
 router.post("/getDailyPlayer", getDailyPlayer);
 
-//router.post("/giveDailyDate", giveDailyDate);
+router.post("/giveDailyDate", giveDailyDate);
 
 export default router;
