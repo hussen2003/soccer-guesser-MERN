@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DailyGamePage extends StatefulWidget {
-  static const String routeName = '/dailygame';
+  static const String routeName = '/dailyGamePage';
   const DailyGamePage({Key? key}) : super(key: key);
 
   @override

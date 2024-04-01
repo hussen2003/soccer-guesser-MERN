@@ -58,7 +58,7 @@ function DailyPage() {
         pToday = guessdata.playedToday;
         fToday = guessdata.finishedToday;
         if (!pToday) {
-          var object = { username: userData.username, guess: null, tryAmount: 0 };
+          var object = { username: userData.username, guess: null, tryAmount: 0 };  // tryamount : 0 resets your guesses for today
           var js = JSON.stringify(object);
           try {
             const response2 = await fetch(buildPath("api/daily/updateGuess"), {
@@ -93,7 +93,7 @@ function DailyPage() {
             const responseEnd = await fetch(buildPath("api/daily/endGame"), {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username: userData.username, score: 0, tryAmount: updatedGuessesMade.length + 1 }),
+              body: JSON.stringify({ username: userData.username, score: guessdata.dailyScore , tryAmount: updatedGuessesMade.length + 1 }),
             });
             if (!responseEnd.ok) {
               throw new Error("Failed to fetch game summary stats!");
