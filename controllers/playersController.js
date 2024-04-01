@@ -28,7 +28,7 @@ export const getDailyPlayer = async (req, res) => {
     
       const dailyPlayer = await Player.findOne({ dailyDate });
   
-      res.status(201).json(date);
+      res.status(201).json(dailyDate);
   
     } catch (error) {
       console.log("Error in players controller", error.message);
