@@ -41,7 +41,7 @@ export const updateGuess = async (req, res) => {
         date.setMinutes(0);
         date.setSeconds(0);
         date.setMilliseconds(0);
-        date = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: "America/New_York"}));
+        date = new Date(date.toLocaleString("en-US", {timeZone: "America/New_York"}));
       
         const { username, guess, tryAmount } = req.body;
 
@@ -76,7 +76,7 @@ export const getGuesses = async (req, res) => {
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
-      date = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: "America/New_York"}));
+      date = new Date(date.toLocaleString("en-US", {timeZone: "America/New_York"}));
       const finishedDate = new Date(user.lastDateFinished);
       const lastDate = new Date(user.lastDatePlayed);
 
@@ -115,7 +115,7 @@ export const endGame = async (req, res) => {
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
-      date = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: "America/New_York"}));
+      date = new Date(date.toLocaleString("en-US", {timeZone: "America/New_York"}));
       const { username, score, tryAmount } = req.body;
 
       const user = await User.findOne({ username });
