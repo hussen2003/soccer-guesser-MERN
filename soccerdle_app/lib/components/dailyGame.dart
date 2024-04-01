@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DailyGamePage extends StatefulWidget {
-  static const String routeName = '/dailygame';
+  static const String routeName = '/dailyGamePage';
   const DailyGamePage({Key? key}) : super(key: key);
 
   @override
