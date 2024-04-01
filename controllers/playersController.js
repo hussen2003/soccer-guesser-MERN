@@ -24,13 +24,13 @@ export const getDailyPlayer = async (req, res) => {
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
-      date = new Date(date.toLocaleString("en-US", {timeZone: "America/New_York"}));
+      // date = new Date(date.toLocaleString("en-US", {timeZone: "America/New_York"}));
       // const dailyDate = "Thu Mar 28 2024 00:00:00 GMT-0400 (Eastern Daylight Time)";
       const dailyDate = date + "";
     
       const dailyPlayer = await Player.findOne({ dailyDate });
   
-      res.status(201).json(dailyDate);
+      res.status(201).json(date.toLocaleString("en-US", {timeZone: "America/New_York"}));
   
     } catch (error) {
       console.log("Error in players controller", error.message);
