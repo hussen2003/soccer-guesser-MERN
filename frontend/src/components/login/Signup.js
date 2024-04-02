@@ -79,10 +79,6 @@ function SignUp() {
               <p>
                 User created successfully. Navigate to your email to verify your account.
               </p>
-              <hr />
-              <p className="mb-0">
-                Click the red Home button below to Log back in! 
-              </p>
             </Alert>)}
             <form onSubmit={doSignup}> 
                 <div className="form-group">
@@ -139,12 +135,6 @@ function SignUp() {
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#ed6d6d'}
                 style={{ position:'relative', top: '1vh', right: '-10px', padding: '10px 20px', backgroundColor: '#ed6d6d', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '100px', height: '40px', transition: 'background-color 0.3s', border: 'none',margin: '13px 0'}}
                 >Home</Button>
-                {/* <Button onClick = {aboutus}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}
-                style={{ position: 'relative', top: '-61vh', right: '-42vw', padding: '10px 20px', backgroundColor: '#90ee90', color: 'rgb(0, 0, 0)', fontSize: '15px', width: '150px', height: '40px', transition: 'background-color 0.3s', border: 'none'}}
-                >About Us</Button> */}
-                
             </form>
         </div>
     );

@@ -20,7 +20,7 @@ const Header = () => {
   <div>
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
-        <Navbar.Brand className="navbarBrand" href="/">S O C C E R D L E</Navbar.Brand>
+        <Navbar.Brand className="navbarBrand" href="/LandingPage">S O C C E R D L E</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/DailyPage">Daily</Nav.Link>
           <Nav.Link href="/UnlimitedMode">Unlimited</Nav.Link>

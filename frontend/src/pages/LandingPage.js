@@ -51,14 +51,14 @@ function LandingPage() {
                 // backgroundColor: 'rgba(224, 224, 224, .9)',
                 // borderRadius: '10px',
                 // boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'    
-                maxWidth: '500px',
-                margin: '0 auto',
-                padding: '30px',
-                backgroundColor: 'rgba(224, 224, 224, 0.9)',
+                position: 'relative',
+                minWidth: '40vw',
+                minHeight: '80vh',
+                margin: 'auto',
+                backgroundColor: 'rgba(224, 224, 224, .9)',
                 borderRadius: '10px',
-                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'          
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'      
             }}>
-                <h1 style={{ color: 'Black' }}> Hello, {name}!</h1>
                 <div style={{ margin: '75px 0' }}></div> { }
                 <Button onClick={playdaily}
                     onMouseEnter={handleMouseEnter}

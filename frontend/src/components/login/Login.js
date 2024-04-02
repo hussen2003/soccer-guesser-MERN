@@ -70,6 +70,7 @@ function Login() {
     <div>
     <div className='login-container'>
       <h2>Login</h2>
+      <div style={{ margin: '20px 0' }}></div> { }
       {(error==="Email not verified") && (<Alert key={'danger'} variant={'danger'}>
           {error}
         </Alert>)}
@@ -109,67 +110,9 @@ function Login() {
           onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}>
           Login</Button>{' '}
-        <div style={{ margin: '10px 0' }}></div> { }
-        <p>Don't have an account? Click Below to sign up!</p>
-        <Button
-          type="submit"
-          variant="outline-primary"
-          onClick={signup}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#90ee90',
-            color: 'rgb(0, 0, 0)',
-            fontSize: '15px',
-            cursor: 'pointer',
-            width: '150px',
-            height: '40px',
-            transition: 'background-color 0.3s'
-          }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}>
-          Sign Up
-        </Button>
+        <div style={{ margin: '20px 0' }}></div> { }
+        <p>Don't have an account? <a href="/SignUpPage">Sign Up!</a></p>
       </form>
-      <div style={{ margin: '20px 0' }}></div> { }
-      {/* <Button
-          type="submit"
-          variant="outline-primary"
-          onClick={aboutus}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#90ee90',
-            color: 'rgb(0, 0, 0)',
-            fontSize: '15px',
-            cursor: 'pointer',
-            width: '150px',
-            height: '40px',
-            transition: 'background-color 0.3s',
-          }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}>
-          About Us
-        </Button> */}
-
-
-      {/* <Nav variant="underline">
-        <Nav.Item>
-          <Nav.Link href="/AboutPage">About Us</Nav.Link>
-        </Nav.Item>
-      </Nav> */}
-      {/* <button class="shrink-border">About Us</button> */}
-      {/* <a href="/AboutPage" 
-  //  onMouseEnter={(e) => e.target.style.textDecoration = 'underline'} 
-  //  onMouseLeave={(e) => e.target.style.textDecoration = 'none'} 
-   //</div>style={{ textDecoration: 'none', color: 'inherit', fontSize: '15px', transition: 'text-decoration 0.3s', }}>About Us</a>
-   ></a> */}
-
-{/* <a href="/AboutPage" class="btn">
-        <svg width="130px" height="45px" viewBox="0 0 180 60" class="border">
-          <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
-          <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
-        </svg>
-        <span>About Us</span>
-      </a> */}
     </div>
   </div>
   );

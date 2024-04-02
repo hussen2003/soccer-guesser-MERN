@@ -154,7 +154,6 @@ function UnlimitedMode() {
         <div>
             <Header />
             <div style={{ margin: '50px' }} />
-            <h3 style={{ color: 'white' }}>Soccerdle Unlimited</h3>
             {!gameState.gameEnded && (<Button onClick={goback}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}

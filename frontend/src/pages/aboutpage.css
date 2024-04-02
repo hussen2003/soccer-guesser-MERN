@@ -4,22 +4,28 @@
     position:relative;
     width: 75%;
     background-color: transparent;
+    height: 80vh;
 }
 
 .team-members {
-    display:flex;
-    width: relative;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    margin: 0 auto; /* Center the container */
+    max-width: 1200px; /* Maximum width for the container */
 }
+
 
 .member {
     margin: 20px;
     padding: 20px;
     background-color: #efeee9;
     border-radius: 10px;
-    width: 200px;
+    width: calc(25% - 40px); /* Calculate width dynamically */
+    max-width: 200px; /* Maximum width for each member card */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
 }
+
 
 .about-title{
     text-align: center;

@@ -2,6 +2,7 @@ import React from 'react';
 import './aboutpage.css'; // Importing CSS for styling
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from'react-bootstrap/Nav';
+import Header from '../components/header/Header.js';
 
 function AboutPage() {
     const teamMembers = [
@@ -40,6 +41,7 @@ function AboutPage() {
 
     return (
         <div>
+            <Header />
             <div className='about-page'>
                 <div className="team-members">
                     {teamMembers.map((member, index) => (
@@ -50,12 +52,6 @@ function AboutPage() {
                         </div>
                     ))}
                 </div>
-                <button onClick={goHome}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    className="home-button">
-                    Home
-                </button>
             </div>
         </div>
     );

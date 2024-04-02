@@ -7,12 +7,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
-.signup-container h2 {
-    text-align: center;
-    font-size: 45px;
-}
-
-
 .form-group {
     margin-bottom: 12px;
 }
@@ -28,7 +22,6 @@ input[type='password'] {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-
     padding-left: 10px;
     width: calc(100% - 20px);
 }
