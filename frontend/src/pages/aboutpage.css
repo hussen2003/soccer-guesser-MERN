@@ -13,13 +13,6 @@
     justify-content: center;
 }
 
-.navbar {
-    position:top;
-    top: 0;
-    width: 100%;
-    background-color: rgba(61, 61, 61, 0.6); /* Adjust the alpha value (0.5) for the desired transparency */
-  }  
-
 .member {
     margin: 20px;
     padding: 20px;

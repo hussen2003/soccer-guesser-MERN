@@ -1,15 +1,28 @@
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: rgba(61, 61, 61, 0.6); /* Adjust the alpha value (0.5) for the desired transparency */
+/* Reset default margin and padding */
+body, html {
+  margin: 0;
+  padding: 0;
 }
 
-.navbar-brand {
-  display: block;
-  width: 100%;
-  text-align: center;
-  letter-spacing: 0.1em;
-  color: rgb(255, 255, 255);
-  font-size: 50px;
+.navbar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Adjust the z-index as needed */
+}
+
+.container {
+  padding: 10px;
+}
+
+/* Adjust margin to create space between navbar and content */
+.content {
+  margin-top: 150px; /* Adjust this value as needed */
+}
+
+.navbarBrand {
+  font-size: 25px;
+  font-weight: normal;
 }

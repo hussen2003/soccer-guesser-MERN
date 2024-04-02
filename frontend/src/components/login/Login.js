@@ -131,7 +131,7 @@ function Login() {
         </Button>
       </form>
       <div style={{ margin: '20px 0' }}></div> { }
-      <Button
+      {/* <Button
           type="submit"
           variant="outline-primary"
           onClick={aboutus}
@@ -148,7 +148,7 @@ function Login() {
           onMouseEnter={(e) => e.target.style.backgroundColor = '#4CAF50'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#90ee90'}>
           About Us
-        </Button>
+        </Button> */}
 
 
       {/* <Nav variant="underline">

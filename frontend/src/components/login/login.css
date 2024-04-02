@@ -2,31 +2,25 @@ body {
     background-image: url('wallpaper3.jpg');
     background-size: cover;
     background-position: center;
-    margin: 0;
+    /* display: flex; */
+    
+}
+
+.login-container {
+    /* margin: 0;
     padding: 0;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0); */
     font-family: Arial, sans-serif;
-}
-
-
-.login-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 30px;
     background-color: rgba(224, 224, 224, 0.9);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .login-container h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 35px;
-    
   }
   
   .login-container form > div{
@@ -57,42 +51,4 @@ body {
   .login-container button:hover {
     background-color: #088f16;
   }
-/*   
-  .btn {
-    width: 150px;
-    height: 45px;
-    cursor: pointer;
-    background: transparent;
-    border: 1px solid #91C9FF;
-    outline: none;
-    transition: 1s ease-in-out;
-  }
-  
-  svg {
-    position: relative;
-    left: 0;
-    top: 0;
-    fill: none;
-    stroke: #fff;
-    stroke-dasharray: 150 480;
-    stroke-dashoffset: 150;
-    transition: 1s ease-in-out;
-  }
-  
-  .btn:hover {
-    transition: 1s ease-in-out;
-    background: #4F95DA;
-  }
-  
-  .btn:hover svg {
-    stroke-dashoffset: -480;
-  }
-  
-  .btn span {
-    color: rgb(0, 0, 0);
-    font-size: 15px;
-    font-weight: 100;
-  }
-  
-   */
   

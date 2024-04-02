@@ -2,25 +2,38 @@ import React from 'react';
 import "./header.css";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from'react-bootstrap/Nav';
-import NavDropdown from'react-bootstrap/NavDropdown';
 import Container from'react-bootstrap/Container';
+import Form from'react-bootstrap/Form';
 import Button from'react-bootstrap/Button';
 
 const Header = () => {
-  const aboutus = async (event) => {
-    event.preventDefault();
-    window.location.href = "/AboutPage";
-  }
+  // const aboutus = async (event) => {
+  //   event.preventDefault();
+  //   window.location.href = "/AboutPage";
+  // }
+  const name = (JSON.parse(sessionStorage.getItem('user_data')).name);
   return (
   <div>
-
-  <Navbar expand="lg" fixed="top">
-      <Navbar.Brand>
-        {/* still need to add the logic for clicking the navbar (if signed in, take to landing on click. otherwise, take to login on click) */}
-        <Nav.Link href="/">SOCCERDLE</Nav.Link>      
-      </Navbar.Brand>
-  </Navbar>
-    
+    <Navbar bg="dark" data-bs-theme="dark">
+      <Container>
+        <Navbar.Brand className="navbarBrand" href="/">S O C C E R D L E</Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="/DailyPage">Daily</Nav.Link>
+          <Nav.Link href="/UnlimitedMode">Unlimited</Nav.Link>
+          <Nav.Link href="/Leaderboard">Leaderboard</Nav.Link>
+          <Nav.Link href="/AboutPage">About us</Nav.Link>
+        </Nav>
+        <Navbar.Text style={{ padding: '0 20px' }}>
+            Signed in as: <a>{name}</a>
+          </Navbar.Text>
+        <Form className="d-flex">
+          <Button variant="outline-danger">Sign Out</Button>
+        </Form>
+      </Container>
+    </Navbar>
+    <div className="content">
+        
+      </div>
   </div>
   )
 }

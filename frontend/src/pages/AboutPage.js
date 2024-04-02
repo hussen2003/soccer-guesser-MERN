@@ -40,13 +40,6 @@ function AboutPage() {
 
     return (
         <div>
-            <Navbar expand="lg" fixed="top">
-                    <Navbar.Brand>
-                        {/* still need to add the logic for clicking the navbar (if signed in, take to landing on click. otherwise, take to login on click) */}
-                        About Us     
-                    </Navbar.Brand>
-                </Navbar>
-            <div style={{ margin: '300px 0' }}></div> { }
             <div className='about-page'>
                 <div className="team-members">
                     {teamMembers.map((member, index) => (
