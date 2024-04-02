@@ -25,6 +25,7 @@ const Header = () => {
           <Nav.Link href="/DailyPage">Daily</Nav.Link>
           <Nav.Link href="/UnlimitedMode">Unlimited</Nav.Link>
           <Nav.Link href="/Leaderboard">Leaderboard</Nav.Link>
+          <Nav.Link href="/AllTimeLB">All Time Leaderboard</Nav.Link>
           <Nav.Link href="/AboutPage">About us</Nav.Link>
         </Nav>
         <Navbar.Text style={{ padding: '0 20px' }}>
