@@ -12,6 +12,10 @@ const Header = () => {
   //   window.location.href = "/AboutPage";
   // }
   const name = (JSON.parse(sessionStorage.getItem('user_data')).name);
+  const logout = (event) => {
+    event.preventDefault();
+    window.location.href = "/";
+}
   return (
   <div>
     <Navbar bg="dark" data-bs-theme="dark">
@@ -27,7 +31,7 @@ const Header = () => {
             Signed in as: <a>{name}</a>
           </Navbar.Text>
         <Form className="d-flex">
-          <Button variant="outline-danger">Sign Out</Button>
+          <Button onClick={logout} variant="outline-danger">Sign Out</Button>
         </Form>
       </Container>
     </Navbar>
