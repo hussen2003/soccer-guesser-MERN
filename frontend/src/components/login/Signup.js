@@ -73,7 +73,7 @@ function SignUp() {
     return (
         <div className="signup-container"> 
             <h2>Sign Up</h2> 
-            {(error!=="Username already exists") && (error === "Internal Server Error") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>Make sure every field is filled out</p>)}
+            {((error !== "Email already exists") || (error !== "Username already exists")) && (error === "Internal Server Error") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>Make sure every field is filled out</p>)}
             {(error==="User created successfully, verification email sent") && (<Alert variant="success">
               <Alert.Heading>GOAL!</Alert.Heading>
               <p>
@@ -113,6 +113,7 @@ function SignUp() {
                         onChange={(e) => setSignUpEmail(e.target.value)}
                         required
                     />
+                    {error && (error==="Email already exists") && (<p style={{ color: 'red' , fontWeight: 'bold'}}>{error}</p>)}
                 </div>
                 <div className="form-group"> 
                     <label htmlFor="password">Password:</label> 
