@@ -342,19 +342,19 @@ function DailyPage() {
         style={{
           position: "relative",
           top: ".3vw",
-          left: "-17.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
+          left: "-19.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
         }}>
         Home
       </Button>)}
       <div
         style={{
           minHeight: "75vh",
-          minWidth: "75vh",
+          minWidth: "45vw",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           padding: "20px",
-          backgroundColor: "rgba(255, 255, 255, 0.7)", // Change background color to white with some opacity
+          backgroundColor: "rgba(255, 255, 255, 0.9)", // Change background color to white with some opacity
           borderRadius: "10px", // Add some border radius for the container
           backdropFilter: "blur(5px)", // Add a blur effect for better blending with the background image
         }}

@@ -161,13 +161,13 @@ function UnlimitedMode() {
                 style={{
                     position: "relative",
                     top: "0vw",
-                    left: "-17.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
+                    left: "-19.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
                 }}>
                 Home
             </Button>)}
             <div style={{
                 minHeight: '75vh',
-                minWidth: '75vh',
+                minWidth: '45vw',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
