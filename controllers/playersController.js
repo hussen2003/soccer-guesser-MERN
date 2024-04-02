@@ -25,8 +25,8 @@ export const getDailyPlayer = async (req, res) => {
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
-      // const dailyDate = "Thu Mar 28 2024 00:00:00 GMT-0400 (Eastern Daylight Time)";
-      const dailyDate = date + "";
+      const dailyDate = "Mon Apr 01 2024 00:00:00 GMT+0000 (Coordinated Universal Time)";
+      // const dailyDate = date + "";
     
       const dailyPlayer = await Player.findOne({ dailyDate });
   
