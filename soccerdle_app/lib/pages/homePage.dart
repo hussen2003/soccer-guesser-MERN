@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
@@ -10,8 +10,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // need actual name idk
-  String? _name;
+  late String name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the saved name from SharedPreferences
+    _loadName();
+  }
+
+  // Function to load the name from SharedPreferences
+  _loadName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name') ?? '';
+      // If name doesn't exist, set it to empty string
+    });
+  }
 
   void playDailyGame() {
     Navigator.pushNamed(context, '/dailyGamePage');
@@ -25,22 +40,22 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushNamed(context, '/leaderBoard');
   }
 
-  void logout() {
-    Navigator.pushNamed(context, '/login');
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('x-auth-token');
+    Navigator.pushNamed(context, '/loginPage');
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar:
-            true, 
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: const Text('Soccerdle',
               style: TextStyle(fontWeight: FontWeight.bold)),
-          centerTitle: true, // This centers the title
-          backgroundColor:
-              Colors.grey.shade200.withOpacity(0.5), // Make AppBar translucent
+          centerTitle: true,
+          backgroundColor: Colors.grey.shade200.withOpacity(0.5),
           elevation: 0,
           actions: [
             IconButton(
@@ -76,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Hello, $_name!',
+                    'Hello$name${name.split(' ').first}!',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,

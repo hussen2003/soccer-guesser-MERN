@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:soccerdle/pages/loginPage.dart';
-import 'package:soccerdle/pages/registerPage.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {

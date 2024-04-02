@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -34,13 +33,18 @@ class _DailyGamePageState extends State<DailyGamePage> {
   @override
   void initState() {
     super.initState();
-    userData = {'username':'username'};
+    dailyUserGuess();
+    userData = {
+      'username': 'username',
+      // Other necessary user data
+    };
   }
 
+  final String baseUrl = 'http://soccerdle-mern-ace81d4f14ec.herokuapp.com';
   Future<void> dailyUserGuess() async {
     try {
       http.Response response = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/players/getDailyPlayer'),
+        Uri.parse('$baseUrl/api/players/getDailyPlayer'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -50,21 +54,23 @@ class _DailyGamePageState extends State<DailyGamePage> {
       setState(() {
         dailyPlayer = data;
       });
+      //print(dailyPlayer);
     } catch (e) {
       setState(() {
         message = 'Error occurred. Please try again later!';
       });
     }
     var obj = {'username': userData['username']};
-    var js = json.encode(obj);
+    var js = jsonEncode(obj);
     try {
       http.Response response = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/getGuesses'),
+        Uri.parse('$baseUrl/api/daily/getGuesses'),
         body: js,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      //print(obj);
 
       if (response.statusCode != 200) {
         throw Exception('Failed to obtain daily player data!');
@@ -81,10 +87,11 @@ class _DailyGamePageState extends State<DailyGamePage> {
         var js = json.encode(object);
         try {
           var response2 = await http.post(
-            Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateGuess'),
+            Uri.parse('$baseUrl/api/daily/updateGuess'),
             body: js,
             headers: {'Content-Type': 'application/json'},
           );
+
           if (response2.statusCode != 200) {
             throw Exception('Failed to obtain daily player data!');
           }
@@ -119,7 +126,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         });
         try {
           var responseEnd = await http.post(
-            Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/endGame'),
+            Uri.parse('$baseUrl/api/daily/endGame'),
             body: json.encode({
               'username': userData['username'],
               'score': 0,
@@ -150,12 +157,12 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
-  updateHintdex(int i) async {
+  Future<void> updateHintdex(int i) async {
     var obj = {'username': userData['username'], 'dex': i};
     var js = json.encode(obj);
     try {
       var response = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateHints'),
+        Uri.parse('$baseUrl/api/daily/updateHints'),
         body: js,
         headers: {'Content-Type': 'application/json'},
       );
@@ -175,34 +182,34 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
-  revealHint(int index) {
+  void revealHint(int index) {
     var updatedHintdex = List<bool>.from(hintdex);
     updatedHintdex[index] = true;
     updateHintdex(index);
     switch (index) {
       case 0:
         setState(() {
-          hint = 'Nationality: ${dailyPlayer['nationality']}';
+          hint = 'Nationality: ${dailyPlayer["nationality"]}';
         });
         break;
       case 1:
         setState(() {
-          hint = 'Age: ${dailyPlayer['age']}';
+          hint = 'Age: ${dailyPlayer["age"]}';
         });
         break;
       case 2:
         setState(() {
-          hint = 'League: ${dailyPlayer['league']}';
+          hint = 'League: ${dailyPlayer["league"]}';
         });
         break;
       case 3:
         setState(() {
-          hint = 'Club: ${dailyPlayer['club']}';
+          hint = 'Club: ${dailyPlayer["club"]}';
         });
         break;
       case 4:
         setState(() {
-          hint = 'Position: ${dailyPlayer['positions']}';
+          hint = 'Position: ${dailyPlayer["positions"]}';
         });
         break;
       default:
@@ -215,21 +222,21 @@ class _DailyGamePageState extends State<DailyGamePage> {
   String getHint(int index) {
     switch (index) {
       case 0:
-        return 'Nationality: ${dailyPlayer['nationality']}';
+        return 'Nationality: ${dailyPlayer["nationality"]}';
       case 1:
-        return 'Age: ${dailyPlayer['age']}';
+        return 'Age: ${dailyPlayer["age"]}';
       case 2:
-        return 'League: ${dailyPlayer['league']}';
+        return 'League: ${dailyPlayer["league"]}';
       case 3:
-        return 'Club: ${dailyPlayer['club']}';
+        return 'Club: ${dailyPlayer["club"]}';
       case 4:
-        return 'Position: ${dailyPlayer['positions']}';
+        return 'Position: ${dailyPlayer["positions"]}';
       default:
         return '';
     }
   }
 
-  updateGuess(input) async {
+  Future<void> updateGuess(input) async {
     var obj = {
       'username': userData['username'],
       'guess': input.trim(),
@@ -238,7 +245,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     var js = json.encode(obj);
     try {
       var response = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateGuess'),
+        Uri.parse('$baseUrl/api/daily/updateGuess'),
         body: js,
         headers: {'Content-Type': 'application/json'},
       );
@@ -253,73 +260,80 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
-  checkGuess() {
+  void checkGuess() {
     if (guess.trim() == '') {
       return;
     }
     updateGuess(guess.trim());
     var currentGuess = guess.trim().toLowerCase();
-    var correctNameLower = dailyPlayer['name'].toLowerCase();
-    var isCorrectGuess = currentGuess == correctNameLower;
-    var updatedGuessesMade = List<String>.from(guessesMade);
-    updatedGuessesMade[currentGuessIndex] = guess;
-    setState(() {
-      guessesMade = updatedGuessesMade;
-    });
-    if (isCorrectGuess || currentGuessIndex == 5) {
-      setState(() {
-        gameEnded = true;
-      });
-      var s = 0;
-      if (isCorrectGuess) {
-        switch (currentGuessIndex) {
-          case 0:
-            s = 100;
-            break;
-          case 1:
-            s = 90;
-            break;
-          case 2:
-            s = 75;
-            break;
-          case 3:
-            s = 60;
-            break;
-          case 4:
-            s = 45;
-            break;
-          case 5:
-            s = 30;
-            break;
-          default:
-            s = 0;
-            break;
-        }
-        if (hintdex[0]) s -= 1;
-        if (hintdex[1]) s -= 3;
-        if (hintdex[2]) s -= 3;
-        if (hintdex[3]) s -= 3;
-        if (hintdex[4]) s -= 5;
-        Score(s);
-        handleGameEnd(s, guessesMade.length + 1);
+    if (dailyPlayer != null) {
+      var correctNameLower = dailyPlayer['name'].toLowerCase();
+      var isCorrectGuess = currentGuess == correctNameLower;
+
+      var updatedGuessesMade = List<String>.from(guessesMade);
+      if (currentGuessIndex < guessesMade.length) {
+        updatedGuessesMade[currentGuessIndex] = guess;
       } else {
-        Score(0);
-        handleGameEnd(s, 7);
+        // Adjust currentGuessIndex or handle the error appropriately
       }
-    } else {
       setState(() {
-        currentGuessIndex += 1;
-        guess = '';
+        guessesMade = updatedGuessesMade;
       });
+      if (isCorrectGuess || currentGuessIndex == 5) {
+        setState(() {
+          gameEnded = true;
+        });
+        var s = 0;
+        if (isCorrectGuess) {
+          switch (currentGuessIndex) {
+            case 0:
+              s = 100;
+              break;
+            case 1:
+              s = 90;
+              break;
+            case 2:
+              s = 75;
+              break;
+            case 3:
+              s = 60;
+              break;
+            case 4:
+              s = 45;
+              break;
+            case 5:
+              s = 30;
+              break;
+            default:
+              s = 0;
+              break;
+          }
+          if (hintdex[0]) s -= 1;
+          if (hintdex[1]) s -= 3;
+          if (hintdex[2]) s -= 3;
+          if (hintdex[3]) s -= 3;
+          if (hintdex[4]) s -= 5;
+          Score(s);
+          handleGameEnd(s, guessesMade.length + 1);
+        } else {
+          Score(0);
+          handleGameEnd(s, 7);
+        }
+      } else {
+        setState(() {
+          currentGuessIndex += 1;
+          guess = '';
+        });
+      }
     }
   }
 
-  Score(int input) async {
+  Future<void> Score(int input) async {
     var obj = {'username': userData['username'], 'dailyScore': input};
     var js = json.encode(obj);
     try {
       var response = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/updateScore'),
+        Uri.parse('$baseUrl/api/daily/updateScore'),
         body: js,
         headers: {'Content-Type': 'application/json'},
       );
@@ -334,10 +348,10 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
-  handleGameEnd(int scores, int tries) async {
+  Future<void> handleGameEnd(int scores, int tries) async {
     try {
       var responseEnd = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/daily/endGame'),
+        Uri.parse('$baseUrl/api/daily/endGame'),
         body: json.encode({
           'username': userData['username'],
           'score': scores,
@@ -353,6 +367,46 @@ class _DailyGamePageState extends State<DailyGamePage> {
         gameSummary = data;
         showModal = true;
       });
+      // Check if the user wins or loses based on scores
+      if (scores > 0) {
+        // If the score is greater than 0, the user wins
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Congratulations!'),
+              content: Text('You won the game!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // If the score is 0, the user loses
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Game Over'),
+              content: Text('You lost the game. Better luck next time!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     } catch (error) {
       setState(() {
         message = 'Error occurred. Please try again later!';
@@ -361,27 +415,22 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
+  void open() {
+    setState(() {
+      showModal = true;
+    });
+  }
+
+  void close() {
+    setState(() {
+      showModal = false;
+    });
+  }
+
   void _hintRevealed(int index) {
     setState(() {
       _showHints[index] = !_showHints[index];
     });
-  }
-
-  String _getHint(int index) {
-    switch (index) {
-      case 0:
-        return 'Nationality ';
-      case 1:
-        return 'Age';
-      case 2:
-        return 'League';
-      case 3:
-        return 'Club';
-      case 4:
-        return 'Position';
-      default:
-        return 'Unknown';
-    }
   }
 
   @override
@@ -403,7 +452,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
   Widget _buildBackgroundImage() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('lib/images/app.jpg'),
           fit: BoxFit.cover,
@@ -432,7 +481,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(
                 bottom: BorderSide(
@@ -464,13 +513,22 @@ class _DailyGamePageState extends State<DailyGamePage> {
                           child: Container(
                             color: Colors.white,
                             padding: EdgeInsets.all(8),
-                            child: Text(
-                              _getHint(index),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  getHint(index),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                if (index == 0)
+                                  Image.network(dailyPlayer['country_flag']),
+                                if (index == 3)
+                                  Image.network(dailyPlayer['club_logo']),
+                              ],
                             ),
                           ),
                         )
@@ -496,7 +554,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           ),
         ],
       );
-    });
+    }).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -513,39 +571,153 @@ class _DailyGamePageState extends State<DailyGamePage> {
         Center(
           child: Text(
             'Guess ${_currentGuessIndex + 1}',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-        ), // dailyUserGuess
-        TextFormField(
+        ),
+        TextField(
           controller: guessControllers[_currentGuessIndex],
+          onChanged: (val) {
+            setState(() {
+              guess = val;
+            });
+          },
           onEditingComplete: () {
             setState(() {
-              dailyUserGuess();
-
               if (_currentGuessIndex < 5) {
                 _currentGuessIndex++;
               }
+              checkGuess();
             });
+            print(guess);
           },
+          maxLength: 15,
+          autofocus: true,
           decoration: InputDecoration(
             hintText: 'Enter your guess here',
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.green),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             fillColor: Colors.grey.shade200,
             filled: true,
-            hintStyle: TextStyle(color: Colors.black),
-            border: OutlineInputBorder(
+            hintStyle: const TextStyle(color: Colors.black),
+            border: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
         ),
+        /*if (!gameEnded)
+          Container(
+            width: 300,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text('Guess ${guessesMade.length + 1}:'),
+                TextField(
+                  onChanged: (val) {
+                    setState(() {
+                      guess = val;
+                    });
+                  },
+                  onSubmitted: (val) {
+                    checkGuess();
+                  },
+                  maxLength: 15,
+                  autofocus: true,
+                ),
+              ],
+            ),
+          ),*/
+        if (gameEnded)
+          Column(
+            children: [
+              Text(
+                guess.trim().toLowerCase() ==
+                        dailyPlayer['name'].trim().toLowerCase()
+                    ? 'You guessed it in ${guessesMade.length} ${guessesMade.length == 1 ? 'try!' : 'tries!'}'
+                    : 'The player was ${dailyPlayer["name"]}',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 10),
+              Image.network(
+                dailyPlayer['image'],
+                width: 150,
+              ),
+              SizedBox(height: 10),
+              Image.network(
+                dailyPlayer['club_logo'],
+                width: 150,
+              ),
+            ],
+          ),
+        if (gameEnded)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: open,
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                ),
+                child: Text('Stats'),
+              ),
+              SizedBox(width: 10),
+              // ElevatedButton(
+              //   onPressed: goback,
+              //   style: ButtonStyle(
+              //     backgroundColor:
+              //         MaterialStateProperty.all<Color>(Colors.green),
+              //   ),
+              //   child: Text('Home'),
+              // ),
+            ],
+          ),
+        if (gameEnded && showModal)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: AlertDialog(
+              title: Text('Game Summary'),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Streak: ${gameSummary["streak"]}'),
+                  Text(
+                      'Win Rate: ${(gameSummary["winRate"] as double).toStringAsFixed(2)}%'),
+                  Text('Score for Today: ${gameSummary["score"]}'),
+                  Text('All Time Score: ${gameSummary["allTimeScore"]}'),
+                  Text('Guess Distribution'),
+                  // Column(
+                  //   children: (gameSummary["guessDistribution"] as List)
+                  //       .map((count, index) {
+                  //     return Text('${index + 1} : $count');
+                  //   }).toList(),
+                  // ),
+                ],
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: close,
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green),
+                  ),
+                  child: Text('Close'),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

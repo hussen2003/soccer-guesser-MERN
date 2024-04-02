@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:soccerdle/services/loginPageServices.dart';
 
 class LoginPage extends StatefulWidget {
@@ -106,9 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
                       child: GestureDetector(
-                        onTap: () {
-                          
-                        },
+                        onTap: () {},
                         child: const Text('Forget Password ?'),
                       ),
                     ),

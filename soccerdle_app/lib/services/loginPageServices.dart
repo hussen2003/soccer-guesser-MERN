@@ -1,22 +1,25 @@
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:soccerdle/constants/errorHandling.dart';
 import 'package:soccerdle/constants/utils.dart';
-import 'package:soccerdle/providers/user_provider.dart';
+import 'package:soccerdle/providers/userProvider.dart';
 
 class LoginPageService {
-  // sign in user
-  void signInUser({
+  Map<String, dynamic>? userData;
+
+  Future<void> signInUser({
     required BuildContext context,
     required String username,
     required String password,
   }) async {
     try {
-      http.Response res = await http.post(
-        Uri.parse('https://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
+      final http.Response res = await http.post(
+        Uri.parse(
+            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
@@ -26,17 +29,32 @@ class LoginPageService {
         },
       );
 
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-        },
-      );
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        print('Received status code: ${res.statusCode}');
+
+        userData = json.decode(res.body);
+        print('Received User Data: $userData');
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('x-auth-token', userData!['token']);
+        await prefs.setString('username', username); // Save username
+
+        Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+        // You may navigate to the next screen upon successful login here.
+      } else if (res.statusCode == 401) {
+        showSnackBar(context, "Unauthorized access");
+      } else if (res.statusCode == 400) {
+        // Bad request, likely due to invalid credentials
+        showSnackBar(context, "Invalid username or password");
+      } else {
+        // Other server-side errors
+        showSnackBar(context, "Server error: ${res.statusCode}");
+      }
+    } on SocketException {
+      showSnackBar(context, "No internet connection");
     } catch (e) {
-      showSnackBar(context, e.toString());
+      // Handle any other unexpected errors
+      showSnackBar(context, "Unexpected error: $e");
     }
   }
 }

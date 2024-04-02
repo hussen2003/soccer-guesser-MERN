@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:soccerdle/common/customButton.dart';
 import 'package:soccerdle/common/customTextfiled.dart';
 import 'package:soccerdle/services/registerPageServices.dart';
