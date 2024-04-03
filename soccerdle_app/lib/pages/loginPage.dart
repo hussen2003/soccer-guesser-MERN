@@ -24,12 +24,14 @@ class _LoginPageState extends State<LoginPage> {
 
   void signInUser() async {
     if (_signInFormKey.currentState!.validate()) {
-      loginService.signInUser(
+      await loginService.signInUser(
         context: context,
         username: _usernameController.text,
         password: _passwordController.text,
       );
+      if (loginService.userData != null){
       Navigator.pushNamed(context, '/home');
+      }
     }
   }
 

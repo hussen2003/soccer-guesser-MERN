@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:soccerdle/providers/userProvider.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
@@ -41,9 +43,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('x-auth-token');
-    Navigator.pushNamed(context, '/loginPage');
+  Navigator.pushNamed(context, '/login');
   }
 
   @override
