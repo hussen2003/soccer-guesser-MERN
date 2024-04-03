@@ -14,11 +14,13 @@
     transition: opacity 3s ease-in-out;
     /* Fade-in animation */
     z-index: 999;
+    backdrop-filter: blur(1px);
 }
 
 /* CSS for modal content */
 .modal-content {
-    background-color: white;
+    color: white;
+    background-color: rgba(33, 37, 41, 0.98);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -40,6 +42,13 @@
     /* Set button width to 100% of its container */
     max-width: 200px;
     /* Set maximum button width if needed */
+    padding: 10px;
+    background-color: #efeee9;
+    color: #000; 
+    cursor: pointer; 
+    border: 2px solid #000000;
+    min-width: 6vw;
+    border-radius: 8px;
 }
 
 /* CSS for modal overlay when visible */

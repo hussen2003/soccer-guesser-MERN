@@ -16,33 +16,26 @@
 
 .member {
     padding: 20px;
-    background-color: #efeee9;
+    background-color: rgba(33,37,41, 0.9);
+    color: white;
     border-radius: 10px;
     box-sizing: border-box; 
     flex: 1 0 21%; 
     margin: 1%;
     max-width: 24%;
     min-width: 200px;
+    backdrop-filter: blur(1px);
 }
 
 .member h2 {
     font-size: 24px;
     margin-bottom: 10px;
+
 }
 
 .member p {
     font-size: 18px;
-    color: #666666;
-}
-
-.home-button {
-    padding: 10px 20px;
-    background-color: #efeee9;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 0px;
+    color: rgba(114, 114, 114);
 }
 
 .member {

@@ -54,63 +54,46 @@ function Leaderboard() {
         minWidth: '40vw',
         minHeight: '80vh',
         margin: 'auto',
-        backgroundColor: 'rgba(224, 224, 224, .9)',
+        backgroundColor: 'rgba(33, 37, 41, .9)',
         borderRadius: '10px',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+        color: 'white',
       }}
     >
       <Header />
       <div
         className="Leaderboard"
         style={{
-          width: "100%",
-          margin: "15px auto",
+          width: '100%',
+          margin: '15px auto',
           //backgroundColor: "rgba(224, 224, 224, .9)", // Adjust transparency here
-          padding: "20px",
-          borderRadius: "1px", // Optional: Add border radius for better appearance
+          padding: '20px',
+          borderRadius: '1px', // Optional: Add border radius for better appearance
           //boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // Optional: Add shadow for better contrast
+          backdropFilter: 'blur(1px)',
         }}
       >
-        <button
-          onClick={goback}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            position: "relative",
-            top: "0vw",
-            left: "-16vw",
-            padding: "10px",
-            backgroundColor: "#efeee9",
-            color: "#000",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Home
-        </button>
-        <h1 style={{ textAlign: "center" }}>Daily Top Players</h1>
-        <div style={{ margin: "20px 0" }}></div>
+        <h1 style={{ textAlign: 'center' }}>Daily Top Players</h1>
+        <div style={{ margin: '20px 0' }}></div>
         <div
           style={{
-            width: "100%",
-            border: "2px solid #000",
-            padding: "5px",
+            width: '100%',
+            border: '2px solid rgba(114,114,114)',
+            padding: '5px',
           }}
         >
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "10px",
-              borderBottom: "1px solid #000",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '10px',
+              borderBottom: '1px solid rgba(114,114,114)',
             }}
           >
-            <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>No.</span>
-            <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Name</span>
-            <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-              Score
-            </span>
+            <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>No.</span>
+            <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Name</span>
+            <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Score</span>
           </div>
           {players
             .filter((player) => player.dailyScore > 0)
@@ -118,20 +101,16 @@ function Leaderboard() {
               <div
                 key={index}
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "10px",
-                  borderTop: "1px solid #000",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '10px',
+                  borderTop: '1px solid rgba(114,114,114)',
                 }}
               >
                 <span>{index + 1}</span>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  {index < 3 && (
-                    <span style={{ marginRight: "10px" }}>
-                      {index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}
-                    </span>
-                  )}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  {index < 3 && <span style={{ marginRight: '10px' }}>{index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}</span>}
                   <span>{player.name}</span>
                 </div>
                 <span>{player.dailyScore}</span>

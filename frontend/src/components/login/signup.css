@@ -2,11 +2,12 @@
     font-family: Arial, sans-serif;
     max-width: 400px;
     padding: 30px;
-    background-color: rgba(33,37,41, 0.9);
+    background-color: rgba(33,37,41, 0.87);
     color: white;    
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
+    backdrop-filter: blur(1px);
 }
 
 .signup-container input {

@@ -336,50 +336,62 @@ function DailyPage() {
   return (
     <div>
       <Header />
-      {!gameEnded && (<Button onClick={goback}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          position: "relative",
-          top: ".3vw",
-          left: "-19.5vw", padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw'
-        }}>
-        Home
-      </Button>)}
+      {!gameEnded && (
+        <Button
+          onClick={goback}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          style={{
+            position: 'relative',
+            top: '.3vw',
+            left: '-19.5vw',
+            padding: '10px',
+            backgroundColor: '#efeee9',
+            color: '#000',
+            cursor: 'pointer',
+            border: '2px solid #000000',
+            minWidth: '6vw',
+          }}
+        >
+          Home
+        </Button>
+      )}
       <div
         style={{
-          minHeight: "75vh",
-          minWidth: "45vw",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: "20px",
-          backgroundColor: "rgba(255, 255, 255, 0.9)", // Change background color to white with some opacity
-          borderRadius: "10px", // Add some border radius for the container
-          backdropFilter: "blur(5px)", // Add a blur effect for better blending with the background image
+          color: 'white',
+          minHeight: '75vh',
+          minWidth: '45vw',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '20px',
+          backgroundColor: 'rgba(33, 37, 41, 0.87)', // Change background color to white with some opacity
+          borderRadius: '10px', // Add some border radius for the container
+          backdropFilter: 'blur(1px)', // Add a blur effect for better blending with the background image
         }}
       >
-        <span style={{ width: "100%", alignContent: "center" }}>
+        <h1 style={{ textAlign: 'center' }}>Daily Mode</h1>
+        <div style={{ margin: '10px 0' }}></div>
+        <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
             {guessesMade.map((guess, index) => (
               <span
                 key={index}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  margin: "5px auto",
-                  width: "80%",
-                  backgroundColor: "white",
-                  borderRadius: "5px",
-                  height: "10vh",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  border: '1px solid #ccc',
+                  padding: '10px',
+                  margin: '5px auto',
+                  width: '80%',
+                  backgroundColor: 'rgba(85, 85, 85, 0.6)',
+                  borderRadius: '5px',
+                  height: '9vh',
+                  color: 'white',
                 }}
               >
-                <p
-                  style={{ fontSize: "20px", color: "black", margin: "0" }}
-                >{`Guess ${index + 1}: ${guessesMade[index]}`}</p>
+                <p style={{ fontSize: '20px', color: 'white', margin: '0' }}>{`Guess ${index + 1}: ${guessesMade[index]}`}</p>
                 {index >= 0 && !hintdex[index] && !gameEnded && (
                   <span>
                     <button
@@ -387,11 +399,11 @@ function DailyPage() {
                         revealHint(index);
                       }}
                       style={{
-                        padding: "5px 10px",
-                        borderRadius: "5px",
-                        backgroundColor: "#007bff",
-                        color: "white",
-                        cursor: "pointer",
+                        padding: '5px 10px',
+                        borderRadius: '5px',
+                        backgroundColor: '#007bff',
+                        color: 'white',
+                        cursor: 'pointer',
                       }}
                     >
                       Show Hint
@@ -399,21 +411,9 @@ function DailyPage() {
                   </span>
                 )}
                 {hintdex[index] && (
-                  <span
-                    style={{
-                      margin: "10px auto",
-                      backgroundColor: "white",
-                      borderRadius: "5px",
-                      padding: "10px",
-                    }}
-                  >
-                    {getHint(index)}{" "}
-                    {index === 0 && (
-                      <img src={dailyPlayer.country_flag} alt="Country Flag" />
-                    )}
-                    {index === 3 && (
-                      <img src={dailyPlayer.club_logo} alt="club logo" />
-                    )}
+                  <span style={{ margin: '10px auto', backgroundColor: 'rgba(85, 85, 85,0)', borderRadius: '5px', padding: '10px' }}>
+                    {getHint(index)} {index === 0 && <img src={dailyPlayer.country_flag} alt="Country Flag" />}
+                    {index === 3 && <img src={dailyPlayer.club_logo} alt="club logo" style={{ maxWidth: '100%', height: '6vh' }} />}
                   </span>
                 )}
               </span>
@@ -422,18 +422,27 @@ function DailyPage() {
           {!gameEnded && (
             <div
               style={{
-                border: "1px solid #ccc",
-                padding: "10px",
-                margin: "5px auto",
-                width: "50%",
-                backgroundColor: "white",
-                borderRadius: "5px",
+                border: '1px solid #ccc',
+                padding: '10px',
+                margin: '5px auto',
+                width: '50%',
+                backgroundColor: 'rgba(85, 85, 85, 0.6)',
+                borderRadius: '5px',
               }}
             >
-              <p style={{ margin: "0" }}>{`Guess ${guessesMade.length + 1
-                }:`}</p>
+              <p style={{ margin: '0' }}>{`Guess ${guessesMade.length + 1}:`}</p>
               <input
                 type="text"
+                style={{
+                  color: 'white',
+                  margin: '0',
+                  backgroundColor: 'rgba(85, 85, 85, 0.9)',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRradius: '5px',
+                  paddingLeft: '10px',
+                  width: 'calc(100% - 20px)',
+                }}
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -445,31 +454,22 @@ function DailyPage() {
           {gameEnded && (
             <div
               style={{
-                margin: "10px auto",
-                width: "50%",
-                backgroundColor: "white",
-                borderRadius: "5px",
-                padding: "10px",
+                margin: '10px auto',
+                width: '50%',
+                backgroundColor: 'rgba(85, 85, 85, 0.6)',
+                borderRadius: '5px',
+                padding: '10px',
               }}
             >
               {guess.trim().toLowerCase() === dailyPlayer.name.trim().toLowerCase() ? (
-                <p style={{ margin: "0" }}>{`You guessed it in ${guessesMade.length
-                  } ${guessesMade.length === 1 ? "try!" : "tries!"}`}</p>
+                <p style={{ margin: '0' }}>{`You guessed it in ${guessesMade.length} ${guessesMade.length === 1 ? 'try!' : 'tries!'}`}</p>
               ) : (
-                <p
-                  style={{ margin: "0" }}
-                >{`The player was ${dailyPlayer.name}`}</p>
+                <p style={{ margin: '0' }}>{`The player was ${dailyPlayer.name}`}</p>
               )}
               <span>
-                <img
-                  src={dailyPlayer.image}
-                  style={{ maxWidth: "100%", height: "auto" }}
-                />
+                <img src={dailyPlayer.image} style={{ maxWidth: '100%', height: 'auto' }} />
                 <span>
-                  <img
-                    src={dailyPlayer.club_logo}
-                    style={{ maxWidth: "100%", height: "auto" }}
-                  />
+                  <img src={dailyPlayer.club_logo} style={{ maxWidth: '100%', height: 'auto' }} />
                 </span>
               </span>
             </div>
@@ -477,17 +477,20 @@ function DailyPage() {
           {gameEnded && (
             <div>
               <span>
-                <Button onClick={open}
+                <Button
+                  onClick={open}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}>
+                  style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}
+                >
                   Stats
-                </Button>
-                {' '}
-                <Button onClick={goback}
+                </Button>{' '}
+                <Button
+                  onClick={goback}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}>
+                  style={{ padding: '10px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', minWidth: '6vw' }}
+                >
                   Home
                 </Button>
               </span>
@@ -495,27 +498,34 @@ function DailyPage() {
           )}
         </span>
       </div>
-      {gameEnded && showModal && (<div className={`modal-overlay ${showModal ? 'visible' : ''}`}>
-        <div className={`modal-content ${showModal ? 'visible' : ''}`}>
-          {/* Your modal content */}
-          <h2>Game Summary</h2>
-          <p>Streak: {gameSummary.streak}</p>
-          <p>Win Rate: {gameSummary.winRate.toFixed(2)}%</p>
-          <p>Score for Today: {gameSummary.score}</p>
-          <p>All Time Score: {gameSummary.allTimeScore}</p>
-          <h3>Guess Distribution</h3>
-          <ul>
-            {gameSummary.guessDistribution.map((count, index) => (
-              <li key={index}>{index + 1} : {count}</li>
-            ))}
-          </ul>
-          <button onClick={close}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={{ padding: '5px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', position: 'relative', maxWidth: '12vw' }}
-          >Close</button>
+      {gameEnded && showModal && (
+        <div className={`modal-overlay ${showModal ? 'visible' : ''}`}>
+          <div className={`modal-content ${showModal ? 'visible' : ''}`}>
+            {/* Your modal content */}
+            <h2>Game Summary</h2>
+            <p>Streak: {gameSummary.streak}</p>
+            <p>Win Rate: {gameSummary.winRate.toFixed(2)}%</p>
+            <p>Score for Today: {gameSummary.score}</p>
+            <p>All Time Score: {gameSummary.allTimeScore}</p>
+            <h3>Guess Distribution</h3>
+            <ul>
+              {gameSummary.guessDistribution.map((count, index) => (
+                <li key={index}>
+                  {index + 1} : {count}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={close}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              style={{ padding: '5px', backgroundColor: '#efeee9', color: '#000', cursor: 'pointer', border: '2px solid #000000', position: 'relative', maxWidth: '12vw' }}
+            >
+              Close
+            </button>
+          </div>
         </div>
-      </div>)}
+      )}
     </div>
   );
 }
