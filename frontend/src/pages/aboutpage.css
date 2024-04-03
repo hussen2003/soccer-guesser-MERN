@@ -2,39 +2,29 @@
     margin: 50px auto;
     text-align: center;
     position:relative;
-    width: 75%;
     background-color: transparent;
     height: 80vh;
+    width: 100%;
 }
 
 .team-members {
+    margin: 0 auto; 
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    margin: 0 auto; /* Center the container */
-    max-width: 1200px; /* Maximum width for the container */
+    justify-content: space-around;
 }
 
-
 .member {
-    margin: 20px;
     padding: 20px;
     background-color: #efeee9;
     border-radius: 10px;
-    width: calc(25% - 40px); /* Calculate width dynamically */
-    max-width: 200px; /* Maximum width for each member card */
-    box-sizing: border-box; /* Include padding and border in the width calculation */
+    box-sizing: border-box; 
+    flex: 1 0 21%; 
+    margin: 1%;
+    max-width: 24%;
+    min-width: 200px;
 }
 
-
-.about-title{
-    text-align: center;
-    position:static;
-    margin-bottom: 15px;
-    font-size: 45px;
-    letter-spacing: 0.1em;
-    color:rgb(255, 255, 255);
-}
 .member h2 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -53,4 +43,8 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 0px;
+}
+
+.member {
+    transition: transform 0.3s ease;
 }
