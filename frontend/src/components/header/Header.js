@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <div>
       <Navbar bg="dark" data-bs-theme="dark" expand="lg">
-        <Container>
+        <Container className="d-flex justify-content-between">
           <Navbar.Brand className="navbarBrand" href="/LandingPage">S O C C E R D L E</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -26,12 +26,14 @@ const Header = () => {
               <Nav.Link href="/AllTimeLB">All Time Leaderboard</Nav.Link>
               <Nav.Link href="/AboutPage">About us</Nav.Link>
             </Nav>
-            <Navbar.Text style={{ padding: '0 20px' }}>
-              Signed in as: <a>{name}</a>
-            </Navbar.Text>
-            <Form className="d-flex">
-              <Button onClick={logout} variant="outline-danger">Sign Out</Button>
-            </Form>
+            <div className="d-flex flex-column align-items-end">
+              <Navbar.Text style={{ padding: '0 20px' }}>
+                Signed in as: <a>{name}</a>
+              </Navbar.Text>
+              <Form className="d-flex">
+                <Button onClick={logout} variant="outline-danger">Sign Out</Button>
+              </Form>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>
