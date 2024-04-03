@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       name = prefs.getString('name') ?? '';
+      print('Name loaded: $name'); // Add this line for debugging
       // If name doesn't exist, set it to empty string
     });
   }
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: const Text('Soccerdle',
@@ -60,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
-              color: Colors.black,
+              color: Color.fromARGB(255, 157, 21, 21),
               onPressed: logout,
             ),
           ],
@@ -98,13 +100,16 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 45),
                   ElevatedButton(
                     onPressed: playDailyGame,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[100],
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 30),
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      ),
+                      
+                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
+                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Play Daily Game',
@@ -118,9 +123,12 @@ class _HomePageState extends State<HomePage> {
                   ElevatedButton(
                     onPressed: goToUnlimitedMode,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[100],
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 30),
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5), 
+                      ),
+
+                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
+                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Unlimited Mode',
@@ -134,9 +142,11 @@ class _HomePageState extends State<HomePage> {
                   ElevatedButton(
                     onPressed: goToLeaderboard,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[100],
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 30),
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      ),
+                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
+                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 45),
                     ),
                     child: const Text(
                       'Leaderboard',
