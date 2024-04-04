@@ -34,10 +34,9 @@ class _DailyGamePageState extends State<DailyGamePage> {
   void initState() {
     super.initState();
     dailyUserGuess();
-    userData = {
-      'username': 'username',
-      // Other necessary user data
-    };
+    // userData = {
+    //   'username': 'lablard',
+    // };
   }
 
   final String baseUrl = 'http://soccerdle-mern-ace81d4f14ec.herokuapp.com';
@@ -54,23 +53,24 @@ class _DailyGamePageState extends State<DailyGamePage> {
       setState(() {
         dailyPlayer = data;
       });
-      //print(dailyPlayer);
+      // print(dailyPlayer);
     } catch (e) {
       setState(() {
         message = 'Error occurred. Please try again later!';
       });
     }
-    var obj = {'username': userData['username']};
-    var js = jsonEncode(obj);
+
     try {
       http.Response response = await http.post(
         Uri.parse('$baseUrl/api/daily/getGuesses'),
-        body: js,
+        body: jsonEncode({
+          'username': 'lablard',
+        }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      //print(obj);
+      //print(response.body);
 
       if (response.statusCode != 200) {
         throw Exception('Failed to obtain daily player data!');
@@ -79,19 +79,17 @@ class _DailyGamePageState extends State<DailyGamePage> {
       pToday = guessdata['playedToday'];
       fToday = guessdata['finishedToday'];
       if (!pToday) {
-        var object = {
-          'username': userData['username'],
-          'guess': null,
-          'tryAmount': 0
-        };
-        var js = json.encode(object);
         try {
           var response2 = await http.post(
             Uri.parse('$baseUrl/api/daily/updateGuess'),
-            body: js,
-            headers: {'Content-Type': 'application/json'},
+            body: json.encode({
+              'username': 'lablard',
+              'guess': null,
+              'tryAmount': 0,
+            }),
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
           );
-
+          print(response2.body);
           if (response2.statusCode != 200) {
             throw Exception('Failed to obtain daily player data!');
           }
@@ -128,11 +126,11 @@ class _DailyGamePageState extends State<DailyGamePage> {
           var responseEnd = await http.post(
             Uri.parse('$baseUrl/api/daily/endGame'),
             body: json.encode({
-              'username': userData['username'],
+              'username': 'lablard',
               'score': 0,
               'tryAmount': updatedGuessesMade.length + 1
             }),
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
           );
           if (responseEnd.statusCode != 200) {
             throw Exception('Failed to fetch game summary stats!');
@@ -158,18 +156,23 @@ class _DailyGamePageState extends State<DailyGamePage> {
   }
 
   Future<void> updateHintdex(int i) async {
-    var obj = {'username': userData['username'], 'dex': i};
-    var js = json.encode(obj);
     try {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateHints'),
-        body: js,
-        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'username': 'lablard',
+          'dex': i,
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       );
+      print(response.body);
       if (response.statusCode != 200) {
         throw Exception('Failed to update hints!');
       }
       var data = json.decode(response.body);
+      print(data);
       var updateHintdex = data['hints'];
       setState(() {
         hintdex = updateHintdex;
@@ -237,18 +240,19 @@ class _DailyGamePageState extends State<DailyGamePage> {
   }
 
   Future<void> updateGuess(input) async {
-    var obj = {
-      'username': userData['username'],
-      'guess': input.trim(),
-      'tryAmount': guessesMade.length + 1
-    };
-    var js = json.encode(obj);
     try {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateGuess'),
-        body: js,
-        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'username': 'lablard',
+          'guess': input.trim(),
+          'tryAmount': guessesMade.length + 1
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       );
+      print(response.body);
       if (response.statusCode != 200) {
         throw Exception('Failed to update guess!');
       }
@@ -329,14 +333,18 @@ class _DailyGamePageState extends State<DailyGamePage> {
   }
 
   Future<void> Score(int input) async {
-    var obj = {'username': userData['username'], 'dailyScore': input};
-    var js = json.encode(obj);
     try {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateScore'),
-        body: js,
-        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'username': 'lablard',
+          'dailyScore': input,
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       );
+      print(response.body);
       if (response.statusCode != 200) {
         throw Exception('Failed to update score!');
       }
@@ -352,17 +360,15 @@ class _DailyGamePageState extends State<DailyGamePage> {
     try {
       var responseEnd = await http.post(
         Uri.parse('$baseUrl/api/daily/endGame'),
-        body: json.encode({
-          'username': userData['username'],
-          'score': scores,
-          'tryAmount': tries
-        }),
-        headers: {'Content-Type': 'application/json'},
+        body: json.encode(
+            {'username': 'lablard', 'score': scores, 'tryAmount': tries}),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
       if (responseEnd.statusCode != 200) {
         throw Exception('Failed to fetch game summary stats!');
       }
       var data = json.decode(responseEnd.body);
+      print(data);
       setState(() {
         gameSummary = data;
         showModal = true;
