@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
-import 'package:soccerdle/providers/userProvider.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
@@ -44,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void logout() async {
-  Navigator.pushNamed(context, '/login');
+    Navigator.pushNamed(context, '/login');
   }
 
   @override
@@ -93,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Hello$name${name.split(' ').first}!',
+                    'Hello ${name.split(' ').first}!',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,
@@ -105,11 +103,11 @@ class _HomePageState extends State<HomePage> {
                     onPressed: playDailyGame,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                      
                       backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Play Daily Game',
@@ -124,11 +122,11 @@ class _HomePageState extends State<HomePage> {
                     onPressed: goToUnlimitedMode,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5), 
+                        borderRadius: BorderRadius.circular(5),
                       ),
-
                       backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 30),
                     ),
                     child: const Text(
                       'Unlimited Mode',
@@ -143,10 +141,11 @@ class _HomePageState extends State<HomePage> {
                     onPressed: goToLeaderboard,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 45),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 45),
                     ),
                     child: const Text(
                       'Leaderboard',
