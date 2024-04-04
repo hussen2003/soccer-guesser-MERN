@@ -168,7 +168,7 @@ function UnlimitedMode() {
         }}
       >
         <h1 style={{ textAlign: 'center' }}>Unlimited Mode</h1>
-        <div style={{ margin: '10px 0' }}></div>
+        <div style={{ margin: '5px 0' }}></div>
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
             {gameState.guessesMade.map((guess, index) => (
