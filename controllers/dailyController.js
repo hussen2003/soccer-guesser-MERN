@@ -7,9 +7,24 @@ const leaderboardAmount = 10;
 export const leaderboard = async (req, res) => {
     try {
       //const { score } = req.body;
-        const users = await User.find({}).select({ "name": 1, "dailyScore": 1, "_id": 0}).sort({ dailyScore: -1 }).limit(20);
+      const date = new Date();
+      date.setHours(date.getHours() - 5);
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
 
-        res.status(201).json(users);
+      const users = await User.find({});
+      for(var i = 0; i < users.length(); i++){
+        if(users[i].lastDateFinished != "" && (new Date(users[i].lastDateFinished)) != date){
+          users[i].dailyScore = 0;
+        }
+        users[i].save();
+      }
+
+      users = await User.find({}).select({ "name": 1, "dailyScore": 1, "_id": 0}).sort({ dailyScore: -1 }).limit(20);
+
+      res.status(201).json(users);
 
     } catch (error) {
       console.log("Error in daily controller", error.message);
