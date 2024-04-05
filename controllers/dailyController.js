@@ -14,15 +14,18 @@ export const leaderboard = async (req, res) => {
       date.setSeconds(0);
       date.setMilliseconds(0);
 
-      const users = await User.find({});
-      for(var i = 0; i < users.length(); i++){
-        if(users[i].lastDateFinished != "" && (new Date(users[i].lastDateFinished)) != date){
-          users[i].dailyScore = 0;
+      var users = await User.find({});
+      for(let i = 0; i < users.length; i++){
+        if(users[i].lastDateFinished != ""){
+          const lastDate = new Date(users[i].lastDateFinished)
+          if((lastDate - date) != 0){
+            users[i].dailyScore = 0;
+          }
         }
-        users[i].save();
+        await users[i].save();
       }
 
-      users = await User.find({}).select({ "name": 1, "dailyScore": 1, "_id": 0}).sort({ dailyScore: -1 }).limit(20);
+      users = await User.find({}).select({ "name": 1, "dailyScore": 1, "_id": 0}).sort({ dailyScore: -1 }).limit(10);
 
       res.status(201).json(users);
 
