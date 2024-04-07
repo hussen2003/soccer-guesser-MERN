@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:soccerdle/services/loginPageServices.dart';
+
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
@@ -21,13 +23,12 @@ class _HomePageState extends State<HomePage> {
 
   // Function to load the name from SharedPreferences
   _loadName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = prefs.getString('name') ?? '';
-      print('Name loaded: $name'); // Add this line for debugging
-      // If name doesn't exist, set it to empty string
-    });
-  }
+  setState(() {
+    name = Storage.getName();
+    // name = prefs.getString('name') ?? 'NONE'; // Use a default value if the retrieved value is null
+    print('Name loaded: $name');
+  });
+}
 
   void playDailyGame() {
     Navigator.pushNamed(context, '/dailyGamePage');
