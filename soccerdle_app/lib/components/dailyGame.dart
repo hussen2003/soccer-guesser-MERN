@@ -16,7 +16,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       List.generate(6, (_) => TextEditingController());
   List<bool> _showHints = List.generate(6, (_) => false);
   int currentGuessIndex = 0; // Changed variable name
-  List<String> globalGuessesMade = [];
+  List<String> saveUserGuesses = [];
   String message = '';
   var dailyPlayer;
   var pToday, fToday;
@@ -262,7 +262,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       return;
     }
     updateGuess(guess.trim());
-    // Add guesses from guessControllers to guessesMade
+
     for (var controller in guessControllers) {
       var guessText = controller.text.trim();
       if (guessText.isNotEmpty) {
@@ -270,8 +270,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       }
     }
 
-    // Assign guessesMade to the global variable
-    globalGuessesMade = List<String>.from(guessesMade);
+    saveUserGuesses = List<String>.from(guessesMade);
 
     guessControllers.forEach((controller) {
       controller.clear();
@@ -369,7 +368,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     try {
       var responseEnd = await http.post(
         Uri.parse('$baseUrl/api/daily/endGame'),
-        body: json.encode(
+        body: jsonEncode(
             {'username': 'lablard', 'score': scores, 'tryAmount': tries}),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
@@ -459,26 +458,26 @@ class _DailyGamePageState extends State<DailyGamePage> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Streak: ${gameSummary["streak"]}'),
-                Text(
-                  'Win Rate: ${(gameSummary["winRate"] as double).toStringAsFixed(2)}%',
-                ),
-                Text('Score for Today: ${gameSummary["score"]}'),
-                Text('All Time Score: ${gameSummary["allTimeScore"]}'),
-                Text('Guess Distribution'),
-                Column(
-                  children: (gameSummary["guessDistribution"] as Map)
-                      .entries
-                      .map((entry) {
-                    return Text('${entry.key + 1} : ${entry.value}');
-                  }).toList(),
-                ),
-              ],
+              // children: [
+              //   Text('Streak: ${gameSummary["streak"]}'),
+              //   Text(
+              //     'Win Rate: ${(gameSummary["winRate"] as double).toStringAsFixed(2)}%',
+              //   ),
+              //   Text('Score for Today: ${gameSummary["score"]}'),
+              //   Text('All Time Score: ${gameSummary["allTimeScore"]}'),
+              //   Text('Guess Distribution'),
+              //   Column(
+              //     children: (gameSummary["guessDistribution"] as Map)
+              //         .entries
+              //         .map((entry) {
+              //       return Text('${entry.key + 1} : ${entry.value}');
+              //     }).toList(),
+              //   ),
+              // ],
             ),
             actions: [
               ElevatedButton(
-                onPressed: Navigator.of(context).pop, // Close the dialog
+                onPressed: Navigator.of(context).pop,
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.green),
@@ -553,7 +552,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
               children: [
                 Expanded(
                   child: Text(
-                    'Guess ${index + 1}: ${globalGuessesMade[index]}',
+                    'Guess ${index + 1}: ${saveUserGuesses[index]}',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -630,7 +629,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         ),
         Center(
           child: Text(
-            'Guess ${currentGuessIndex + 1}', // Changed variable name
+            'Guess ${currentGuessIndex + 1}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
