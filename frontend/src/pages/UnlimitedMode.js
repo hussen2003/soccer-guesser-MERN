@@ -171,6 +171,7 @@ function UnlimitedMode() {
         <div style={{ margin: '5px 0' }}></div>
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
+          <p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>
             {gameState.guessesMade.map((guess, index) => (
               <span
                 key={index}
