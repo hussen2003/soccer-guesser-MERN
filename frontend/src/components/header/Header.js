@@ -13,7 +13,7 @@ const Header = () => {
     window.location.href = "/";
   }
   return (
-    <div>
+    <div className='header'>
       <Navbar bg="dark" data-bs-theme="dark" expand="lg">
         <Container>
           <Navbar.Brand className="navbarBrand" href="/LandingPage">S O C C E R D L E</Navbar.Brand>
