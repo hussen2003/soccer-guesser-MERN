@@ -6,9 +6,19 @@ import 'package:soccerdle/pages/aboutusPage.dart';
 import 'package:soccerdle/pages/homePage.dart';
 import 'package:soccerdle/pages/loginPage.dart';
 import 'package:soccerdle/pages/registerPage.dart';
+import 'package:soccerdle/providers/userProvider.dart';
+import 'package:provider/provider.dart';
 
-void main() async {
-  runApp(const MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        // Other providers
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
