@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soccerdle/constants/utils.dart';
 import 'package:soccerdle/providers/userProvider.dart';
 
@@ -17,7 +16,8 @@ class LoginPageService {
   }) async {
     try {
       final http.Response res = await http.post(
-        Uri.parse('http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
+        Uri.parse(
+            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
@@ -32,10 +32,7 @@ class LoginPageService {
 
         userData = json.decode(res.body);
         print('Received User Data: $userData');
-
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('x-auth-token', userData!['token']);
-        await prefs.setString('username', username); // Save username
+        Storage s = new Storage(username, userData?['name']);
 
         Provider.of<UserProvider>(context, listen: false).setUser(res.body);
         // You may navigate to the next screen upon successful login here.
@@ -56,5 +53,23 @@ class LoginPageService {
       // Handle any other unexpected errors
       showSnackBar(context, "Unexpected error: $e");
     }
+  }
+}
+
+class Storage {
+  static late String use;
+  static late String name;
+  
+  Storage(String u, String n) {
+    use = u;
+    name = n;
+  }
+
+  static String getUser (){
+    return use;
+  }
+
+  static String getName (){
+    return name;
   }
 }

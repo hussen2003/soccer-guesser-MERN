@@ -16,7 +16,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       List.generate(6, (_) => TextEditingController());
   List<bool> _showHints = List.generate(6, (_) => false);
   int currentGuessIndex = 0; // Changed variable name
-
+  List<String> saveUserGuesses = [];
   String message = '';
   var dailyPlayer;
   var pToday, fToday;
@@ -128,6 +128,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
             throw Exception('Failed to fetch game summary stats!');
           }
           var data = json.decode(responseEnd.body);
+          print(responseEnd.body);
           setState(() {
             gameSummary = data;
             showModal = true;
@@ -256,109 +257,21 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
-  List<Widget> previousGuessWidgets = [];
   void checkGuess() {
     if (guess.trim() == '') {
       return;
     }
     updateGuess(guess.trim());
 
-    // Create a list to hold the previous guess widgets
-
-    // Add guesses from guessControllers to guessesMade and create widgets for previous guesses
     for (var controller in guessControllers) {
       var guessText = controller.text.trim();
       if (guessText.isNotEmpty) {
         guessesMade.add(guessText);
-
-        // Create widget for previous guess
-        previousGuessWidgets.add(
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.green,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Guess ${currentGuessIndex + 1}: ${guessControllers[currentGuessIndex].text}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: _showHints[currentGuessIndex]
-                            ? Colors.green
-                            : Colors.blue,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: _showHints[currentGuessIndex]
-                          ? Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.all(8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      getHint(currentGuessIndex),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    if (currentGuessIndex == 0)
-                                      Image.network(
-                                          dailyPlayer['country_flag']),
-                                    if (currentGuessIndex == 3)
-                                      Image.network(dailyPlayer['club_logo']),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                _hintRevealed(currentGuessIndex);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Show Hint',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
       }
     }
 
-    // Clear all text fields in guessControllers
+    saveUserGuesses = List<String>.from(guessesMade);
+
     guessControllers.forEach((controller) {
       controller.clear();
     });
@@ -421,7 +334,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       } else {
         setState(() {
           currentGuessIndex += 1;
-          //guess = '';
+          guess = '';
         });
       }
     }
@@ -455,7 +368,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     try {
       var responseEnd = await http.post(
         Uri.parse('$baseUrl/api/daily/endGame'),
-        body: json.encode(
+        body: jsonEncode(
             {'username': 'lablard', 'score': scores, 'tryAmount': tries}),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
@@ -534,6 +447,50 @@ class _DailyGamePageState extends State<DailyGamePage> {
     });
   }
 
+  void showGameSummary() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.black.withOpacity(0.5),
+          child: AlertDialog(
+            title: Text('Game Summary'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              // children: [
+              //   Text('Streak: ${gameSummary["streak"]}'),
+              //   Text(
+              //     'Win Rate: ${(gameSummary["winRate"] as double).toStringAsFixed(2)}%',
+              //   ),
+              //   Text('Score for Today: ${gameSummary["score"]}'),
+              //   Text('All Time Score: ${gameSummary["allTimeScore"]}'),
+              //   Text('Guess Distribution'),
+              //   Column(
+              //     children: (gameSummary["guessDistribution"] as Map)
+              //         .entries
+              //         .map((entry) {
+              //       return Text('${entry.key + 1} : ${entry.value}');
+              //     }).toList(),
+              //   ),
+              // ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: Navigator.of(context).pop,
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                ),
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -575,6 +532,89 @@ class _DailyGamePageState extends State<DailyGamePage> {
   }
 
   Widget _buildTextFormField() {
+    List<Widget> previousGuessWidgets =
+        List.generate(currentGuessIndex, (index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.green,
+                  width: 1.0,
+                ),
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Guess ${index + 1}: ${saveUserGuesses[index]}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: _showHints[index] ? Colors.green : Colors.blue,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: _showHints[index]
+                      ? Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  getHint(index),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                if (index == 0)
+                                  Image.network(dailyPlayer['country_flag']),
+                                if (index == 3)
+                                  Image.network(dailyPlayer['club_logo']),
+                              ],
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            _hintRevealed(index);
+                            // revealHint(index);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Show Hint',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+    }).toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -589,7 +629,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         ),
         Center(
           child: Text(
-            'Guess ${currentGuessIndex + 1}', // Changed variable name
+            'Guess ${currentGuessIndex + 1}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -626,153 +666,54 @@ class _DailyGamePageState extends State<DailyGamePage> {
             ),
           ),
         ),
-        // Show Hint Button
-        if (!_showHints[
-            currentGuessIndex]) // Show the button only if the hint is not revealed
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                _hintRevealed(currentGuessIndex);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              child: Text('Show Hint'),
-            ),
-          ),
-        SizedBox(height: 10),
-        // Display hint if revealed
-        if (_showHints[currentGuessIndex])
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              getHint(currentGuessIndex),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        SizedBox(height: 10),
-        // Display images for specific hints
-        if (_showHints[currentGuessIndex] && currentGuessIndex == 0)
-          Center(
-            child: Image.network(
-              dailyPlayer['country_flag'],
-              width: 150,
-            ),
-          ),
-        if (_showHints[currentGuessIndex] && currentGuessIndex == 3)
-          Center(
-            child: Image.network(
-              dailyPlayer['club_logo'],
-              width: 150,
-            ),
-          ),
-        /*if (!gameEnded)
-          Container(
-            width: 300,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-            padding: EdgeInsets.all(10),
+        if (gameEnded)
+          Dialog(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Guess ${guessesMade.length + 1}:'),
-                TextField(
-                  onChanged: (val) {
-                    setState(() {
-                      guess = val;
-                    });
-                  },
-                  onSubmitted: (val) {
-                    checkGuess();
-                  },
-                  maxLength: 15,
-                  autofocus: true,
-                ),
-              ],
-            ),
-          ),*/
-        if (gameEnded)
-          Column(
-            children: [
-              Text(
-                guess.trim().toLowerCase() ==
-                        dailyPlayer['name'].trim().toLowerCase()
-                    ? 'You guessed it in ${guessesMade.length} ${guessesMade.length == 1 ? 'try!' : 'tries!'}'
-                    : 'The player was ${dailyPlayer["name"]}',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              Image.network(
-                dailyPlayer['image'],
-                width: 150,
-              ),
-              SizedBox(height: 10),
-              Image.network(
-                dailyPlayer['club_logo'],
-                width: 150,
-              ),
-            ],
-          ),
-        if (gameEnded)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: open,
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                ),
-                child: Text('Stats'),
-              ),
-              SizedBox(width: 10),
-              // ElevatedButton(
-              //   onPressed: goback,
-              //   style: ButtonStyle(
-              //     backgroundColor:
-              //         MaterialStateProperty.all<Color>(Colors.green),
-              //   ),
-              //   child: Text('Home'),
-              // ),
-            ],
-          ),
-        if (gameEnded && showModal)
-          Container(
-            color: Colors.black.withOpacity(0.5),
-            child: AlertDialog(
-              title: Text('Game Summary'),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Streak: ${gameSummary["streak"]}'),
-                  Text(
-                      'Win Rate: ${(gameSummary["winRate"] as double).toStringAsFixed(2)}%'),
-                  Text('Score for Today: ${gameSummary["score"]}'),
-                  Text('All Time Score: ${gameSummary["allTimeScore"]}'),
-                  Text('Guess Distribution'),
-                  // Column(
-                  //   children: (gameSummary["guessDistribution"] as List)
-                  //       .map((count, index) {
-                  //     return Text('${index + 1} : $count');
-                  //   }).toList(),
-                  // ),
-                ],
-              ),
-              actions: [
-                ElevatedButton(
-                  onPressed: close,
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    guess.trim().toLowerCase() ==
+                            dailyPlayer['name'].trim().toLowerCase()
+                        ? 'You guessed it in ${guessesMade.length} ${guessesMade.length == 1 ? 'try!' : 'tries!'}'
+                        : 'The player was ${dailyPlayer["name"]}',
+                    style: TextStyle(fontSize: 18),
                   ),
-                  child: Text('Close'),
+                ),
+                SizedBox(height: 10),
+                Image.network(
+                  dailyPlayer['image'],
+                  width: 150,
+                ),
+                SizedBox(height: 10),
+                Image.network(
+                  dailyPlayer['club_logo'],
+                  width: 150,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: showGameSummary,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[100],
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 30, horizontal: 30),
+                      ),
+                      child: Text('Stats'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/homePage',
+                        );
+                      },
+                      child: Text('Home'),
+                    ),
+                  ],
                 ),
               ],
             ),

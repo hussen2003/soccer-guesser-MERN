@@ -336,26 +336,6 @@ function DailyPage() {
   return (
     <div>
       <Header />
-      {!gameEnded && (
-        <Button
-          onClick={goback}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            position: 'relative',
-            top: '.3vw',
-            left: '-19.5vw',
-            padding: '10px',
-            backgroundColor: '#efeee9',
-            color: '#000',
-            cursor: 'pointer',
-            border: '2px solid #000000',
-            minWidth: '6vw',
-          }}
-        >
-          Home
-        </Button>
-      )}
       <div
         style={{
           color: 'white',
@@ -371,7 +351,8 @@ function DailyPage() {
         }}
       >
         <h1 style={{ textAlign: 'center' }}>Daily Mode</h1>
-        <div style={{ margin: '10px 0' }}></div>
+        <div style={{ margin: '5px 0' }}></div>
+        <p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
             {guessesMade.map((guess, index) => (
