@@ -99,8 +99,8 @@ export const getGuesses = async (req, res) => {
       const lastDate = new Date(user.lastDatePlayed);
 
       var finishedToday, playedToday;
-      
-      if((lastDate - finishedDate) > 0){
+      if(user.amountGamesPlayed > 0){
+        if((lastDate - finishedDate) > 0){
         playedToday = true;
         finishedToday = false;
       }else if((finishedDate - date) == 0){
@@ -110,6 +110,13 @@ export const getGuesses = async (req, res) => {
         playedToday = false;
         finishedToday = false;
       }
+      }else{
+        if((lastDate - date) == 0){
+          playedToday = true;
+          finishedToday = false;
+        }
+      }
+      
 
       res.status(201).json({
         playedToday, 
