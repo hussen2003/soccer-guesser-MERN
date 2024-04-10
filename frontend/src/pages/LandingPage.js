@@ -47,123 +47,79 @@ function LandingPage() {
     event.target.style.backgroundColor = '#ff5555';
   }
   return (
-    <div>
+    <div
+      style={{
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <Header />
       <div
-        className="landing-page"
         style={{
-          minWidth: '45vw',
-          flexDirection: 'column',
-          alignItems: 'center',
           padding: '20px',
-          backgroundColor: 'rgba(33, 37, 41, 0.87)',
-          borderRadius: '10px',
-          backdropFilter: 'blur(1px)',
+          backgroundColor: 'rgba(33, 37, 41, 0.87)', // Change background color to white with some opacity
+          borderRadius: '10px', // Add some border radius for the container
+          backdropFilter: 'blur(1px)', // Add a blur effect for better blending with the background image
+          //position: 'relative',
+          minWidth: '90vw',
+          minHeight: '40vh',
+          margin: 'auto',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
           color: 'white',
+          //marginLeft: '-75px'
         }}
       >
-        <div style={{ margin: '160px 0' }}></div> {}
-        <Row className='g-4'>
-        <Col>
-          <Card style={{ width: '18rem', height: '28rem' }} className="bg-dark text-white">
-          <div style={{ margin: '8px 0' }}></div> {}
-            <Card.Img variant="top" src={messi2} />
-            <Card.Body>
-              <Card.Title>Daily Game</Card.Title>
-              <Card.Text>
-                Every 24 hours a new player will be randomly selected. Can you guess today's player?
-              </Card.Text>
-              <Button variant="success" onClick={playdaily}>Play now</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: '18rem', height: 'auto' }} className="bg-dark text-white">
-            <Card.Img variant="top" src={SUI} />
-            <Card.Body>
-              <Card.Title>Unlimited Game</Card.Title>
-              <Card.Text>
-                Test your knowledge and go as many times as you want! How many can you guess?
-              </Card.Text>
-              <Button variant="success" onClick={goUnlimited}>Play now</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <div style={{ margin: '15px 0' }}></div> {}
-      <Row>
-        <Col>
-          <Card style={{ width: '18rem', height: '24rem' }} className="bg-dark text-white">
-            <Card.Img variant="top" src={france2} />
-            <div style={{ margin: '8px 0' }}></div> {}
-            <Card.Body>
-              <Card.Title>Daily Leaderboard</Card.Title>
-              <Card.Text>
-                Leaderboard for the Daily game mode.
-              </Card.Text>
-              <Button variant="success" onClick={goleaderboard}>Leaderboard</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: '18rem', height: 'auto' }} className="bg-dark text-white">
-            <Card.Img variant="top" src={brazil2} />
-            <Card.Body>
-              <Card.Title>All Time Leaderboard</Card.Title>
-              <Card.Text>
-                Overall Leaderboard. Do you see yourself on it?
-              </Card.Text>
-              <Button variant="success" onClick={goAllTime}>All Time</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-              
-        
-        {/* <Button
-          onClick={playdaily}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '25px', width: '225px', height: '80px', cursor: 'pointer' }}
-        >
-          Play Daily Game
-        </Button> */}
-        <div style={{ margin: '20px 0' }}></div> {}
-        {/* <Button
-          onClick={goUnlimited}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '25px', width: '225px', height: '80px', cursor: 'pointer' }}
-        >
-          Unlimited Mode
-        </Button>
-        <div style={{ margin: '20px 0' }}></div> {}
-        <Button
-          onClick={goleaderboard}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '23px', width: '225px', height: '80px', cursor: 'pointer' }}
-        >
-          Daily LeaderBoard
-        </Button>
-        <div style={{ margin: '20px 0' }}></div> {}
-        <Button
-          onClick={goAllTime}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '20px', width: '225px', height: '80px', cursor: 'pointer' }}
-        >
-          All Time Leaderboard
-        </Button>
-        <div style={{ margin: '20px 0' }}></div> {}
-        <Button
-          onClick={logout}
-          onMouseEnter={handleMouseEnterlog}
-          onMouseLeave={handleMouseLeave}
-          style={{ padding: '15px', backgroundColor: '#efeee9', color: 'rgb(0, 0, 0)', fontSize: '30px', width: '225px', height: '80px', cursor: 'pointer' }}
-        >
-          Logout
-        </Button> */}
+        <Row className="g-4 ">
+          <Col>
+            <Card className="bg-dark text-white" style={{ width: '300px', height: '400px' }}>
+              <Card.Img variant="top" src={messi2} />
+              <Card.Body>
+                <Card.Title>Daily Game</Card.Title>
+                <Card.Text>Every 24 hours a new player will be randomly selected. Can you guess today's player?</Card.Text>
+                <Button variant="success" onClick={playdaily}>
+                  Play now
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card className="bg-dark text-white" style={{ width: '300px', height: '400px' }}>
+              <Card.Img variant="top" src={SUI} />
+              <Card.Body>
+                <Card.Title>Unlimited Game</Card.Title>
+                <Card.Text>Test your knowledge and go as many times as you want! How many can you guess?</Card.Text>
+                <Button variant="success" onClick={goUnlimited}>
+                  Play now
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card className="bg-dark text-white" style={{ width: '300px', height: '400px' }}>
+              <Card.Img variant="top" src={france2} />
+              <Card.Body>
+                <Card.Title>Daily Leaderboard</Card.Title>
+                <Card.Text>Leaderboard for the Daily game mode.</Card.Text>
+                <Button variant="success" onClick={goleaderboard} style={{ marginTop: '5.5vh' }}>
+                  Leaderboard
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card className="bg-dark text-white" style={{ width: '300px', height: '400px' }}>
+              <Card.Img variant="top" src={brazil2} />
+              <Card.Body>
+                <Card.Title>All Time Leaderboard</Card.Title>
+                <Card.Text>Overall Leaderboard. Do you see yourself on it?</Card.Text>
+                <Button variant="success" onClick={goAllTime} style={{ marginTop: '5vh' }}>
+                  All Time
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </div>
   );
