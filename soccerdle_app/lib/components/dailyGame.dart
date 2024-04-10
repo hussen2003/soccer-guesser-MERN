@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:soccerdle/services/loginPageServices.dart';
 
 class DailyGamePage extends StatefulWidget {
   static const String routeName = '/dailygame';
@@ -60,7 +61,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       http.Response response = await http.post(
         Uri.parse('$baseUrl/api/daily/getGuesses'),
         body: jsonEncode({
-          'username': 'wablard',
+          'username': Storage.getUser(),
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -81,7 +82,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           var response2 = await http.post(
             Uri.parse('$baseUrl/api/daily/updateGuess'),
             body: json.encode({
-              'username': 'wablard',
+              'username': Storage.getUser(),
               'guess': null,
               'tryAmount': 0,
             }),
@@ -126,7 +127,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           var responseEnd = await http.post(
             Uri.parse('$baseUrl/api/daily/endGame'),
             body: json.encode({
-              'username': 'wablard',
+              'username': Storage.getUser(),
               'score': 0,
               'tryAmount': updatedGuessesMade.length + 1
             }),
@@ -161,7 +162,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateHints'),
         body: json.encode({
-          'username': 'wablard',
+          'username': Storage.getUser(),
           'dex': i,
         }),
         headers: {
@@ -245,7 +246,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateGuess'),
         body: jsonEncode({
-          'username': 'wablard',
+          'username': Storage.getUser(),
           'guess': input.trim(),
           'tryAmount': guessesMade.length + 1
         }),
@@ -350,7 +351,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateScore'),
         body: jsonEncode({
-          'username': 'wablard',
+          'username': Storage.getUser(),
           'dailyScore': input,
         }),
         headers: {
@@ -373,8 +374,11 @@ class _DailyGamePageState extends State<DailyGamePage> {
     try {
       var responseEnd = await http.post(
         Uri.parse('$baseUrl/api/daily/endGame'),
-        body: jsonEncode(
-            {'username': 'wablard', 'score': scores, 'tryAmount': tries}),
+        body: jsonEncode({
+          'username': Storage.getUser(),
+          'score': scores,
+          'tryAmount': tries
+        }),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
