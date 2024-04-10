@@ -93,12 +93,14 @@ function DailyPage() {
             const responseEnd = await fetch(buildPath("api/daily/endGame"), {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username: userData.username, score: guessdata.dailyScore , tryAmount: updatedGuessesMade.length + 1 }),
+              body: JSON.stringify({ username: userData.username, score: 0 , tryAmount: updatedGuessesMade.length + 1 }),
             });
             if (!responseEnd.ok) {
               throw new Error("Failed to fetch game summary stats!");
             }
             const data = JSON.parse(await responseEnd.text());
+            data.dailyScore = guessdata.dailyScore;
+            Score(guessdata.dailyScore);
             setGameSummary(data);
             setShowModal(true);
           } catch (error) {
