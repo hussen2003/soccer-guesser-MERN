@@ -354,7 +354,7 @@ function DailyPage() {
       >
         <h1 style={{ textAlign: 'center' }}>Daily Mode</h1>
         <div style={{ margin: '5px 0' }}></div>
-        <p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>
+        {currentGuessIndex === 0 && (<p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>)}
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
             {guessesMade.map((guess, index) => (
