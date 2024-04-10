@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soccerdle/services/loginPageServices.dart';
 
-
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
   const HomePage({Key? key}) : super(key: key);
@@ -22,12 +21,12 @@ class _HomePageState extends State<HomePage> {
 
   // Function to load the name from SharedPreferences
   _loadName() async {
-  setState(() {
-    name = Storage.getName();
-    // name = prefs.getString('name') ?? 'NONE'; // Use a default value if the retrieved value is null
-    print('Name loaded: $name');
-  });
-}
+    setState(() {
+      name = Storage.getName();
+      // name = prefs.getString('name') ?? 'NONE'; // Use a default value if the retrieved value is null
+      print('Name loaded: $name');
+    });
+  }
 
   void playDailyGame() {
     Navigator.pushNamed(context, '/dailyGamePage');
@@ -43,6 +42,10 @@ class _HomePageState extends State<HomePage> {
 
   void logout() async {
     Navigator.pushNamed(context, '/login');
+  }
+
+  void allTimeLB() async {
+    Navigator.pushNamed(context, '/allTimeLeaderboard');
   }
 
   @override
@@ -152,6 +155,29 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: 200, // Specify your desired width here
+                    height: 90, // Specify your desired height here
+                    child: ElevatedButton(
+                      onPressed: allTimeLB,
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        backgroundColor: Color.fromARGB(255, 84, 227, 110),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 20),
+                      ),
+                      child: const Text(
+                        'All Time Leaderboard',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
