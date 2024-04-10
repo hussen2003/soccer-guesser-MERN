@@ -15,7 +15,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
   final List<TextEditingController> guessControllers =
       List.generate(6, (_) => TextEditingController());
   List<bool> _showHints = List.generate(6, (_) => false);
-  int currentGuessIndex = 0; // Changed variable name
+  int currentGuessIndex = 0;
   List<String> saveUserGuesses = [];
   String message = '';
   var dailyPlayer;
@@ -50,7 +50,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
       setState(() {
         dailyPlayer = data;
       });
-      print('Daily player from database: $dailyPlayer\n');
     } catch (e) {
       setState(() {
         message = 'Error occurred. Please try again later!';
@@ -67,10 +66,8 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('Get guess from database: ${response.body}\n');
+
       var guessdata = json.decode(response.body);
-      print('This is guess data ${guessdata}\n');
-      print(response.statusCode);
 
       if (response.statusCode != 201) {
         throw Exception('Failed to obtain daily player data!');
@@ -78,9 +75,8 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
       pToday = guessdata['playedToday'];
       fToday = guessdata['finishedToday'];
-      print('Today is played $pToday and finished $fToday\n');
+
       if (!pToday) {
-        print('Player today: $pToday\n');
         try {
           var response2 = await http.post(
             Uri.parse('$baseUrl/api/daily/updateGuess'),
@@ -91,8 +87,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
             }),
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
           );
-          print(
-              'Get guess from database and today player is false: ${response2.body}\n');
+
           if (response2.statusCode != 200) {
             throw Exception('Failed to obtain daily player data!');
           }
@@ -142,8 +137,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
           }
           var data = json.decode(responseEnd.body);
 
-          print(
-              'Get end game from database and today player is false: ${responseEnd.body}\n');
           setState(() {
             gameSummary = data;
             showModal = true;
@@ -175,12 +168,12 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(response.body);
+
       if (response.statusCode != 200) {
         throw Exception('Failed to update hints!');
       }
       var data = json.decode(response.body);
-      print(data);
+
       var updateHintdex = data["hints"];
       setState(() {
         hintdex = updateHintdex;
@@ -260,7 +253,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(response.body); // WIP
 
       if (response.statusCode != 200) {
         throw Exception('Failed to update guess!');
@@ -298,7 +290,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var isCorrectGuess = currentGuess == correctNameLower;
 
       var updatedGuessesMade = List<String>.from(guessesMade);
-      print('updatedGuessesMade in checkguess() is $updatedGuessesMade');
+
       if (currentGuessIndex < guessesMade.length) {
         updatedGuessesMade[currentGuessIndex] = guess;
       } else {
@@ -338,8 +330,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           }
 
           Score(s);
-          print(
-              'S in socre is $s and guessMadelength is ${guessesMade.length}');
+
           handleGameEnd(s, guessesMade.length + 1);
         } else {
           Score(0);
@@ -355,7 +346,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
   }
 
   Future<void> Score(int input) async {
-    print('The received score is $input');
     try {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateScore'),
@@ -367,7 +357,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('Get the score from the database: ${response.body}');
+
       if (response.statusCode != 200) {
         throw Exception('Failed to update score!');
       }
@@ -390,7 +380,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
       var data = json.decode(responseEnd.body);
 
-      print('Handle end game : $data\n');
       setState(() {
         gameSummary = data;
         showModal = true;
