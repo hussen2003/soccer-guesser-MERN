@@ -9,7 +9,7 @@ const leaderboardAmount = 10;
 export const leaderboard = async (req, res) => {
     try {
       //const { score } = req.body;
-        const users = await User.find({}).select({ "name": 1, "score": 1, "_id": 0}).sort({ score: -1 }).limit(20);
+        const users = await User.find({}).select({ "name": 1, "score": 1, "_id": 0}).sort({ score: -1 }).limit(10);
 
         res.status(201).json(users);
 

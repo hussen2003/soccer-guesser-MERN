@@ -8,6 +8,7 @@ import 'package:soccerdle/pages/loginPage.dart';
 import 'package:soccerdle/pages/registerPage.dart';
 import 'package:soccerdle/providers/userProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:soccerdle/components/allTimeLeaderboard.dart';
 
 void main() {
   runApp(
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/unlimitedModePage': (context) => const UnlimitedModePage(),
         '/leaderBoard': (context) => const LeaderBoardPage(),
         '/aboutUs': (context) => const AboutUsPage(),
+        '/allTimeLeaderboard': (context) => const AllTimeLeaderBoardPage(),
       },
     );
   }
