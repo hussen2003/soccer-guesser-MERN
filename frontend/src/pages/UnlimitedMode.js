@@ -234,7 +234,7 @@ function UnlimitedMode() {
                 value={gameState.guess}
                 onChange={(e) => setGameState({ ...gameState, guess: e.target.value })}
                 onKeyPress={handleKeyPress}
-                maxLength={15}
+                maxLength={16}
                 autoFocus
               />
             </div>

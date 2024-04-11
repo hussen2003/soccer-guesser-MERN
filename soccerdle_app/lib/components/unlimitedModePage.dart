@@ -22,6 +22,7 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
   var dailyPlayer;
   int currentGuessIndex = 0;
   List<bool> _showHints = List.generate(6, (_) => false);
+  bool guessed = false;
 
   @override
   void initState() {
@@ -55,10 +56,13 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
     if (guess.trim() == '') {
       return;
     }
+    print('Guess: ${guess.trim().toLowerCase()}');
+    print('Daily Player Name: ${dailyPlayer["name"].trim().toLowerCase()}');
 
     String trimmedGuess = guess.trim().toLowerCase();
     String correctNameLower = dailyPlayer['name'].toLowerCase();
     bool isCorrectGuess = trimmedGuess == correctNameLower;
+    guessed = isCorrectGuess;
     List<String> updatedGuessesMade = List.from(guessesMade);
     updatedGuessesMade[currentGuessIndex] = guess;
 
@@ -207,47 +211,51 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
                     color: _showHints[index] ? Colors.green : Colors.blue,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: _showHints[index]
-                      ? Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  getHint(index),
+                  child: gameEnded
+                      ? null
+                      : _showHints[index]
+                          ? // Check if gameEnded is true and conditionally render the button
+                          Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                color: Colors.white,
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      getHint(index),
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    if (index == 0)
+                                      Image.network(
+                                          dailyPlayer['country_flag']),
+                                    if (index == 3)
+                                      Image.network(dailyPlayer['club_logo']),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                      _hintRevealed(index);
+                                    },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Show Hint',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
-                                if (index == 0)
-                                  Image.network(dailyPlayer['country_flag']),
-                                if (index == 3)
-                                  Image.network(dailyPlayer['club_logo']),
-                              ],
-                            ),
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            _hintRevealed(index);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Show Hint',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
                             ),
-                          ),
-                        ),
                 )
               ],
             ),
@@ -290,10 +298,11 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
               checkGuess();
             });
           },
-          maxLength: 15,
+          maxLength: 16,
           autofocus: true,
           decoration: InputDecoration(
             hintText: 'Enter your guess here',
+            enabled: !gameEnded, // Disable the text field if gameEnded is true
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.green),
               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -315,9 +324,8 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    guess.trim().toLowerCase() ==
-                            dailyPlayer['name'].trim().toLowerCase()
-                        ? 'You guessed it in ${guessesMade.length} ${guessesMade.length == 1 ? 'try!' : 'tries!'}'
+                    guessed
+                        ? 'You guessed it in ${currentGuessIndex + 1} ${currentGuessIndex == 0 ? 'try!' : 'tries!'}'
                         : 'The player was ${dailyPlayer["name"]}',
                     style: TextStyle(fontSize: 18),
                   ),

@@ -432,7 +432,7 @@ function DailyPage() {
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
                 onKeyPress={handleKeyPress}
-                maxLength={15}
+                maxLength={16}
                 autoFocus
               />
             </div>
