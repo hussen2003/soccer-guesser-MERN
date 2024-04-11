@@ -497,7 +497,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         body: Stack(
           children: [
             _buildBackgroundImage(),
-            unlimitedModeScreen(context),
+            dailyGameModeScreen(context),
           ],
         ),
       ),
@@ -515,7 +515,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     );
   }
 
-  Widget unlimitedModeScreen(BuildContext context) {
+  Widget dailyGameModeScreen(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -703,7 +703,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          '/homePage',
+                          '/home',
                         );
                       },
                       child: Text('Home'),
