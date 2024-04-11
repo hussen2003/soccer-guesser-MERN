@@ -9,17 +9,25 @@ void httpErrorHandle({
   required BuildContext context,
   required VoidCallback onSuccess,
 }) {
+  final responseBody = jsonDecode(response.body);
+  final errorMessage = responseBody['error'] ?? 'An unexpected error occurred.';
+
   switch (response.statusCode) {
     case 200:
       onSuccess();
       break;
+    case 201:
     case 400:
-      showSnackBar(context, jsonDecode(response.body)['msg']);
-      break;
     case 500:
-      showSnackBar(context, jsonDecode(response.body)['error']);
+      showSnackBar(context, errorMessage);
+      break;
+    case 403:
+      showSnackBar(context, "Forbidden: You don't have permission to access this resource.");
+      break;
+    case 404:
+      showSnackBar(context, "Not Found: The requested resource could not be found.");
       break;
     default:
-      showSnackBar(context, response.body);
+      showSnackBar(context, errorMessage);
   }
 }
