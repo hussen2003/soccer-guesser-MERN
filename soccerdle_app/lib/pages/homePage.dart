@@ -159,25 +159,21 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    width: 200, // Specify your desired width here
-                    height: 90, // Specify your desired height here
-                    child: ElevatedButton(
-                      onPressed: allTimeLB,
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
+                  ElevatedButton(
+                    onPressed: allTimeLB,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Text(
-                        'All Time Leaderboard',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
+                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 45),
+                    ),
+                    child: const Text(
+                      '   All Time\nLeaderboard',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
                       ),
                     ),
                   ),

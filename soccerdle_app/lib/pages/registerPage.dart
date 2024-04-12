@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     String? validateUserName(String? username) {
     if (username == null || username.isEmpty) {
-      return 'Please enter your name';
+      return 'Please enter your username';
     }
     return null;
   }

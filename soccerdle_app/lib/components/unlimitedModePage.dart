@@ -165,8 +165,15 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
     );
   }
 
-  Widget unlimitedModeScreen(BuildContext context) {
-    return SingleChildScrollView(
+Widget unlimitedModeScreen(BuildContext context) {
+  return SingleChildScrollView(
+    padding: const EdgeInsets.fromLTRB(16.0, 30.0, 16.0, 30.0),
+    child: Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.8), 
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,8 +181,10 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
           _buildTextFormField(),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildTextFormField() {
     List<Widget> previousGuessWidgets =
@@ -184,15 +193,11 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.green,
-                  width: 1.0,
-                ),
-              ),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration:BoxDecoration(
+              color: Colors.white, 
+              borderRadius: BorderRadius.circular(6.0),     
+               border: Border.all(color: Color.fromARGB(255, 69, 4, 199)),
             ),
             child: Row(
               children: [
@@ -208,7 +213,7 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: _showHints[index] ? Colors.green : Colors.blue,
+                    color: _showHints[index] ? Color.fromARGB(255, 255, 255, 255) : Colors.blue,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: gameEnded
@@ -267,12 +272,12 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
         Column(
           children: <Widget>[
             for (var widget in previousGuessWidgets) ...[
               widget,
-              SizedBox(height: 10),
+              SizedBox(height: 20),
             ],
           ],
         ),
@@ -280,7 +285,7 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
           child: Text(
             'Guess ${currentGuessIndex + 1}',
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -304,7 +309,7 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
             hintText: 'Enter your guess here',
             enabled: !gameEnded, // Disable the text field if gameEnded is true
             enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.green),
+              borderSide: BorderSide(color: Color.fromARGB(255, 69, 4, 199)),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             fillColor: Colors.grey.shade200,
@@ -330,17 +335,17 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 2),
                 Image.network(
                   dailyPlayer['image'],
-                  width: 150,
+                  width: 125,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 0.5),
                 Image.network(
                   dailyPlayer['club_logo'],
-                  width: 150,
+                  width: 125,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -352,7 +357,14 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
                         );
                       },
                       child: Text('Play Again'),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                           RoundedRectangleBorder(
+                             borderRadius: BorderRadius.circular(8), // Adjust the border radius as needed
                     ),
+                  ),
+                ),
+              ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(
@@ -361,6 +373,13 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
                         );
                       },
                       child: Text('Home'),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
