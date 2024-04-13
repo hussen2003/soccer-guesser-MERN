@@ -20,13 +20,12 @@ class _DailyGamePageState extends State<DailyGamePage> {
   List<String> saveUserGuesses = [];
   String message = '';
   var dailyPlayer;
-  var pToday, fToday;
-
+  late bool pToday = false, fToday = false;
   String guess = '';
   bool gameEnded = false;
   List<String> guessesMade = [];
   String hint = '';
-  List<bool> hintdex = [];
+  List<bool> hintdex = [false, false, false, false, false];
   bool showModal = false;
   dynamic gameSummary;
   var userData;
@@ -46,7 +45,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
       var data = json.decode(response.body);
       setState(() {
         dailyPlayer = data;
@@ -67,12 +65,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
       var guessdata = json.decode(response.body);
-
-      if (response.statusCode != 201) {
-        throw Exception('Failed to obtain daily player data!');
-      }
 
       pToday = guessdata['playedToday'];
       fToday = guessdata['finishedToday'];
@@ -98,18 +91,18 @@ class _DailyGamePageState extends State<DailyGamePage> {
           });
           return;
         }
-      } else if (pToday && !fToday) {
+      }
+      if (pToday && !fToday) {
         var updatedGuessesMade = (guessdata['guesses'] ?? [])
             .where((guess) => guess.trim() != '')
             .toList();
-
-        var updatedHintdex = guessdata['hints'];
         var updatedCurrentGuessIndex = updatedGuessesMade.length;
+        var updatedHintdex = guessdata['hints'];
 
         setState(() {
-          guessesMade = updatedGuessesMade;
+          guessesMade = List<String>.from(updatedGuessesMade);
           currentGuessIndex = updatedCurrentGuessIndex;
-          hintdex = updatedHintdex;
+          hintdex = List<bool>.from(updatedHintdex);
         });
       } else if (fToday) {
         var updatedGuessesMade = (guessdata['guesses'] ?? [])
@@ -118,11 +111,12 @@ class _DailyGamePageState extends State<DailyGamePage> {
         var updatedCurrentGuessIndex = updatedGuessesMade.length;
         var updatedHintdex = guessdata["hints"];
         setState(() {
-          guessesMade = updatedGuessesMade;
+          guessesMade = List<String>.from(updatedGuessesMade);
           currentGuessIndex = updatedCurrentGuessIndex;
-          hintdex = updatedHintdex;
+          hintdex = List<bool>.from(updatedHintdex);
           gameEnded = true;
         });
+
         try {
           var responseEnd = await http.post(
             Uri.parse('$baseUrl/api/daily/endGame'),
@@ -133,9 +127,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
             }),
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
           );
-          if (responseEnd.statusCode != 200) {
-            throw Exception('Failed to fetch game summary stats!');
-          }
+
           var data = json.decode(responseEnd.body);
 
           setState(() {
@@ -169,15 +161,11 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
-      if (response.statusCode != 200) {
-        throw Exception('Failed to update hints!');
-      }
       var data = json.decode(response.body);
-
       var updateHintdex = data["hints"];
+
       setState(() {
-        hintdex = updateHintdex;
+        hintdex = List<bool>.from(updateHintdex);
       });
     } catch (e) {
       setState(() {
@@ -330,6 +318,11 @@ class _DailyGamePageState extends State<DailyGamePage> {
               break;
           }
 
+          if (hintdex[0]) s -= 1;
+          if (hintdex[1]) s -= 3;
+          if (hintdex[2]) s -= 3;
+          if (hintdex[3]) s -= 3;
+          if (hintdex[4]) s -= 5;
           Score(s);
 
           handleGameEnd(s, guessesMade.length + 1);
@@ -339,7 +332,9 @@ class _DailyGamePageState extends State<DailyGamePage> {
         }
       } else {
         setState(() {
-          currentGuessIndex += 1;
+          if (currentGuessIndex < guessesMade.length) {
+            currentGuessIndex += 1;
+          }
           guess = '';
         });
       }
@@ -388,9 +383,8 @@ class _DailyGamePageState extends State<DailyGamePage> {
         gameSummary = data;
         showModal = true;
       });
-      // Check if the user wins or loses based on scores
+
       if (scores > 0) {
-        // If the score is greater than 0, the user wins
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -529,7 +523,9 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
   Widget _buildTextFormField() {
     List<Widget> previousGuessWidgets =
-        List.generate(currentGuessIndex, (index) {
+        List.generate(guessesMade.length, (index) {
+      String guess = guessesMade[index];
+      bool hintShown = _showHints[index];
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -548,7 +544,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
               children: [
                 Expanded(
                   child: Text(
-                    'Guess ${index + 1}: ${saveUserGuesses[index]}',
+                    'Guess ${index + 1}: $guess',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -558,57 +554,87 @@ class _DailyGamePageState extends State<DailyGamePage> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: _showHints[index] ? Colors.green : Colors.blue,
+                    color: hintShown ? Colors.green : Colors.blue,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: _showHints[index]
-                      ? Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  getHint(index),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
+                  child: () {
+                    if (index < hintdex.length && hintdex[index]) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                getHint(index),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
-                                if (index == 0)
-                                  Image.network(dailyPlayer['country_flag']),
-                                if (index == 3)
-                                  Image.network(dailyPlayer['club_logo']),
-                              ],
-                            ),
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            _hintRevealed(index);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Show Hint',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
+                              if (index == 0)
+                                Image.network(dailyPlayer['country_flag']),
+                              if (index == 3)
+                                Image.network(dailyPlayer['club_logo']),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (hintShown) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                getHint(index),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              if (index == 0)
+                                Image.network(dailyPlayer['country_flag']),
+                              if (index == 3)
+                                Image.network(dailyPlayer['club_logo']),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (index < 5) {
+                      return GestureDetector(
+                        onTap: () {
+                          _hintRevealed(index);
+                          revealHint(index);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Show Hint',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                )
+                      );
+                    }
+                  }(),
+                ),
               ],
             ),
           ),
         ],
       );
-    }).toList();
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -622,45 +648,47 @@ class _DailyGamePageState extends State<DailyGamePage> {
             ],
           ],
         ),
-        Center(
-          child: Text(
-            'Guess ${currentGuessIndex + 1}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+        if (!gameEnded)
+          Center(
+            child: Text(
+              'Guess ${guessesMade.length + 1}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        TextField(
-          controller: guessControllers[currentGuessIndex],
-          onChanged: (val) {
-            setState(() {
-              guess = val;
-            });
-          },
-          onEditingComplete: () {
-            setState(() {
-              checkGuess();
-            });
-          },
-          maxLength: 15,
-          autofocus: true,
-          decoration: InputDecoration(
-            hintText: 'Enter your guess here',
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.green),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            fillColor: Colors.grey.shade200,
-            filled: true,
-            hintStyle: const TextStyle(color: Colors.black),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+        if (!gameEnded)
+          TextField(
+            controller: guessControllers[guessesMade.length],
+            onChanged: (val) {
+              setState(() {
+                guess = val;
+              });
+            },
+            onEditingComplete: () {
+              setState(() {
+                checkGuess();
+              });
+            },
+            maxLength: 15,
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'Enter your guess here',
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              fillColor: Colors.grey.shade200,
+              filled: true,
+              hintStyle: const TextStyle(color: Colors.black),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
             ),
           ),
-        ),
         if (gameEnded)
           Dialog(
             child: Column(
