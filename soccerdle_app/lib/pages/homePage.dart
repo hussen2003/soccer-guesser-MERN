@@ -23,8 +23,6 @@ class _HomePageState extends State<HomePage> {
   _loadName() async {
     setState(() {
       name = Storage.getName();
-      // name = prefs.getString('name') ?? 'NONE'; // Use a default value if the retrieved value is null
-      print('Name loaded: $name');
     });
   }
 
