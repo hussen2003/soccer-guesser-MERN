@@ -383,45 +383,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         gameSummary = data;
         showModal = true;
       });
-
-      if (scores > 0) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Congratulations!'),
-              content: Text('You won the game!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        // If the score is 0, the user loses
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Game Over'),
-              content: Text('You lost the game. Better luck next time!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
+      showGameSummary();
     } catch (error) {
       setState(() {
         message = 'Error occurred. Please try again later!';
