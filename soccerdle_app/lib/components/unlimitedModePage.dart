@@ -56,8 +56,6 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
     if (guess.trim() == '') {
       return;
     }
-    print('Guess: ${guess.trim().toLowerCase()}');
-    print('Daily Player Name: ${dailyPlayer["name"].trim().toLowerCase()}');
 
     String trimmedGuess = guess.trim().toLowerCase();
     String correctNameLower = dailyPlayer['name'].toLowerCase();
