@@ -21,6 +21,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
   String message = '';
   var dailyPlayer;
   late bool pToday = false, fToday = false;
+
   String guess = '';
   bool gameEnded = false;
   List<String> guessesMade = [];
@@ -133,6 +134,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           setState(() {
             gameSummary = data;
             showModal = true;
+            showGameSummary();
           });
         } catch (error) {
           setState(() {
@@ -412,7 +414,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
               children: [
                 Text('Streak: ${gameSummary["streak"]}'),
                 Text(
-                  'Win Rate: ${gameSummary["winRate"]}',
+                  'Win Rate: ${gameSummary["winRate"].toStringAsFixed(2)}',
                 ),
                 Text('Score for Today: ${gameSummary["score"]}'),
                 Text('All Time Score: ${gameSummary["allTimeScore"]}'),
