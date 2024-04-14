@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:soccerdle/common/firebaseSignInButton.dart';
+import 'package:soccerdle/services/firebaseAuthServices.dart';
 import 'package:soccerdle/services/loginPageServices.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
         username: _usernameController.text,
         password: _passwordController.text,
       );
-      if (loginService.userData != null){
-      Navigator.pushNamed(context, '/home');
+      if (loginService.userData != null) {
+        Navigator.pushNamed(context, '/home');
       }
     }
   }
@@ -103,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: Icons.lock,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
                       child: GestureDetector(
@@ -115,6 +117,55 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: signInUser,
                       child: const Text('Sign In'),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.5,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Text(
+                              'Or continue with',
+                              style: TextStyle(color: Colors.grey[700]),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.5,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FirebaseSignInButton(
+                          onTap: () =>
+                              FirebaseAuthService().signInWithGoogle(context),
+                          imagePath: 'lib/images/google_logo.png',
+                        ),
+                        SizedBox(width: 25),
+                        FirebaseSignInButton(
+                            onTap: () =>
+                                FirebaseAuthService().signInWithTwitter(),
+                            imagePath: 'lib/images/apple_logo.png'),
+                        SizedBox(width: 25),
+                        FirebaseSignInButton(
+                            onTap: () =>
+                                FirebaseAuthService().signInWithGitHub(),
+                            imagePath: 'lib/images/instagram_logo.png'),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     Row(
