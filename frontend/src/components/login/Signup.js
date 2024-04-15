@@ -128,7 +128,11 @@ const SignUp = () => {
       isValid = false;
     }
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: !isValid });
+    if (isValid || value === '') {
+      setErrors({ ...errors, [name]: undefined });
+    } else {
+      setErrors({ ...errors, [name]: !isValid });
+    }
   };
 
   return (
