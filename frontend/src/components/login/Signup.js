@@ -36,7 +36,7 @@ const SignUp = () => {
       name: 'name',
       type: 'text',
       placeholder: 'Enter your full name',
-      errorMessage: 'Name is required!',
+      //errorMessage: 'Name is required!',
       label: 'Name',
       required: true,
     },
@@ -45,9 +45,9 @@ const SignUp = () => {
       name: 'username',
       type: 'text',
       placeholder: 'Enter your username',
-      errorMessage: 'Username is required',//"Username should be 3-16 characters and shouldn't include any special character!",
+      errorMessage: 'No spaces allowed', //"Username should be 3-16 characters and shouldn't include any special character!",
       label: 'Username',
-      //pattern: '^[A-Za-z0-9]{3,16}$',
+      pattern: '^[^\\s]*$',
       required: true,
     },
     {
@@ -55,7 +55,7 @@ const SignUp = () => {
       name: 'email',
       type: 'email',
       placeholder: 'Enter your email',
-      errorMessage: 'It should be a valid email address!',
+      //errorMessage: 'It should be a valid email address!',
       label: 'Email',
       required: true,
     },
@@ -64,9 +64,9 @@ const SignUp = () => {
       name: 'password',
       type: 'password',
       placeholder: 'Enter your password',
-      errorMessage: 'Password should be minimum 6 characters',//'Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!',
+      errorMessage: 'Password should be minimum 6 characters', //'Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!',
       label: 'Password',
-      pattern: `^.{6,}$`,//`^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
+      pattern: `^.{6,}$`, //`^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
       required: true,
     },
     {
@@ -151,9 +151,11 @@ const SignUp = () => {
           <div key={input.id} className="form-group">
             <label>{input.label}</label>
             <input type={input.type} name={input.name} placeholder={input.placeholder} value={values[input.name]} onChange={onChange} required={input.required} pattern={input.pattern} />
-            <div className="error" style={{ color: 'red', display: errors[input.name] ? 'block' : 'none' }}>
-              {input.errorMessage}
-            </div>
+            {input.errorMessage && errors[input.name] && (
+              <div className="error" style={{ color: 'red', height: '15px', display: 'block' }}>
+                {input.errorMessage}
+              </div>
+            )}
           </div>
         ))}
         <Button
