@@ -327,7 +327,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           if (hintdex[4]) s -= 5;
           Score(s);
 
-          handleGameEnd(s, guessesMade.length + 1);
+          handleGameEnd(s, currentGuessIndex + 1);
         } else {
           Score(0);
           handleGameEnd(s, 7);
