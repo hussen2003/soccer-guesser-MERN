@@ -139,8 +139,12 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: const Text('Unlimited Mode'),
+          title: const Text('Unlimited Mode',style: TextStyle(fontWeight: FontWeight.bold)),
+          centerTitle: true,
+          backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+          elevation: 10,
         ),
         body: Stack(
           children: [
@@ -165,7 +169,7 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
 
 Widget unlimitedModeScreen(BuildContext context) {
   return SingleChildScrollView(
-    padding: const EdgeInsets.fromLTRB(16.0, 30.0, 16.0, 30.0),
+    padding: const EdgeInsets.fromLTRB(16.0, 70.0, 16.0, 30.0),
     child: Container(
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -305,7 +309,7 @@ Widget unlimitedModeScreen(BuildContext context) {
           autofocus: true,
           decoration: InputDecoration(
             hintText: 'Enter your guess here',
-            enabled: !gameEnded, // Disable the text field if gameEnded is true
+            enabled: !gameEnded, 
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Color.fromARGB(255, 69, 4, 199)),
               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -358,7 +362,7 @@ Widget unlimitedModeScreen(BuildContext context) {
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                            RoundedRectangleBorder(
-                             borderRadius: BorderRadius.circular(8), // Adjust the border radius as needed
+                             borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
