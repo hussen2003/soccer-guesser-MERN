@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:soccerdle/services/loginPageServices.dart';
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
@@ -40,8 +39,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void logout() async {
-    GoogleSignIn _googleSignIn = GoogleSignIn();
-    await _googleSignIn.signOut();
     Navigator.pushNamed(context, '/login');
   }
 

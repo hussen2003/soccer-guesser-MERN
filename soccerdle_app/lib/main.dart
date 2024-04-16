@@ -1,21 +1,16 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:soccerdle/components/allTimeLeaderboard.dart';
-import 'package:soccerdle/components/dailyGame.dart';
-import 'package:soccerdle/components/leaderBoard.dart';
-import 'package:soccerdle/components/unlimitedModePage.dart';
-import 'package:soccerdle/pages/aboutusPage.dart';
-import 'package:soccerdle/pages/homePage.dart';
-import 'package:soccerdle/pages/loginPage.dart';
-import 'package:soccerdle/pages/registerPage.dart';
-import 'package:soccerdle/providers/userProvider.dart';
-
-import 'firebase_options.dart';
+import 'package:soccerdle_app/components/allTimeLeaderboard.dart';
+import 'package:soccerdle_app/components/dailyGame.dart';
+import 'package:soccerdle_app/components/leaderBoard.dart';
+import 'package:soccerdle_app/components/unlimitedModePage.dart';
+import 'package:soccerdle_app/pages/aboutusPage.dart';
+import 'package:soccerdle_app/pages/homePage.dart';
+import 'package:soccerdle_app/pages/loginPage.dart';
+import 'package:soccerdle_app/pages/registerPage.dart';
+import 'package:soccerdle_app/providers/userProvider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(
       providers: [

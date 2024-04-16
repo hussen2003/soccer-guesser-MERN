@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:soccerdle/constants/utils.dart';
+import 'package:soccerdle_app/constants/utils.dart';
 
 void httpErrorHandle({
   required http.Response response,
@@ -22,10 +22,12 @@ void httpErrorHandle({
       showSnackBar(context, errorMessage);
       break;
     case 403:
-      showSnackBar(context, "Forbidden: You don't have permission to access this resource.");
+      showSnackBar(context,
+          "Forbidden: You don't have permission to access this resource.");
       break;
     case 404:
-      showSnackBar(context, "Not Found: The requested resource could not be found.");
+      showSnackBar(
+          context, "Not Found: The requested resource could not be found.");
       break;
     default:
       showSnackBar(context, errorMessage);

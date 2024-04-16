@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:soccerdle/constants/utils.dart';
-import 'package:soccerdle/providers/userProvider.dart';
+import 'package:soccerdle_app/constants/utils.dart';
+import 'package:soccerdle_app/providers/userProvider.dart';
 
 class LoginPageService {
   Map<String, dynamic>? userData;

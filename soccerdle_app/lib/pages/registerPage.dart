@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:soccerdle/common/customButton.dart';
-import 'package:soccerdle/common/customTextfiled.dart';
-import 'package:soccerdle/services/registerPageServices.dart';
+import 'package:soccerdle_app/common/customButton.dart';
+import 'package:soccerdle_app/common/customTextfiled.dart';
+import 'package:soccerdle_app/services/registerPageServices.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/register';
@@ -19,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-
   String? validateName(String? name) {
     if (name == null || name.isEmpty) {
       return 'Please enter your name';
@@ -30,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
-    String? validateUserName(String? username) {
+  String? validateUserName(String? username) {
     if (username == null || username.isEmpty) {
       return 'Please enter your username';
     }
@@ -53,21 +52,20 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     if (password.length < 8) {
       return 'Password must be at least'
-             ' 8 characters long';
+          ' 8 characters long';
     }
     if (!password.contains(RegExp(r'[A-Z]'))) {
       return 'Add at least'
-             ' one uppercase letter';
+          ' one uppercase letter';
     }
 
     if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return 'Add at least'
-             ' one special character';
+          ' one special character';
     }
     return null;
   }
 
-    
   @override
   void dispose() {
     super.dispose();
@@ -179,7 +177,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                     fillColor: Colors.white,
                                     validator: validateName,
                                   ),
-                                  
                                   const SizedBox(height: 20),
                                   CustomTextField(
                                     controller: _emailController,
@@ -214,7 +211,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   CustomButton(
                                     text: 'Sign Up',
                                     onTap: () {
-                                      if (_signUpFormKey.currentState!.validate()) {
+                                      if (_signUpFormKey.currentState!
+                                          .validate()) {
                                         signUpUser();
                                         Navigator.pushNamed(context, '/login');
                                       }

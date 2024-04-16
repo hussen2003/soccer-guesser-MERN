@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soccerdle/common/firebaseSignInButton.dart';
-import 'package:soccerdle/services/firebaseAuthServices.dart';
-import 'package:soccerdle/services/loginPageServices.dart';
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login';
@@ -117,55 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: signInUser,
                       child: const Text('Sign In'),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              'Or continue with',
-                              style: TextStyle(color: Colors.grey[700]),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FirebaseSignInButton(
-                          onTap: () =>
-                              FirebaseAuthService().signInWithGoogle(context),
-                          imagePath: 'lib/images/google_logo.png',
-                        ),
-                        SizedBox(width: 25),
-                        FirebaseSignInButton(
-                            onTap: () =>
-                                FirebaseAuthService().signInWithTwitter(),
-                            imagePath: 'lib/images/apple_logo.png'),
-                        SizedBox(width: 25),
-                        FirebaseSignInButton(
-                            onTap: () =>
-                                FirebaseAuthService().signInWithGitHub(),
-                            imagePath: 'lib/images/instagram_logo.png'),
-                      ],
                     ),
                     const SizedBox(height: 20),
                     Row(
