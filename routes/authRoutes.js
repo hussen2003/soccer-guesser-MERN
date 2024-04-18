@@ -1,5 +1,5 @@
 import express from "express";
-import {getUsers, login, signup, verifyEmail} from "../controllers/authController.js";
+import {deleteUser, getUsers, login, signup, verifyEmail} from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.post("/getUsers", getUsers);
 
 router.post("/verifyEmail", verifyEmail)
 
-
+router.post("/deleteUser", deleteUser)
 
 
 export default router;
