@@ -15,6 +15,7 @@ function buildPath(route) {
 function AllTimeLB() {
   const [message, setMessage] = useState("");
   const [players, setPlayers] = useState([]);
+  const curUser = JSON.parse(sessionStorage.getItem('user_data')).name;
   const goback = async (event) => {
     event.preventDefault();
     setMessage("success?");
@@ -103,8 +104,9 @@ function AllTimeLB() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '10px',
+                  padding: '15px',
                   borderTop: '1px solid rgba(114,114,114)',
+                  backgroundColor: player.name === curUser ? 'rgba(0, 150, 0, 0.3)' : 'transparent',
                 }}
               >
                 <span>{index + 1}</span>

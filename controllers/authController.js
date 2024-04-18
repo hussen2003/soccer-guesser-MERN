@@ -127,3 +127,21 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const userByUsername = await User.findOne({ username });
+    if (!userByUsername) {
+      return res.status(400).json({ error: "Username does not exist" });
+    } 
+    else {
+      await User.deleteOne({ username: username });
+      res.status(201).json({error: 'User delete successfully'});
+    }
+  } catch (error) {
+    console.log("Error in delete endpoint", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
