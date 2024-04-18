@@ -18,8 +18,8 @@ const getPasswordRequirements = (requirements) => {
   const fulfilledStyle = { color: 'green', fontWeight: 'bold' };
 
   return (
-    <div>
-      <p>Password requirements:</p>
+    <div style={{fontSize: "14px", textAlign: 'left', marginTop: '-15px', color: 'red', marginLeft: '-10px'}}>
+
       <ul>
         <li style={requirements.minLength ? fulfilledStyle : null}>Minimum 8 characters</li>
         <li style={requirements.uppercase ? fulfilledStyle : null}>At least one uppercase letter</li>
@@ -155,7 +155,15 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <form onSubmit={doSignup}>
+      <div style={{ margin: '20px 0' }}></div>
         <h1>Sign Up</h1>
+        {error === 'User created successfully, verification email sent' && (
+          <Alert variant="success">
+            <Alert.Heading>GOAL!</Alert.Heading>
+            <p>User created successfully. Please check your email to verify your account.</p>
+          </Alert>
+        )}
+        
         <div className="form-group">
           <label>Name</label>
           <input
@@ -177,6 +185,9 @@ const SignUp = () => {
             onChange={onChange}
             required
           />
+          {error === 'Username already exists' && error !== '' && (
+            <p style={{ fontSize: '14px', color: 'red', textAlign: 'left', marginTop: '-10px', marginBottom: '-5px' , marginLeft: '10px'}}>{error}</p>
+        )}
         </div>
         <div className="form-group">
           <label>Email</label>
@@ -188,6 +199,9 @@ const SignUp = () => {
             onChange={onChange}
             required
           />
+          {error === 'Email already exists' && error !== '' && (
+            <p style={{ fontSize: '14px', color: 'red', textAlign: 'left', marginTop: '-10px', marginBottom: '-5px' , marginLeft: '10px'}}>{error}</p>
+        )}
         </div>
         <div className="form-group">
           <label>Password</label>
@@ -210,11 +224,9 @@ const SignUp = () => {
             onChange={onChange}
             required
           />
-          {error && (
-            <Alert variant="danger" style={{ marginTop: '10px' }}>
-              {error}
-            </Alert>
-          )}
+          {values.password !== values.confirmPassword && (
+            <p style={{ fontSize: '14px', color: 'red', textAlign: 'left', marginBottom: '20px' , marginLeft: '10px'}}>{error}</p>
+        )}
         </div>
         {getPasswordRequirements(passwordRequirements)}
         <ProgressBar>
