@@ -114,6 +114,9 @@ export const getGuesses = async (req, res) => {
         if((lastDate - date) == 0){
           playedToday = true;
           finishedToday = false;
+        }else{
+          playedToday = false;
+          finishedToday = false;
         }
       }
       

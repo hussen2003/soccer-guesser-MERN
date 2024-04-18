@@ -81,14 +81,14 @@ function Login() {
         <div className="form-group">
           <label>Username</label>
           <input type="text" name="username" placeholder="Enter your username" value={values.username} onChange={onChange} required />
-          <div className="error" style={{ color: 'red', display: errors.username ? 'block' : 'none' }}>
+          <div className="error" style={{ color: 'red', height: '15px', display: errors.username ? 'block' : 'none' }}>
             {errors.username}
           </div>
         </div>
         <div className="form-group">
           <label>Password</label>
           <input type="password" name="password" placeholder="Enter your password" value={values.password} onChange={onChange} required />
-          <div className="error" style={{ color: 'red', display: errors.password ? 'block' : 'none' }}>
+          <div className="error" style={{ color: 'red', height: '15px', display: errors.password ? 'block' : 'none' }}>
             {errors.password}
           </div>
         </div>

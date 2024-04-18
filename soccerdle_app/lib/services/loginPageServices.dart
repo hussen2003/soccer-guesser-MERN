@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:soccerdle/constants/utils.dart';
-import 'package:soccerdle/providers/userProvider.dart';
+import 'package:soccerdle_app/constants/utils.dart';
+import 'package:soccerdle_app/providers/userProvider.dart';
 
 class LoginPageService {
   Map<String, dynamic>? userData;
@@ -28,10 +29,8 @@ class LoginPageService {
       );
 
       if (res.statusCode == 200 || res.statusCode == 201) {
-        print('Received status code: ${res.statusCode}');
-
         userData = json.decode(res.body);
-        print('Received User Data: $userData');
+
         Storage s = new Storage(username, userData?['name']);
 
         Provider.of<UserProvider>(context, listen: false).setUser(res.body);
@@ -59,17 +58,17 @@ class LoginPageService {
 class Storage {
   static late String use;
   static late String name;
-  
+
   Storage(String u, String n) {
     use = u;
     name = n;
   }
 
-  static String getUser (){
+  static String getUser() {
     return use;
   }
 
-  static String getName (){
+  static String getName() {
     return name;
   }
 }

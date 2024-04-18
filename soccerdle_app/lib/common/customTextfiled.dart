@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final bool obscureText;
   final Icon prefixIcon;
+  final FormFieldValidator<String>? validator;
 
   const CustomTextField({
     Key? key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     required this.prefixIcon,
+    this.validator,
     this.maxLines = 1, required BorderRadius borderRadius, required Color fillColor,
   }) : super(key: key);
 
@@ -41,12 +43,7 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
-        validator: (val) {
-          if (val == null || val.isEmpty) {
-            return 'Enter your ${hintText.toLowerCase()}';
-          }
-          return null;
-        },
+        validator: validator,
         maxLines: maxLines,
       ),
     );

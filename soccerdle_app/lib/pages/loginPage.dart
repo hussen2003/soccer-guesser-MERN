@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soccerdle/services/loginPageServices.dart';
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login';
@@ -29,8 +29,8 @@ class _LoginPageState extends State<LoginPage> {
         username: _usernameController.text,
         password: _passwordController.text,
       );
-      if (loginService.userData != null){
-      Navigator.pushNamed(context, '/home');
+      if (loginService.userData != null) {
+        Navigator.pushNamed(context, '/home');
       }
     }
   }
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: Icons.lock,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
                       child: GestureDetector(

@@ -10,7 +10,7 @@ body, html {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* Adjust the z-index as needed */
+  z-index: 1; /* Adjust the z-index as needed */
 }
 
 .container {
@@ -19,7 +19,8 @@ body, html {
 
 /* Adjust margin to create space between navbar and content */
 .content {
-  margin-top: 150px; /* Adjust this value as needed */
+  margin-top: 150px; /*Adjust this value as needed */
+  padding-top: 1px;
 }
 
 .navbarBrand {

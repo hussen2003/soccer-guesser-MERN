@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class DailyGamePage extends StatefulWidget {
   static const String routeName = '/dailygame';
@@ -15,18 +16,19 @@ class _DailyGamePageState extends State<DailyGamePage> {
   final List<TextEditingController> guessControllers =
       List.generate(6, (_) => TextEditingController());
   List<bool> _showHints = List.generate(6, (_) => false);
-  int currentGuessIndex = 0; // Changed variable name
+  int currentGuessIndex = 0;
   List<String> saveUserGuesses = [];
   String message = '';
   var dailyPlayer;
-  var pToday, fToday;
+  late bool pToday = false, fToday = false;
+
   String guess = '';
   bool gameEnded = false;
   List<String> guessesMade = [];
   String hint = '';
-  List<bool> hintdex = [];
+  List<bool> hintdex = [false, false, false, false, false];
   bool showModal = false;
-  var gameSummary;
+  dynamic gameSummary;
   var userData;
 
   @override
@@ -44,12 +46,10 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
       var data = json.decode(response.body);
       setState(() {
         dailyPlayer = data;
       });
-      // print(dailyPlayer);
     } catch (e) {
       setState(() {
         message = 'Error occurred. Please try again later!';
@@ -60,32 +60,29 @@ class _DailyGamePageState extends State<DailyGamePage> {
       http.Response response = await http.post(
         Uri.parse('$baseUrl/api/daily/getGuesses'),
         body: jsonEncode({
-          'username': 'lablard',
+          'username': Storage.getUser(),
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      //print(response.body);
-
-      if (response.statusCode != 200) {
-        throw Exception('Failed to obtain daily player data!');
-      }
       var guessdata = json.decode(response.body);
+
       pToday = guessdata['playedToday'];
       fToday = guessdata['finishedToday'];
+
       if (!pToday) {
         try {
           var response2 = await http.post(
             Uri.parse('$baseUrl/api/daily/updateGuess'),
             body: json.encode({
-              'username': 'lablard',
+              'username': Storage.getUser(),
               'guess': null,
               'tryAmount': 0,
             }),
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
           );
-          print(response2.body);
+
           if (response2.statusCode != 200) {
             throw Exception('Failed to obtain daily player data!');
           }
@@ -95,43 +92,49 @@ class _DailyGamePageState extends State<DailyGamePage> {
           });
           return;
         }
-      } else if (pToday && !fToday) {
+      }
+      if (pToday && !fToday) {
         var updatedGuessesMade = (guessdata['guesses'] ?? [])
             .where((guess) => guess.trim() != '')
             .toList();
+        var updatedCurrentGuessIndex = updatedGuessesMade.length;
         var updatedHintdex = guessdata['hints'];
+
         setState(() {
-          guessesMade = updatedGuessesMade;
-          hintdex = updatedHintdex;
+          guessesMade = List<String>.from(updatedGuessesMade);
+          currentGuessIndex = updatedCurrentGuessIndex;
+          hintdex = List<bool>.from(updatedHintdex);
         });
       } else if (fToday) {
         var updatedGuessesMade = (guessdata['guesses'] ?? [])
             .where((guess) => guess.trim() != '')
             .toList();
-        var updatedHintdex = guessdata['hints'];
+        var updatedCurrentGuessIndex = updatedGuessesMade.length;
+        var updatedHintdex = guessdata["hints"];
         setState(() {
-          guessesMade = updatedGuessesMade;
-          hintdex = updatedHintdex;
+          guessesMade = List<String>.from(updatedGuessesMade);
+          currentGuessIndex = updatedCurrentGuessIndex;
+          hintdex = List<bool>.from(updatedHintdex);
           gameEnded = true;
         });
+
         try {
           var responseEnd = await http.post(
             Uri.parse('$baseUrl/api/daily/endGame'),
             body: json.encode({
-              'username': 'lablard',
+              'username': Storage.getUser(),
               'score': 0,
               'tryAmount': updatedGuessesMade.length + 1
             }),
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
           );
-          if (responseEnd.statusCode != 200) {
-            throw Exception('Failed to fetch game summary stats!');
-          }
+
           var data = json.decode(responseEnd.body);
-          print(responseEnd.body);
+
           setState(() {
             gameSummary = data;
             showModal = true;
+            showGameSummary();
           });
         } catch (error) {
           setState(() {
@@ -153,22 +156,18 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateHints'),
         body: json.encode({
-          'username': 'lablard',
+          'username': Storage.getUser(),
           'dex': i,
         }),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(response.body);
-      if (response.statusCode != 200) {
-        throw Exception('Failed to update hints!');
-      }
       var data = json.decode(response.body);
-      print(data);
-      var updateHintdex = data['hints'];
+      var updateHintdex = data["hints"];
+
       setState(() {
-        hintdex = updateHintdex;
+        hintdex = List<bool>.from(updateHintdex);
       });
     } catch (e) {
       setState(() {
@@ -237,7 +236,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateGuess'),
         body: jsonEncode({
-          'username': 'lablard',
+          'username': Storage.getUser(),
           'guess': input.trim(),
           'tryAmount': guessesMade.length + 1
         }),
@@ -245,7 +244,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(response.body); // WIP
+
       if (response.statusCode != 200) {
         throw Exception('Failed to update guess!');
       }
@@ -282,7 +281,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var isCorrectGuess = currentGuess == correctNameLower;
 
       var updatedGuessesMade = List<String>.from(guessesMade);
-      print(updatedGuessesMade);
+
       if (currentGuessIndex < guessesMade.length) {
         updatedGuessesMade[currentGuessIndex] = guess;
       } else {
@@ -320,20 +319,24 @@ class _DailyGamePageState extends State<DailyGamePage> {
               s = 0;
               break;
           }
+
           if (hintdex[0]) s -= 1;
           if (hintdex[1]) s -= 3;
           if (hintdex[2]) s -= 3;
           if (hintdex[3]) s -= 3;
           if (hintdex[4]) s -= 5;
           Score(s);
-          handleGameEnd(s, guessesMade.length + 1);
+
+          handleGameEnd(s, currentGuessIndex + 1);
         } else {
           Score(0);
           handleGameEnd(s, 7);
         }
       } else {
         setState(() {
-          currentGuessIndex += 1;
+          if (currentGuessIndex < guessesMade.length) {
+            currentGuessIndex += 1;
+          }
           guess = '';
         });
       }
@@ -345,14 +348,14 @@ class _DailyGamePageState extends State<DailyGamePage> {
       var response = await http.post(
         Uri.parse('$baseUrl/api/daily/updateScore'),
         body: jsonEncode({
-          'username': 'lablard',
+          'username': Storage.getUser(),
           'dailyScore': input,
         }),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      // print(response.body);
+
       if (response.statusCode != 200) {
         throw Exception('Failed to update score!');
       }
@@ -364,81 +367,31 @@ class _DailyGamePageState extends State<DailyGamePage> {
     }
   }
 
-  Future<void> handleGameEnd(int scores, int tries) async {
+  handleGameEnd(int scores, int tries) async {
     try {
       var responseEnd = await http.post(
         Uri.parse('$baseUrl/api/daily/endGame'),
-        body: jsonEncode(
-            {'username': 'lablard', 'score': scores, 'tryAmount': tries}),
+        body: jsonEncode({
+          'username': Storage.getUser(),
+          'score': scores,
+          'tryAmount': tries
+        }),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
-      if (responseEnd.statusCode != 200) {
-        throw Exception('Failed to fetch game summary stats!');
-      }
+
       var data = json.decode(responseEnd.body);
-      print(data);
+
       setState(() {
         gameSummary = data;
         showModal = true;
       });
-      // Check if the user wins or loses based on scores
-      if (scores > 0) {
-        // If the score is greater than 0, the user wins
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Congratulations!'),
-              content: Text('You won the game!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        // If the score is 0, the user loses
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Game Over'),
-              content: Text('You lost the game. Better luck next time!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
+      showGameSummary();
     } catch (error) {
       setState(() {
         message = 'Error occurred. Please try again later!';
       });
       return;
     }
-  }
-
-  void open() {
-    setState(() {
-      showModal = true;
-    });
-  }
-
-  void close() {
-    setState(() {
-      showModal = false;
-    });
   }
 
   void _hintRevealed(int index) {
@@ -458,22 +411,23 @@ class _DailyGamePageState extends State<DailyGamePage> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              // children: [
-              //   Text('Streak: ${gameSummary["streak"]}'),
-              //   Text(
-              //     'Win Rate: ${(gameSummary["winRate"] as double).toStringAsFixed(2)}%',
-              //   ),
-              //   Text('Score for Today: ${gameSummary["score"]}'),
-              //   Text('All Time Score: ${gameSummary["allTimeScore"]}'),
-              //   Text('Guess Distribution'),
-              //   Column(
-              //     children: (gameSummary["guessDistribution"] as Map)
-              //         .entries
-              //         .map((entry) {
-              //       return Text('${entry.key + 1} : ${entry.value}');
-              //     }).toList(),
-              //   ),
-              // ],
+              children: [
+                Text('Streak: ${gameSummary["streak"]}'),
+                Text(
+                  'Win Rate: ${gameSummary["winRate"].toStringAsFixed(2)}',
+                ),
+                Text('Score for Today: ${gameSummary["score"]}'),
+                Text('All Time Score: ${gameSummary["allTimeScore"]}'),
+                Text('Guess Distribution'),
+                Column(
+                  children: (gameSummary["guessDistribution"] as List)
+                      .asMap()
+                      .entries
+                      .map((entry) {
+                    return Text('${entry.key + 1} : ${entry.value}');
+                  }).toList(),
+                ),
+              ],
             ),
             actions: [
               ElevatedButton(
@@ -501,7 +455,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
         body: Stack(
           children: [
             _buildBackgroundImage(),
-            unlimitedModeScreen(context),
+            dailyGameModeScreen(context),
           ],
         ),
       ),
@@ -519,7 +473,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     );
   }
 
-  Widget unlimitedModeScreen(BuildContext context) {
+  Widget dailyGameModeScreen(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -533,7 +487,9 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
   Widget _buildTextFormField() {
     List<Widget> previousGuessWidgets =
-        List.generate(currentGuessIndex, (index) {
+        List.generate(guessesMade.length, (index) {
+      String guess = guessesMade[index];
+      bool hintShown = _showHints[index];
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -552,7 +508,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
               children: [
                 Expanded(
                   child: Text(
-                    'Guess ${index + 1}: ${saveUserGuesses[index]}',
+                    'Guess ${index + 1}: $guess',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -562,58 +518,87 @@ class _DailyGamePageState extends State<DailyGamePage> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: _showHints[index] ? Colors.green : Colors.blue,
+                    color: hintShown ? Colors.green : Colors.blue,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: _showHints[index]
-                      ? Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  getHint(index),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
+                  child: () {
+                    if (index < hintdex.length && hintdex[index]) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                getHint(index),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
-                                if (index == 0)
-                                  Image.network(dailyPlayer['country_flag']),
-                                if (index == 3)
-                                  Image.network(dailyPlayer['club_logo']),
-                              ],
-                            ),
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            _hintRevealed(index);
-                            // revealHint(index);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Show Hint',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
+                              if (index == 0)
+                                Image.network(dailyPlayer['country_flag']),
+                              if (index == 3)
+                                Image.network(dailyPlayer['club_logo']),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (hintShown) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                getHint(index),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              if (index == 0)
+                                Image.network(dailyPlayer['country_flag']),
+                              if (index == 3)
+                                Image.network(dailyPlayer['club_logo']),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (index < 5) {
+                      return GestureDetector(
+                        onTap: () {
+                          _hintRevealed(index);
+                          revealHint(index);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Show Hint',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                )
+                      );
+                    }
+                  }(),
+                ),
               ],
             ),
           ),
         ],
       );
-    }).toList();
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -627,45 +612,47 @@ class _DailyGamePageState extends State<DailyGamePage> {
             ],
           ],
         ),
-        Center(
-          child: Text(
-            'Guess ${currentGuessIndex + 1}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+        if (!gameEnded)
+          Center(
+            child: Text(
+              'Guess ${guessesMade.length + 1}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        TextField(
-          controller: guessControllers[currentGuessIndex],
-          onChanged: (val) {
-            setState(() {
-              guess = val;
-            });
-          },
-          onEditingComplete: () {
-            setState(() {
-              checkGuess();
-            });
-          },
-          maxLength: 15,
-          autofocus: true,
-          decoration: InputDecoration(
-            hintText: 'Enter your guess here',
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.green),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            fillColor: Colors.grey.shade200,
-            filled: true,
-            hintStyle: const TextStyle(color: Colors.black),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+        if (!gameEnded)
+          TextField(
+            controller: guessControllers[guessesMade.length],
+            onChanged: (val) {
+              setState(() {
+                guess = val;
+              });
+            },
+            onEditingComplete: () {
+              setState(() {
+                checkGuess();
+              });
+            },
+            maxLength: 15,
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'Enter your guess here',
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              fillColor: Colors.grey.shade200,
+              filled: true,
+              hintStyle: const TextStyle(color: Colors.black),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
             ),
           ),
-        ),
         if (gameEnded)
           Dialog(
             child: Column(
@@ -708,7 +695,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          '/homePage',
+                          '/home',
                         );
                       },
                       child: Text('Home'),

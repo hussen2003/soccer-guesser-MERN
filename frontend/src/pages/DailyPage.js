@@ -1,26 +1,26 @@
-import Header from "../components/header/Header.js";
-import React, { useState, useEffect } from "react";
+import Header from '../components/header/Header.js';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import './dailypage.css';
 
-const app_name = "soccerdle-mern-ace81d4f14ec";
+const app_name = 'soccerdle-mern-ace81d4f14ec';
 function buildPath(route) {
-  if (process.env.NODE_ENV === "production") {
-    return "https://" + app_name + ".herokuapp.com/" + route;
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
   } else {
-    return "http://localhost:5001/" + route;
+    return 'http://localhost:5001/' + route;
   }
 }
 
 function DailyPage() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [dailyPlayer, setDailyPlayer] = useState(null);
   var pToday, fToday;
-  const [guess, setGuess] = useState("");
+  const [guess, setGuess] = useState('');
   const [gameEnded, setGameEnded] = useState(false);
   const [guessesMade, setGuessesMade] = useState([]);
   const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
-  const [hint, setHint] = useState("");
+  const [hint, setHint] = useState('');
   const [hintdex, setHindex] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [gameSummary, setGameSummary] = useState({});
@@ -29,60 +29,60 @@ function DailyPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(buildPath("api/players/getDailyPlayer"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const response = await fetch(buildPath('api/players/getDailyPlayer'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
         });
         if (!response.ok) {
-          throw new Error("Failed to obtain daily player data!");
+          throw new Error('Failed to obtain daily player data!');
         }
         const data = JSON.parse(await response.text());
         setDailyPlayer(data);
       } catch (e) {
         alert(e.toString());
-        setMessage("Error occurred. Please try again later!");
+        setMessage('Error occurred. Please try again later!');
         return;
       }
       var obj = { username: userData.username };
       var js = JSON.stringify(obj);
       try {
-        const res = await fetch(buildPath("api/daily/getGuesses"), {
-          method: "POST",
+        const res = await fetch(buildPath('api/daily/getGuesses'), {
+          method: 'POST',
           body: js,
-          headers: { "Content-Type": "application/json" },
+          headers: { 'Content-Type': 'application/json' },
         });
         if (!res.ok) {
-          throw new Error("Failed to obtain daily player data!");
+          throw new Error('Failed to obtain daily player data!');
         }
         const guessdata = JSON.parse(await res.text());
         pToday = guessdata.playedToday;
         fToday = guessdata.finishedToday;
         if (!pToday) {
-          var object = { username: userData.username, guess: null, tryAmount: 0 };  // tryamount : 0 resets your guesses for today
+          var object = { username: userData.username, guess: null, tryAmount: 0 }; // tryamount : 0 resets your guesses for today
           var js = JSON.stringify(object);
           try {
-            const response2 = await fetch(buildPath("api/daily/updateGuess"), {
-              method: "POST",
+            const response2 = await fetch(buildPath('api/daily/updateGuess'), {
+              method: 'POST',
               body: js,
-              headers: { "Content-Type": "application/json" },
+              headers: { 'Content-Type': 'application/json' },
             });
             if (!response2.ok) {
-              throw new Error("Failed to obtain daily player data!");
+              throw new Error('Failed to obtain daily player data!');
             }
           } catch (e) {
             alert(e.toString());
-            setMessage("Error occurred. Please try again later!");
+            setMessage('Error occurred. Please try again later!');
             return;
           }
         } else if (pToday && !fToday) {
-          const updatedGuessesMade = (guessdata.guesses || []).filter(guess => guess.trim() !== '');
+          const updatedGuessesMade = (guessdata.guesses || []).filter((guess) => guess.trim() !== '');
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
           const updatedHintdex = guessdata.hints;
           setGuessesMade(updatedGuessesMade);
           setCurrentGuessIndex(updatedCurrentGuessIndex);
           setHindex(updatedHintdex);
         } else if (fToday) {
-          const updatedGuessesMade = (guessdata.guesses || []).filter(guess => guess.trim() !== '');
+          const updatedGuessesMade = (guessdata.guesses || []).filter((guess) => guess.trim() !== '');
           const updatedCurrentGuessIndex = updatedGuessesMade.length;
           const updatedHintdex = guessdata.hints;
           setGuessesMade(updatedGuessesMade);
@@ -90,26 +90,28 @@ function DailyPage() {
           setHindex(updatedHintdex);
           setGameEnded(true);
           try {
-            const responseEnd = await fetch(buildPath("api/daily/endGame"), {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username: userData.username, score: guessdata.dailyScore , tryAmount: updatedGuessesMade.length + 1 }),
+            const responseEnd = await fetch(buildPath('api/daily/endGame'), {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: userData.username, score: 0, tryAmount: updatedGuessesMade.length + 1 }),
             });
             if (!responseEnd.ok) {
-              throw new Error("Failed to fetch game summary stats!");
+              throw new Error('Failed to fetch game summary stats!');
             }
             const data = JSON.parse(await responseEnd.text());
+            data.dailyScore = guessdata.dailyScore;
+            Score(guessdata.dailyScore);
             setGameSummary(data);
             setShowModal(true);
           } catch (error) {
             alert(error.toString());
-            setMessage("Error occurred. Please try again later!");
+            setMessage('Error occurred. Please try again later!');
             return;
           }
         }
       } catch (e) {
         alert(e.toString());
-        setMessage("Error occurred. Please try again later!");
+        setMessage('Error occurred. Please try again later!');
         return;
       }
     };
@@ -118,37 +120,37 @@ function DailyPage() {
   }, []);
 
   const updateHintdex = async (i) => {
-    var obj = { username: userData.username, dex: i};
+    var obj = { username: userData.username, dex: i };
     var js = JSON.stringify(obj);
     try {
-      const response = await fetch(buildPath("api/daily/updateHints"), {
-        method: "POST",
+      const response = await fetch(buildPath('api/daily/updateHints'), {
+        method: 'POST',
         body: js,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
       if (!response.ok) {
-        throw new Error("Failed to update hints!");
+        throw new Error('Failed to update hints!');
       }
       const data = JSON.parse(await response.text());
       const updateHintdex = data.hints;
       setHindex(updateHintdex);
     } catch (e) {
       alert(e.toString());
-      setMessage("Error occurred. Please try again later!");
+      setMessage('Error occurred. Please try again later!');
       return;
     }
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       checkGuess();
     }
   };
 
   const goback = async (event) => {
     event.preventDefault();
-    window.location.href = "/LandingPage";
-  }
+    window.location.href = '/LandingPage';
+  };
 
   function handleMouseEnter(event) {
     event.target.style.backgroundColor = '#3dea76';
@@ -162,24 +164,25 @@ function DailyPage() {
     var obj = { username: userData.username, guess: input.trim(), tryAmount: guessesMade.length + 1 };
     var js = JSON.stringify(obj);
     try {
-      const response = await fetch(buildPath("api/daily/updateGuess"), {
-        method: "POST",
+      const response = await fetch(buildPath('api/daily/updateGuess'), {
+        method: 'POST',
         body: js,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
       if (!response.ok) {
-        throw new Error("Failed to update guess!");
+        throw new Error('Failed to update guess!');
       }
     } catch (e) {
       alert(e.toString());
-      setMessage("Error occurred. Please try again later!");
+      setMessage('Error occurred. Please try again later!');
       return;
     }
-  }
-
+  };
+  const [wrongGuesses, setWrongGuesses] = useState([]);
+  const [correctGuesses, setCorrectGuesses] = useState([]);
   const checkGuess = () => {
     // Check if guess is not empty string
-    if (guess.trim() === "") {
+    if (guess.trim() === '') {
       return; // Do nothing if guess is empty
     }
 
@@ -219,16 +222,11 @@ function DailyPage() {
             s = 0;
             break;
         }
-        if(hintdex[0])
-          s -= 1;
-        if(hintdex[1])
-          s -= 3;
-        if(hintdex[2])
-          s -= 3;
-        if(hintdex[3])
-          s -= 3;
-        if(hintdex[4])
-          s -= 5;
+        if (hintdex[0]) s -= 1;
+        if (hintdex[1]) s -= 3;
+        if (hintdex[2]) s -= 3;
+        if (hintdex[3]) s -= 3;
+        if (hintdex[4]) s -= 5;
         Score(s);
         handleGameEnd(s, guessesMade.length + 1);
       } else {
@@ -237,7 +235,13 @@ function DailyPage() {
       }
     } else {
       setCurrentGuessIndex(currentGuessIndex + 1);
-      setGuess("");
+      setGuess('');
+    }
+    if (!isCorrectGuess) {
+      setWrongGuesses([...wrongGuesses, currentGuessIndex]);
+      setTimeout(() => setWrongGuesses(wrongGuesses.filter((index) => index !== currentGuessIndex)), 2000);
+    } else {
+      setCorrectGuesses([...correctGuesses, currentGuessIndex]);
     }
   };
 
@@ -263,7 +267,7 @@ function DailyPage() {
         setHint(`Position: ${dailyPlayer.positions}`);
         break;
       default:
-        setHint("");
+        setHint('');
     }
   };
 
@@ -280,7 +284,7 @@ function DailyPage() {
       case 4:
         return `Position: ${dailyPlayer.positions}`;
       default:
-        return "";
+        return '';
     }
   };
 
@@ -288,37 +292,37 @@ function DailyPage() {
     var obj = { username: userData.username, dailyScore: input };
     var js = JSON.stringify(obj);
     try {
-      const response = await fetch(buildPath("api/daily/updateScore"), {
-        method: "POST",
+      const response = await fetch(buildPath('api/daily/updateScore'), {
+        method: 'POST',
         body: js,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
       if (!response.ok) {
-        throw new Error("Failed to update score!");
+        throw new Error('Failed to update score!');
       }
     } catch (e) {
       alert(e.toString());
-      setMessage("Error occurred. Please try again later!");
+      setMessage('Error occurred. Please try again later!');
       return;
     }
-  }
+  };
 
   const handleGameEnd = async (scores, tries) => {
     try {
-      const responseEnd = await fetch(buildPath("api/daily/endGame"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const responseEnd = await fetch(buildPath('api/daily/endGame'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: userData.username, score: scores, tryAmount: tries }),
       });
       if (!responseEnd.ok) {
-        throw new Error("Failed to fetch game summary stats!");
+        throw new Error('Failed to fetch game summary stats!');
       }
       const data = JSON.parse(await responseEnd.text());
       setGameSummary(data);
       setShowModal(true);
     } catch (error) {
       alert(error.toString());
-      setMessage("Error occurred. Please try again later!");
+      setMessage('Error occurred. Please try again later!');
       return;
     }
   };
@@ -326,12 +330,12 @@ function DailyPage() {
   const close = async (event) => {
     event.preventDefault();
     setShowModal(false);
-  }
+  };
 
   const open = async (event) => {
     event.preventDefault();
     setShowModal(true);
-  }
+  };
 
   return (
     <div>
@@ -352,7 +356,7 @@ function DailyPage() {
       >
         <h1 style={{ textAlign: 'center' }}>Daily Mode</h1>
         <div style={{ margin: '5px 0' }}></div>
-        <p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>
+        {currentGuessIndex === 0 && (<p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>)}
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
             {guessesMade.map((guess, index) => (
@@ -362,7 +366,7 @@ function DailyPage() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  border: '1px solid #ccc',
+                  border: correctGuesses.includes(index) ? '2px solid green' : wrongGuesses.includes(index) ? '2px solid red' : '1px solid #ccc',
                   padding: '10px',
                   margin: '5px auto',
                   width: '80%',
@@ -370,6 +374,7 @@ function DailyPage() {
                   borderRadius: '5px',
                   height: '9vh',
                   color: 'white',
+                  animation: wrongGuesses.includes(index) ? 'shake 0.5s' : 'none',
                 }}
               >
                 <p style={{ fontSize: '20px', color: 'white', margin: '0' }}>{`Guess ${index + 1}: ${guessesMade[index]}`}</p>
@@ -427,7 +432,7 @@ function DailyPage() {
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
                 onKeyPress={handleKeyPress}
-                maxLength={15}
+                maxLength={16}
                 autoFocus
               />
             </div>

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soccerdle/services/loginPageServices.dart';
-
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/homePage';
@@ -22,12 +21,10 @@ class _HomePageState extends State<HomePage> {
 
   // Function to load the name from SharedPreferences
   _loadName() async {
-  setState(() {
-    name = Storage.getName();
-    // name = prefs.getString('name') ?? 'NONE'; // Use a default value if the retrieved value is null
-    print('Name loaded: $name');
-  });
-}
+    setState(() {
+      name = Storage.getName();
+    });
+  }
 
   void playDailyGame() {
     Navigator.pushNamed(context, '/dailyGamePage');
@@ -43,6 +40,10 @@ class _HomePageState extends State<HomePage> {
 
   void logout() async {
     Navigator.pushNamed(context, '/login');
+  }
+
+  void allTimeLB() async {
+    Navigator.pushNamed(context, '/allTimeLeaderboard');
   }
 
   @override
@@ -149,6 +150,25 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: const Text(
                       'Leaderboard',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: allTimeLB,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 45),
+                    ),
+                    child: const Text(
+                      '   All Time\nLeaderboard',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,

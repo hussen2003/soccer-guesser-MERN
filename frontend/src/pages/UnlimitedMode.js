@@ -1,4 +1,5 @@
 import Header from '../components/header/Header.js';
+import './unlimitedmode.css';
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
@@ -70,6 +71,8 @@ function UnlimitedMode() {
     }
   };
 
+  const [wrongGuesses, setWrongGuesses] = useState([]);
+  const [correctGuesses, setCorrectGuesses] = useState([]);
   const checkGuess = () => {
     const { guess, guessesMade, currentGuessIndex, gameEnded, dailyPlayer } = gameState;
     if (guess.trim() === '') {
@@ -92,6 +95,12 @@ function UnlimitedMode() {
       updatedGameState.gameEnded = true;
     } else {
       updatedGameState.currentGuessIndex = currentGuessIndex + 1;
+    }
+    if (!isCorrectGuess) {
+      setWrongGuesses([...wrongGuesses, currentGuessIndex]);
+      setTimeout(() => setWrongGuesses(wrongGuesses.filter((index) => index !== currentGuessIndex)), 2000);
+    } else {
+      setCorrectGuesses([...correctGuesses, currentGuessIndex]);
     }
 
     setGameState(updatedGameState);
@@ -151,7 +160,6 @@ function UnlimitedMode() {
   return (
     <div>
       <Header />
-      <div style={{ margin: '50px' }} />
 
       <div
         style={{
@@ -171,7 +179,7 @@ function UnlimitedMode() {
         <div style={{ margin: '5px 0' }}></div>
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
-          <p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>
+            {gameState.currentGuessIndex === 0 && (<p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>)}
             {gameState.guessesMade.map((guess, index) => (
               <span
                 key={index}
@@ -179,7 +187,7 @@ function UnlimitedMode() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  border: '1px solid #ccc',
+                  border: correctGuesses.includes(index) ? '2px solid green' : wrongGuesses.includes(index) ? '2px solid red' : '1px solid #ccc',
                   padding: '10px',
                   margin: '5px auto',
                   width: '80%',
@@ -187,6 +195,7 @@ function UnlimitedMode() {
                   borderRadius: '5px',
                   height: '9vh',
                   color: 'white',
+                  animation: wrongGuesses.includes(index) ? 'shake 0.5s' : 'none',
                 }}
               >
                 <p style={{ fontSize: '20px', color: 'white', margin: '0' }}>{`Guess ${index + 1}: ${guess}`}</p>
@@ -224,7 +233,7 @@ function UnlimitedMode() {
                 value={gameState.guess}
                 onChange={(e) => setGameState({ ...gameState, guess: e.target.value })}
                 onKeyPress={handleKeyPress}
-                maxLength={15}
+                maxLength={16}
                 autoFocus
               />
             </div>

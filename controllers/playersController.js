@@ -20,13 +20,13 @@ export const getDailyPlayer = async (req, res) => {
     try {
       
       const date = new Date();
-      // date.setHours(date.getHours() - 5);
+      date.setHours(date.getHours() - 5);
       date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
-      const dailyDate = "Mon Apr 01 2024 00:00:00 GMT+0000 (Coordinated Universal Time)";
-      // const dailyDate = date + "";
+      //const dailyDate = "Mon Apr 01 2024 00:00:00 GMT+0000 (Coordinated Universal Time)";
+      const dailyDate = date + "";
     
       const dailyPlayer = await Player.findOne({ dailyDate });
   

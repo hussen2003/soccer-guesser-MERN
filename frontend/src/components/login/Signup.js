@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import './signup.css';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const app_name = 'soccerdle-mern-ace81d4f14ec';
+
 function buildPath(route) {
   if (process.env.NODE_ENV === 'production') {
     return 'https://' + app_name + '.herokuapp.com/' + route;
@@ -11,6 +13,22 @@ function buildPath(route) {
     return 'http://localhost:5001/' + route;
   }
 }
+
+const getPasswordRequirements = (requirements) => {
+  const fulfilledStyle = { color: 'green', fontWeight: 'bold' };
+
+  return (
+    <div>
+      <p>Password requirements:</p>
+      <ul>
+        <li style={requirements.minLength ? fulfilledStyle : null}>Minimum 8 characters</li>
+        <li style={requirements.uppercase ? fulfilledStyle : null}>At least one uppercase letter</li>
+        <li style={requirements.lowercase ? fulfilledStyle : null}>At least one lowercase letter</li>
+        <li style={requirements.number ? fulfilledStyle : null}>At least one number</li>
+      </ul>
+    </div>
+  );
+};
 
 const SignUp = () => {
   const [values, setValues] = useState({
@@ -20,69 +38,73 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-  const [errors, setErrors] = useState({
-    name: false,
-    username: false,
-    email: false,
-    password: false,
-    confirmPassword: false,
-  });
 
   const [error, setError] = useState('');
 
-  const inputs = [
-    {
-      id: 0,
-      name: 'name',
-      type: 'text',
-      placeholder: 'Enter your full name',
-      errorMessage: 'Name is required!',
-      label: 'Name',
-      required: true,
-    },
-    {
-      id: 1,
-      name: 'username',
-      type: 'text',
-      placeholder: 'Enter your username',
-      errorMessage: 'Username is required',//"Username should be 3-16 characters and shouldn't include any special character!",
-      label: 'Username',
-      //pattern: '^[A-Za-z0-9]{3,16}$',
-      required: true,
-    },
-    {
-      id: 2,
-      name: 'email',
-      type: 'email',
-      placeholder: 'Enter your email',
-      errorMessage: 'It should be a valid email address!',
-      label: 'Email',
-      required: true,
-    },
-    {
-      id: 3,
-      name: 'password',
-      type: 'password',
-      placeholder: 'Enter your password',
-      errorMessage: 'Password should be minimum 6 characters',//'Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!',
-      label: 'Password',
-      pattern: `^.{6,}$`,//`^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`
-      required: true,
-    },
-    {
-      id: 4,
-      name: 'confirmPassword',
-      type: 'password',
-      placeholder: 'Enter your password again',
-      errorMessage: "Passwords don't match!",
-      label: 'Confirm Password',
-      pattern: values.password,
-      required: true,
-    },
-  ];
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    minLength: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+  });
+
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setValues({ ...values, password: newPassword });
+    const strength = calculatePasswordStrength(newPassword);
+    setPasswordStrength(strength);
+    updatePasswordRequirements(newPassword);
+  };
+
+  const calculatePasswordStrength = (password) => {
+    let strength = 0;
+    if (password.length >= 8) {
+      strength += 25;
+      setPasswordRequirements((prevRequirements) => ({ ...prevRequirements, minLength: true }));
+    }
+    if (/[A-Z]/.test(password)) {
+      strength += 25;
+      setPasswordRequirements((prevRequirements) => ({ ...prevRequirements, uppercase: true }));
+    }
+    if (/[a-z]/.test(password)) {
+      strength += 25;
+      setPasswordRequirements((prevRequirements) => ({ ...prevRequirements, lowercase: true }));
+    }
+    if (/\d/.test(password)) {
+      strength += 25;
+      setPasswordRequirements((prevRequirements) => ({ ...prevRequirements, number: true }));
+    }
+    return strength;
+  };
+
+  const updatePasswordRequirements = (password) => {
+    setPasswordRequirements({
+      minLength: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /\d/.test(password),
+    });
+  };
 
   const doSignup = async (event) => {
     event.preventDefault();
+
+    if (values.name === '' || values.username === '' || values.email === '' || values.password === '' || values.confirmPassword === '') {
+      setError('Please fill out all fields.');
+      return;
+    }
+
+    if (values.password !== values.confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(values.email)) {
+      setError('Invalid email address.');
+      return;
+    }
+
     var obj = { name: values.name, email: values.email, username: values.username, password: values.password };
     var js = JSON.stringify(obj);
     try {
@@ -97,7 +119,7 @@ const SignUp = () => {
         setError(res.error);
         return;
       } else if (res.errors) {
-        setError(res.errors);
+        setError(res.errors.join(', ')); // Combine all error messages into one string
         return;
       } else {
         var user = {
@@ -118,44 +140,91 @@ const SignUp = () => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    const input = inputs.find((input) => input.name === name);
     let isValid = true;
 
-    if (input.required && value === '') {
+    if (name === 'confirmPassword' && value !== values.password) {
       isValid = false;
     }
-    if (input.pattern && !new RegExp(input.pattern).test(value)) {
+    if (value === '') {
       isValid = false;
     }
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: !isValid });
+    setError(''); // Clear error message when input changes
   };
 
   return (
     <div className="signup-container">
       <form onSubmit={doSignup}>
         <h1>Sign Up</h1>
-        {error === 'User created successfully, verification email sent' && (
-          <Alert variant="success">
-            <Alert.Heading>GOAL!</Alert.Heading>
-            <p>User created successfully. Please check your email to verify your account.</p>
-          </Alert>
-        )}
-        {error !== 'User created successfully, verification email sent' && error !== '' && (
-          <Alert variant="danger">
-            <Alert.Heading>Error!</Alert.Heading>
-            <p>{error}</p>
-          </Alert>
-        )}
-        {inputs.map((input) => (
-          <div key={input.id} className="form-group">
-            <label>{input.label}</label>
-            <input type={input.type} name={input.name} placeholder={input.placeholder} value={values[input.name]} onChange={onChange} required={input.required} pattern={input.pattern} />
-            <div className="error" style={{ color: 'red', display: errors[input.name] ? 'block' : 'none' }}>
-              {input.errorMessage}
-            </div>
-          </div>
-        ))}
+        <div className="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your full name"
+            value={values.name}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter your username"
+            value={values.username}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={values.email}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value={values.password}
+            onChange={handlePasswordChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Enter your password again"
+            value={values.confirmPassword}
+            onChange={onChange}
+            required
+          />
+          {error && (
+            <Alert variant="danger" style={{ marginTop: '10px' }}>
+              {error}
+            </Alert>
+          )}
+        </div>
+        {getPasswordRequirements(passwordRequirements)}
+        <ProgressBar>
+          <ProgressBar
+            striped
+            now={passwordStrength}
+            variant={passwordStrength < 50 ? 'danger' : passwordStrength < 80 ? 'warning' : 'success'}
+            key={1}
+          />
+        </ProgressBar>
         <Button
           variant="primary"
           type="submit"
@@ -175,14 +244,11 @@ const SignUp = () => {
         >
           Sign up
         </Button>
-        <div style={{ margin: '20px 0' }}></div> {}
+        <div style={{ margin: '20px 0' }}></div>
         <p>
           Already have an account? <a href="/">Login</a>
         </p>
       </form>
-      {(error !== 'Email already exists' || error !== 'Username already exists') && error === 'Internal Server Error' && (
-        <p style={{ color: 'red', fontWeight: 'bold' }}>Make sure every field is filled out</p>
-      )}
     </div>
   );
 };

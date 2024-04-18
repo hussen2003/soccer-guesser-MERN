@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LeaderBoardPage extends StatefulWidget {
-  static const String routeName = '/leaderBoard';
-  const LeaderBoardPage({Key? key}) : super(key: key);
+class AllTimeLeaderBoardPage extends StatefulWidget {
+  static const String routeName = '/allTimeLeaderboard';
+  const AllTimeLeaderBoardPage({Key? key}) : super(key: key);
   @override
-  _LeaderboardState createState() => _LeaderboardState();
+  _AllTimeLeaderboardState createState() => _AllTimeLeaderboardState();
 }
 
-class _LeaderboardState extends State<LeaderBoardPage> {
+class _AllTimeLeaderboardState extends State<AllTimeLeaderBoardPage> {
   List<User> users = [];
   String message = '';
 
@@ -23,7 +23,7 @@ class _LeaderboardState extends State<LeaderBoardPage> {
   Future<void> fetchPlayers() async {
     try {
       http.Response response = await http.post(
-        Uri.parse('$baseUrl/api/daily/leaderboard'),
+        Uri.parse('$baseUrl/api/unlimited/leaderboard'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -44,21 +44,21 @@ class _LeaderboardState extends State<LeaderBoardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daily Top Players'),
+        title: Text('Top Players'),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            Text('Daily Top Players',
+            Text('Top Players',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: users.where((user) => user.dailyScore > 0).length,
+                itemCount: users.where((user) => user.score > 0).length,
                 itemBuilder: (context, index) {
                   var players =
-                      users.where((user) => user.dailyScore > 0).toList();
+                      users.where((user) => user.score > 0).toList();
                   return Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class _LeaderboardState extends State<LeaderBoardPage> {
                                 style: TextStyle(fontSize: 18)),
                           ],
                         ),
-                        Text('${players[index].dailyScore}',
+                        Text('${players[index].score}',
                             style: TextStyle(fontSize: 18)),
                       ],
                     ),
@@ -101,14 +101,14 @@ class _LeaderboardState extends State<LeaderBoardPage> {
 
 class User {
   final String name;
-  final int dailyScore;
+  final int score;
 
-  User({required this.name, required this.dailyScore});
+  User({required this.name, required this.score});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'],
-      dailyScore: json['dailyScore'],
+      score: json['score'],
     );
   }
 }
