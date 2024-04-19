@@ -284,9 +284,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
       if (currentGuessIndex < guessesMade.length) {
         updatedGuessesMade[currentGuessIndex] = guess;
-      } else {
-        // Adjust currentGuessIndex or handle the error appropriately
-      }
+      } else {}
       setState(() {
         guessesMade = updatedGuessesMade;
       });
@@ -475,12 +473,20 @@ class _DailyGamePageState extends State<DailyGamePage> {
 
   Widget dailyGameModeScreen(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTextFormField(),
-        ],
+      padding: const EdgeInsets.fromLTRB(16.0, 30.0, 16.0, 30.0),
+      child: Container(
+        padding: EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTextFormField(),
+          ],
+        ),
       ),
     );
   }
@@ -494,21 +500,17 @@ class _DailyGamePageState extends State<DailyGamePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            decoration: const BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
               color: Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.green,
-                  width: 1.0,
-                ),
-              ),
+              borderRadius: BorderRadius.circular(6.0),
+              border: Border.all(color: Color.fromARGB(255, 69, 4, 199)),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: Text(
-                    'Guess ${index + 1}: $guess',
+                    ' Guess ${index + 1}: $guess',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -518,7 +520,9 @@ class _DailyGamePageState extends State<DailyGamePage> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: hintShown ? Colors.green : Colors.blue,
+                    color: hintShown
+                        ? Color.fromARGB(255, 255, 255, 255)
+                        : Colors.blue,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: () {
@@ -617,7 +621,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
             child: Text(
               'Guess ${guessesMade.length + 1}',
               style: const TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -641,7 +645,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
             decoration: InputDecoration(
               hintText: 'Enter your guess here',
               enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.green),
+                borderSide: BorderSide(color: Color.fromARGB(255, 69, 4, 199)),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               fillColor: Colors.grey.shade200,
