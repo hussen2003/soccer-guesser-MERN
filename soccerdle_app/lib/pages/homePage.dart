@@ -26,159 +26,123 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void playDailyGame() {
+  void playDaily(BuildContext context) {
     Navigator.pushNamed(context, '/dailyGamePage');
   }
 
-  void goToUnlimitedMode() {
-    Navigator.pushNamed(context, '/unlimitedModePage');
-  }
-
-  void goToLeaderboard() {
+  void goLeaderboard(BuildContext context) {
     Navigator.pushNamed(context, '/leaderBoard');
   }
 
-  void logout() async {
-    Navigator.pushNamed(context, '/login');
+  void logout() {
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
-  void allTimeLB() async {
+  void goUnlimited(BuildContext context) {
+    Navigator.pushNamed(context, '/unlimitedModePage');
+  }
+
+  void goAllTime(BuildContext context) {
     Navigator.pushNamed(context, '/allTimeLeaderboard');
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          title: const Text('Soccerdle',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          centerTitle: true,
-          backgroundColor: Colors.grey.shade200.withOpacity(0.5),
-          elevation: 0,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout),
-              color: Color.fromARGB(255, 157, 21, 21),
-              onPressed: logout,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Soccerdle',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            color: Color.fromARGB(255, 157, 21, 21),
+            onPressed: logout,
+          ),
+        ],
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/images/app.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  _buildCard(
+                    context,
+                    'Daily Game',
+                    'Every 24 hours a new player will be randomly selected. Can you guess today\'s player?',
+                    'lib/images/messi2.jpeg',
+                    playDaily,
+                  ),
+                  _buildCard(
+                    context,
+                    'Unlimited Game',
+                    'Test your knowledge and go as many times as you want! How many can you guess?',
+                    'lib/images/SUI.jpeg',
+                    goUnlimited,
+                  ),
+                  _buildCard(
+                    context,
+                    'Daily Leaderboard',
+                    'Leaderboard for the Daily game mode.',
+                    'lib/images/france2.jpeg',
+                    goLeaderboard,
+                  ),
+                  _buildCard(
+                    context,
+                    'All Time Leaderboard',
+                    'Overall Leaderboard. Do u see yourself on it?',
+                    'lib/images/brazil2.jpeg',
+                    goAllTime,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(BuildContext context, String title, String description,
+      String imagePath, Function onPressed) {
+    return Container(
+      width: 300,
+      height: 400,
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: Card(
+        color: Colors.white,
+        elevation: 20,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(imagePath),
+            Column(
+              children: [
+                Text(title),
+                Text(description),
+                ElevatedButton(
+                  onPressed: () => onPressed(context),
+                  child: Text('Play now'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff7eaf34),
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('lib/images/app.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.all(60),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Hello ${name.split(' ').first}!',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 45),
-                  ElevatedButton(
-                    onPressed: playDailyGame,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 30),
-                    ),
-                    child: const Text(
-                      'Play Daily Game',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: goToUnlimitedMode,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 30),
-                    ),
-                    child: const Text(
-                      'Unlimited Mode',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: goToLeaderboard,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 45),
-                    ),
-                    child: const Text(
-                      'Leaderboard',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: allTimeLB,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 84, 227, 110),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 45),
-                    ),
-                    child: const Text(
-                      '   All Time\nLeaderboard',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ),
       ),
     );
