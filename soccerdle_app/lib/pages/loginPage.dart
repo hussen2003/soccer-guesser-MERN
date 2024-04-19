@@ -65,88 +65,85 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginUI(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 120),
-        color: Colors.black.withOpacity(0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(40),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Form(
-                key: _signInFormKey,
-                child: Column(
-                  children: [
-                    const Text(
-                      "Login",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.black,
-                      ),
+Widget _loginUI(BuildContext context) {
+  return SingleChildScrollView(
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 120),
+      color: Colors.black.withOpacity(0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(40),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.9),
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Form(
+              key: _signInFormKey,
+              child: Column(
+                children: [
+                  const Text(
+                    "Login",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 30),
-                    _buildTextField(
-                      controller: _usernameController,
-                      hintText: 'Username',
-                      prefixIcon: Icons.person,
+                  ),
+                  const SizedBox(height: 30),
+                  _buildTextField(
+                    controller: _usernameController,
+                    hintText: 'Username',
+                    prefixIcon: Icons.person,
+                  ),
+                  const SizedBox(height: 20),
+                  _buildTextField(
+                    controller: _passwordController,
+                    hintText: 'Password',
+                    prefixIcon: Icons.lock,
+                    isPassword: true,
+                  ),
+                  const SizedBox(height: 15),
+                  Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: const Text('Forget Password ?'),
                     ),
-                    const SizedBox(height: 20),
-                    _buildTextField(
-                      controller: _passwordController,
-                      hintText: 'Password',
-                      prefixIcon: Icons.lock,
-                      isPassword: true,
-                    ),
-                    const SizedBox(height: 15),
-                    Align(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: const Text('Forget Password ?'),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: signInUser,
-                      child: const Text('Sign In'),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Don't have an account? "),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
-                          child: const Text(
-                            'Sign up',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: signInUser,
+                    child: const Text('Sign In'),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account? "),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
+                        child: const Text(
+                          'Sign up',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 9),
-            ElevatedButton(
-              onPressed: navigateToAboutUs,
-              child: const Text('About Us'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildTextField({
     required TextEditingController controller,

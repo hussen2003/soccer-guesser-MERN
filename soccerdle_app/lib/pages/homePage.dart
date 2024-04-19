@@ -49,22 +49,55 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Soccerdle',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.grey.shade200.withOpacity(0.5),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            color: Color.fromARGB(255, 157, 21, 21),
-            onPressed: logout,
-          ),
-        ],
+    appBar: AppBar(
+      title: const Text(
+        'Soccerdle',
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
+      centerTitle: true,
+      backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      leading: PopupMenuButton(
+        itemBuilder: (BuildContext context) {
+          return [
+            PopupMenuItem(
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Color(0xff7eaf34), // Set green color
+                  border: Border.all(color: Colors.black, width: 2.0),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text(
+                  'About Us',
+                  style: TextStyle(
+                    color: Colors.black, // Set text color to black for contrast
+                  ),
+                ),
+              ),
+              value: 'aboutUs',
+            ),
+          ];
+        },
+  onSelected: (value) {
+    if (value == 'aboutUs') {
+      Navigator.pushNamed(context, '/aboutUs');
+    }
+  },
+),
+
+
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.logout),
+          color: Color.fromARGB(255, 157, 21, 21),
+          onPressed: logout,
+        ),
+      ],
+    ),
+
+
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -103,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                   _buildCard(
                     context,
                     'All Time Leaderboard',
-                    'Overall Leaderboard. Do u see yourself on it?',
+                    'Overall Leaderboard. Do you see yourself on it?',
                     'lib/images/brazil2.jpeg',
                     goAllTime,
                   ),
@@ -168,13 +201,13 @@ Widget _buildCard(BuildContext context, String title, String description,
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
                         'Play now',
-                        style: TextStyle(fontSize: 16, color: Colors.black), // Set color to white
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7eaf34)), // Set green color
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7eaf34)), 
                       side: MaterialStateProperty.all<BorderSide>(
-                        BorderSide(color: Colors.black, width: 2), // Add border to the button
+                        BorderSide(color: Colors.black, width: 2), 
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(

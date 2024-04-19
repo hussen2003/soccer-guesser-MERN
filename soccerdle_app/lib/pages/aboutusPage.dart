@@ -62,25 +62,26 @@ class _AboutUsPageState extends State<AboutUsPage> {
     },
   ];
 
-  void redirectToLinkedIn(String linkedinUrl) {
-
-  }
+  void redirectToLinkedIn(String linkedinUrl) {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40.0), 
+        preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
-          title: const Text('Soccerdle'),
+          title: Text(
+            'Soccerdle',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
-          backgroundColor: Colors.transparent, 
+          backgroundColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: ClipRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
               child: Container(
-                color: Colors.grey.withOpacity(0.3), 
+                color: Colors.white.withOpacity(0.7), // Adjust opacity here
               ),
             ),
           ),
@@ -104,38 +105,38 @@ class _AboutUsPageState extends State<AboutUsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Meet Our Team',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                   Expanded(
                     child: ListView.builder(
                       itemCount: teamMembers.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () => redirectToLinkedIn(teamMembers[index]['linkedin']),
+                          onTap: () =>
+                              redirectToLinkedIn(teamMembers[index]['linkedin']),
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200.withOpacity(0.9),
+                              color: Colors.white.withOpacity(0.7),//Opacity 
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Column(
                               children: [
                                 Text(
                                   teamMembers[index]['name'],
-                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   teamMembers[index]['role'],
-                                  style: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 86, 85, 85)),
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 86, 85, 85)),
                                 ),
                                 const SizedBox(height: 10),
                                 Image.network(
