@@ -522,8 +522,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
                   decoration: BoxDecoration(
                     color: hintShown
                         ? Color.fromARGB(255, 255, 255, 255)
-                        : Colors.blue,
-                    borderRadius: BorderRadius.circular(20),
+                        : Colors.transparent,
                   ),
                   child: () {
                     if (index < hintdex.length && hintdex[index]) {
@@ -533,7 +532,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
                           color: Colors.white,
                           padding: EdgeInsets.all(8),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 getHint(index),
@@ -544,9 +542,29 @@ class _DailyGamePageState extends State<DailyGamePage> {
                                 ),
                               ),
                               if (index == 0)
-                                Image.network(dailyPlayer['country_flag']),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      dailyPlayer['country_flag'],
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
                               if (index == 3)
-                                Image.network(dailyPlayer['club_logo']),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      dailyPlayer['club_logo'],
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
                             ],
                           ),
                         ),
@@ -558,7 +576,6 @@ class _DailyGamePageState extends State<DailyGamePage> {
                           color: Colors.white,
                           padding: EdgeInsets.all(8),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 getHint(index),
@@ -569,27 +586,59 @@ class _DailyGamePageState extends State<DailyGamePage> {
                                 ),
                               ),
                               if (index == 0)
-                                Image.network(dailyPlayer['country_flag']),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      dailyPlayer['country_flag'],
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
                               if (index == 3)
-                                Image.network(dailyPlayer['club_logo']),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      dailyPlayer['club_logo'],
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
                             ],
                           ),
                         ),
                       );
                     } else if (index < 5) {
-                      return GestureDetector(
-                        onTap: () {
-                          _hintRevealed(index);
-                          revealHint(index);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Show Hint',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _hintRevealed(index);
+                              revealHint(index);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Color.fromARGB(255, 94, 11, 226),
+                              backgroundColor: Colors.green,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              shape: RoundedRectangleBorder(),
+                              elevation: 3,
+                              shadowColor: Colors.grey.withOpacity(0.5),
+                            ),
+                            child: Text(
+                              'Show Hint',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
