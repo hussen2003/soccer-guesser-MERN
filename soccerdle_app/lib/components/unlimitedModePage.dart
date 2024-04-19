@@ -321,6 +321,10 @@ Widget unlimitedModeScreen(BuildContext context) {
         ),
         if (gameEnded)
           Dialog(
+                backgroundColor: Color.fromARGB(255, 252, 253, 253), // Set background color
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // Adjust the border radius as needed
+                ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -370,7 +374,7 @@ Widget unlimitedModeScreen(BuildContext context) {
                           '/home',
                         );
                       },
-                      child: Text('Home'),
+                      child: Text('Home Page'),
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

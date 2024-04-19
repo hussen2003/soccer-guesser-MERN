@@ -116,31 +116,75 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCard(BuildContext context, String title, String description,
+Widget _buildCard(BuildContext context, String title, String description,
       String imagePath, Function onPressed) {
     return Container(
       width: 300,
-      height: 400,
+      height: 450,
       margin: EdgeInsets.symmetric(vertical: 8.0),
       child: Card(
         color: Colors.white,
         elevation: 20,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), 
+          side: BorderSide(color: Colors.black, width: 2), 
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath),
-            Column(
-              children: [
-                Text(title),
-                Text(description),
-                ElevatedButton(
-                  onPressed: () => onPressed(context),
-                  child: Text('Play now'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff7eaf34),
+            Container(
+              width: 200,
+              height: 200, 
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 1.5), 
+              ),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 8),
+                  Text(
+                    description,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16),
+                  OutlinedButton(
+                    onPressed: () => onPressed(context),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Text(
+                        'Play now',
+                        style: TextStyle(fontSize: 16, color: Colors.black), // Set color to white
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7eaf34)), // Set green color
+                      side: MaterialStateProperty.all<BorderSide>(
+                        BorderSide(color: Colors.black, width: 2), // Add border to the button
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -148,3 +192,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
