@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:soccerdle_app/services/loginPageServices.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = '/login';
-  const LoginPage({Key? key}) : super(key: key);
+class ForgotPasswordPage extends StatefulWidget {
+  static const String routeName = '/forgot-password';
+  const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _signInFormKey = GlobalKey<FormState>();
-  final forogtPasswordPageService loginService = forogtPasswordPageService();
+  final forogtPasswordPageService forgotPasswordService =
+      forogtPasswordPageService();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
@@ -23,15 +24,15 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
   }
 
-  void signInUser() async {
+  void forogtPassword() async {
     if (_signInFormKey.currentState!.validate()) {
-      await loginService.forgotPassword(
+      await forgotPasswordService.forgotPassword(
         context: context,
         username: _usernameController.text,
         password: _passwordController.text,
       );
-      if (loginService.userData != null) {
-        Navigator.pushNamed(context, '/home');
+      if (forgotPasswordService.userData != null) {
+        Navigator.pushNamed(context, '/login');
       }
     }
   }
@@ -85,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     const Text(
-                      "Login",
+                      "Forgot Password",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -105,36 +106,12 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: Icons.lock,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 15),
-                    Align(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/forgot-password');
-                          },
-                          child: const Text('Forget Password ?')),
-                    ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: signInUser,
-                      child: const Text('Sign In'),
+                      onPressed: forogtPassword,
+                      child: const Text('Update Password'),
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Don't have an account? "),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
-                          child: const Text(
-                            'Sign up',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),

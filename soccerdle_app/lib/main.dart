@@ -5,6 +5,7 @@ import 'package:soccerdle_app/components/dailyGame.dart';
 import 'package:soccerdle_app/components/leaderBoard.dart';
 import 'package:soccerdle_app/components/unlimitedModePage.dart';
 import 'package:soccerdle_app/pages/aboutusPage.dart';
+import 'package:soccerdle_app/pages/forgotPassword.dart';
 import 'package:soccerdle_app/pages/homePage.dart';
 import 'package:soccerdle_app/pages/loginPage.dart';
 import 'package:soccerdle_app/pages/registerPage.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginPage(),
+        '/forgot-password': (context) => const ForgotPasswordPage(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const HomePage(),
         '/dailyGamePage': (context) => const DailyGamePage(),

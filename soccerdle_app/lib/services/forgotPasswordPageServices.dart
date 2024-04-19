@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:soccerdle_app/constants/utils.dart';
 import 'package:soccerdle_app/providers/userProvider.dart';
 
-class forogtPasswordPageService {
+class ForgotPasswordPageService {
   Map<String, dynamic>? userData;
 
   Future<void> forgotPassword({
