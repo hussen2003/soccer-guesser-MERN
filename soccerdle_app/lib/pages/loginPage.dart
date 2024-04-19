@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final LoginPageService loginService = LoginPageService();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isObscure = true;
 
   @override
   void dispose() {
@@ -138,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 9),
             ElevatedButton(
-              onPressed: navigateToAboutUs, // Navigating to AboutUsPage
+              onPressed: navigateToAboutUs,
               child: const Text('About Us'),
             ),
           ],
@@ -151,19 +152,30 @@ class _LoginPageState extends State<LoginPage> {
     required TextEditingController controller,
     required String hintText,
     required IconData prefixIcon,
-    bool isPassword = false, // Added optional parameter for password field
+    bool isPassword = false,
   }) {
     return TextFormField(
       controller: controller,
-      obscureText: isPassword, // Set obscureText property for password field
+      obscureText: isPassword ? _isObscure : false,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: Icon(prefixIcon),
+        suffixIcon: isPassword
+            ? IconButton(
+                icon:
+                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  setState(() {
+                    _isObscure = !_isObscure;
+                  });
+                },
+              )
+            : null,
         filled: true,
         fillColor: Colors.grey.shade200,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: Colors.grey), // Set border color
+          borderSide: const BorderSide(color: Colors.grey),
         ),
       ),
       validator: (value) {
