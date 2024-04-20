@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Header from '../components/header/Header.js';
 import { useParams } from 'react-router-dom';
 
 const VerifyEmail = () => {
@@ -26,9 +25,22 @@ const VerifyEmail = () => {
 
   return (
     <div>
-      <Header />
-      <div style={{ color: 'white', fontSize: '24px', fontWeight: 'bold' }}>
-        {verificationStatus}
+      <div style={{
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: '0 auto',
+        width: '100%',
+        maxWidth: '400px',
+        padding: '30px',
+        backgroundColor: 'rgba(33,37,41, 0.87)',
+        color: 'white',    
+        borderRadius: '10px',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+        backdropFilter: 'blur(1px)',
+      }}>
+        {verificationStatus} !
       </div>
     </div>
   );
