@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+
+const app_name = 'soccerdle-mern-ace81d4f14ec';
+function buildPath(route) {
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://' + app_name + '.herokuapp.com/' + route;
+  } else {
+    return 'http://localhost:5001/' + route;
+  }
+}
+
 const VerifyEmail = () => {
   const { token } = useParams();
   const [verificationStatus, setVerificationStatus] = useState('');
@@ -9,7 +19,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const response = await axios.post('http://localhost:5001/api/auth/verifyEmail', { token });
+        const response = await axios.post(buildPath('api/auth/verifyEmail'), { token });
         if (response.status === 200) {
           setVerificationStatus('Email verified successfully');
         } else {

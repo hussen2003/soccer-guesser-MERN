@@ -145,3 +145,73 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "Email does not exist" });
+    }
+
+    // Generate a reset token
+    const resetToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
+    // Send the reset link to the user's email
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'soccerdle.verify.email@gmail.com',
+        pass: 'dlom qktg fvci rgpl'
+      }
+    });
+
+    let resetLink = `${buildPath(`UpdatePassword/${resetToken}`)}`;
+  
+    await transporter.sendMail({
+      from: '"Soccerdle" <soccerdle.verify.email@gmail.com>',
+      to: user.email,
+      subject: 'Password Reset',
+      text: `You requested for a password reset. Please click on the following link to reset your password: ${resetLink}`
+    });
+
+    res.status(200).json({ message: "Password reset link has been sent to your email" });
+  } catch (error) {
+    console.log("Error in forgetPassword controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { newPassword, token } = req.body;
+
+    // Verify the token and get the payload
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    // Find the user by id from the payload
+    const user = await User.findById(payload.id);
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.log("Error in updatePassword controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
+
+

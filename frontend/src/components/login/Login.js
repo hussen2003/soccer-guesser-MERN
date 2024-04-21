@@ -88,10 +88,14 @@ function Login() {
         <div className="form-group">
           <label>Password</label>
           <input type="password" name="password" placeholder="Enter your password" value={values.password} onChange={onChange} required />
+          <p style={{fontSize:'14px', color: 'gray', textAlign: 'right', marginRight: '10px', marginTop: '-15px' }}>
+            <a href="/ForgetPassword">Forgot password?</a>
+          </p>
           <div className="error" style={{ color: 'red', height: '15px', display: errors.password ? 'block' : 'none' }}>
             {errors.password}
           </div>
         </div>
+
         <Button
           type="submit"
           variant="outline-primary"

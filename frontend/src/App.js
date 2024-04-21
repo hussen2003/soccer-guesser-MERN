@@ -10,6 +10,8 @@ import SignUpPage from './pages/SignUpPage.js';
 import UnlimitedMode from './pages/UnlimitedMode.js';
 import VerifyEmail from './pages/VerifyEmail.js';
 import AllTimeLB from './pages/AllTimeLB.js';
+import ForgetPassword from "./pages/ForgetPassword.js";
+import UpdatePassword from "./pages/UpdatePassword.js";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path = "/UnlimitedMode" index element = {<UnlimitedMode />} />
           <Route path = "/AllTimeLB" index element = {<AllTimeLB />} />
           <Route path ="/VerifyEmail/:token" element={<VerifyEmail />} />
+          <Route path = "/ForgetPassword" index element={<ForgetPassword />} />
+          <Route path = "/UpdatePassword/:token" element={<UpdatePassword />} />
           </Routes>
       </BrowserRouter>
     </div>
