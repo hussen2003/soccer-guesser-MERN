@@ -94,7 +94,7 @@ const UpdatePassword = () => {
       const response = await axios.post(buildPath('api/auth/updatePassword'), { newPassword, token });
       if (response.data.message) {
         setMessage(response.data.message);
-        setVariant('success'); // Set the variant to 'success' when the API call is successful
+        setVariant('success'); 
       }
     } catch (error) {
       console.error("Error in updatePassword", error.message);
@@ -125,7 +125,6 @@ const UpdatePassword = () => {
         </div>
         {getPasswordRequirements(passwordRequirements)}
         <ProgressBar striped now={passwordStrength} variant={passwordStrength < 50 ? 'danger' : passwordStrength < 80 ? 'warning' : 'success'} />
-        
         <Button
           type="submit"
           variant="outline-primary"

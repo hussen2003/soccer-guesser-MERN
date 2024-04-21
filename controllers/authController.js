@@ -150,16 +150,13 @@ export const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: "Email does not exist" });
     }
 
-    // Generate a reset token
     const resetToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 
-    // Send the reset link to the user's email
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -187,20 +184,15 @@ export const forgetPassword = async (req, res) => {
 export const updatePassword = async (req, res) => {
   try {
     const { newPassword, token } = req.body;
-
-    // Verify the token and get the payload
     const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    // Find the user by id from the payload
     const user = await User.findById(payload.id);
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
 
-    // Hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Update the user's password in the database
     user.password = hashedPassword;
     await user.save();
 

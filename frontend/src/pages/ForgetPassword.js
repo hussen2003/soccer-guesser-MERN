@@ -24,12 +24,12 @@ const ForgetPassword = () => {
       const response = await axios.post(buildPath('api/auth/forgetPassword'), { email });
       if (response.data.message) {
         setMessage(response.data.message);
-        setVariant('success'); // Set the variant to 'success' when the API call is successful
+        setVariant('success'); 
       }
     } catch (error) {
       console.error("Error in forgetPassword", error.message);
-      setMessage(error.response.data.error); // Set the message for all errors
-      setVariant('danger'); // Set the variant to 'danger' when the API call fails
+      setMessage(error.response.data.error); 
+      setVariant('danger'); 
     }
   };
 
