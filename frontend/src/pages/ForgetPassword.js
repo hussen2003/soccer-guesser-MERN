@@ -60,12 +60,16 @@ const ForgetPassword = () => {
             height: '40px',
             transition: 'background-color 0.3s',
             width: 'calc(100% - 20px)',
+            
           }}
           onMouseEnter={(e) => (e.target.style.backgroundColor = '#4CAF50')}
           onMouseLeave={(e) => (e.target.style.backgroundColor = '#90ee90')}
         >
           Submit
         </Button>
+        <p style={{marginTop: '10px'}}>
+          Back to <a href="/">Login</a>
+        </p>
       </form>
     </div>
   );

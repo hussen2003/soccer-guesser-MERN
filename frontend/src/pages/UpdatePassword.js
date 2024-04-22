@@ -144,6 +144,9 @@ const UpdatePassword = () => {
         >
           Submit
         </Button>
+        <p style={{marginTop: '10px'}}>
+          Back to <a href="/">Login</a>
+        </p>
       </form>
     </div>
   );
