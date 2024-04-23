@@ -84,11 +84,14 @@ export const login = async (req, res) => {
       return res.status(400).json({ error: "Incorrect password" });
     }
 
+    const token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       username: user.username,
+      token: token, 
     });
   } catch (error) {
     console.log("Error in login controller", error.message);
