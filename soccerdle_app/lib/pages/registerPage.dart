@@ -124,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.black,
                           ),
                           const Text(
-                            'Soocerdle',
+                            'Soccerdle',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 22,
