@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class LeaderBoardPage extends StatefulWidget {
   static const String routeName = '/leaderBoard';
@@ -41,11 +42,17 @@ class _LeaderboardState extends State<LeaderBoardPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Daily Top Players'),
-      ),
+Widget build(BuildContext context) {
+  return Center(
+    child: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Daily Top Players',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+        ),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -64,6 +71,7 @@ class _LeaderboardState extends State<LeaderBoardPage> {
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(10),
+                      color: players[index].name == Storage.getName() ? Colors.green.withOpacity(0.3) : Colors.transparent,
                     ),
                     margin: EdgeInsets.only(bottom: 10),
                     child: Row(
@@ -95,6 +103,8 @@ class _LeaderboardState extends State<LeaderBoardPage> {
           ],
         ),
       ),
+      ),
+    ),
     );
   }
 }

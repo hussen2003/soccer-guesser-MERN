@@ -135,12 +135,17 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
+@override
+Widget build(BuildContext context) {
+  return Center( 
+    child: SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Unlimited Mode'),
+          title: Text(
+            'Unlimited Mode',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
         ),
         body: Stack(
           children: [
@@ -149,8 +154,11 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
 
   Widget _buildBackgroundImage() {
     return Container(
@@ -235,10 +243,29 @@ Widget unlimitedModeScreen(BuildContext context) {
                                       ),
                                     ),
                                     if (index == 0)
-                                      Image.network(
-                                          dailyPlayer['country_flag']),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      dailyPlayer['country_flag'],
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
                                     if (index == 3)
-                                      Image.network(dailyPlayer['club_logo']),
+                                      Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.network(
+                                          dailyPlayer['club_logo'],
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(width: 10),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -321,9 +348,9 @@ Widget unlimitedModeScreen(BuildContext context) {
         ),
         if (gameEnded)
           Dialog(
-                backgroundColor: Color.fromARGB(255, 252, 253, 253), // Set background color
+                backgroundColor: Color.fromARGB(255, 252, 253, 253),
                 shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15), // Adjust the border radius as needed
+                borderRadius: BorderRadius.circular(15), 
                 ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

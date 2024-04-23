@@ -7,10 +7,43 @@ import 'package:provider/provider.dart';
 import 'package:soccerdle_app/constants/utils.dart';
 import 'package:soccerdle_app/providers/userProvider.dart';
 
-class forogtPasswordPageService {
+
+class ForgotPasswordPageService {
   Map<String, dynamic>? userData;
 
   Future<void> forgotPassword({
+    required BuildContext context,
+    required String email,
+  }) async {
+    try {
+      final http.Response res = await http.post(
+        Uri.parse(
+            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/forgetPassword'),
+        body: jsonEncode({
+          'email': email,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (res.statusCode == 200) {
+        showSnackBar(context, "Password reset link has been sent to your email");
+      }
+
+    } on SocketException {
+      showSnackBar(context, "No internet connection");
+    } catch (e) {
+      // Handle any other unexpected errors
+      showSnackBar(context, "Unexpected error: $e");
+    }
+  }
+}
+
+class LoginPageService { 
+  Map<String, dynamic>? userData;
+
+  Future<void> signInUser({
     required BuildContext context,
     required String username,
     required String password,
@@ -52,6 +85,18 @@ class forogtPasswordPageService {
       // Handle any other unexpected errors
       showSnackBar(context, "Unexpected error: $e");
     }
+  }
+}
+
+
+class Storage2 {
+  static late String email;
+    Storage2(String e) {
+    email = e;
+  }
+
+    static String getEmail() {
+    return email;
   }
 }
 

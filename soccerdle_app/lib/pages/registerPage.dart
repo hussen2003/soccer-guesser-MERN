@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:soccerdle_app/common/customButton.dart';
 import 'package:soccerdle_app/common/customTextfiled.dart';
@@ -18,6 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+ 
+
 
   String? validateName(String? name) {
     if (name == null || name.isEmpty) {
@@ -85,23 +89,44 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  
+
+  @override
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/images/app.jpg'),
-                  fit: BoxFit.cover,
-                ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(40.0),
+        child: AppBar(
+          title: Text(
+            'Soccerdle',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(
+                color: Colors.white.withOpacity(0.7),
               ),
-              width: double.infinity,
-              height: double.infinity,
             ),
+          ),
+        ),
+      ),
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/images/app.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Content
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(left: 0, right: 0),
@@ -109,32 +134,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 0),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      color: Colors.grey.shade200.withOpacity(0.5),
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            color: Colors.black,
-                          ),
-                          const Text(
-                            'Soocerdle',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(width: 52),
-                        ],
-                      ),
-                    ),
                     const SizedBox(height: 80),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -232,7 +231,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ],
         ),
-      ),
     );
   }
 }

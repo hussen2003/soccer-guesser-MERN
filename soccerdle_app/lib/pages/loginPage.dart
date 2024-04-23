@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _signInFormKey = GlobalKey<FormState>();
-  final forogtPasswordPageService loginService = forogtPasswordPageService();
+  final LoginPageService loginService = LoginPageService();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void signInUser() async {
     if (_signInFormKey.currentState!.validate()) {
-      await loginService.forgotPassword(
+      await loginService.signInUser(
         context: context,
         username: _usernameController.text,
         password: _passwordController.text,
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () {
                             Navigator.pushNamed(context, '/forgot-password');
                           },
-                          child: const Text('Forget Password ?')),
+                          child: const Text('Forget Password ?', style: TextStyle(fontWeight: FontWeight.bold))),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(

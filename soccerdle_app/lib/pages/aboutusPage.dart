@@ -81,7 +81,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
               child: Container(
-                color: Colors.white.withOpacity(0.7), // Adjust opacity here
+                color: Colors.white.withOpacity(0.7),
               ),
             ),
           ),

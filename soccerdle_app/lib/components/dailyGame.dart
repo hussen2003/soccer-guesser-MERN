@@ -431,10 +431,17 @@ class _DailyGamePageState extends State<DailyGamePage> {
               ElevatedButton(
                 onPressed: Navigator.of(context).pop,
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                  ),
                 ),
-                child: Text('Close'),
+                child: Text(
+                  'Close',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           ),
@@ -444,17 +451,23 @@ class _DailyGamePageState extends State<DailyGamePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
+Widget build(BuildContext context) {
+  return Center(
+    child: SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Daily Game'),
+          title: Text(
+            'Daily Game',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
         ),
         body: Stack(
           children: [
             _buildBackgroundImage(),
             dailyGameModeScreen(context),
           ],
+         ),
         ),
       ),
     );
@@ -613,7 +626,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
                           ),
                         ),
                       );
-                    } else if (index < 5) {
+                    } else if (index < 5 && !gameEnded) {
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Align(
@@ -708,6 +721,10 @@ class _DailyGamePageState extends State<DailyGamePage> {
           ),
         if (gameEnded)
           Dialog(
+                backgroundColor: Color.fromARGB(255, 252, 253, 253),
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), 
+                ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -721,29 +738,31 @@ class _DailyGamePageState extends State<DailyGamePage> {
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 2),
                 Image.network(
                   dailyPlayer['image'],
                   width: 150,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 0.5),
                 Image.network(
                   dailyPlayer['club_logo'],
                   width: 150,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: showGameSummary,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[100],
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 30, horizontal: 30),
-                      ),
-                      child: Text('Stats'),
+                  ElevatedButton(
+                  onPressed: showGameSummary,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 33),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
+                  ),
+                  child: Text(' Stats '),
+                ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(
@@ -751,7 +770,14 @@ class _DailyGamePageState extends State<DailyGamePage> {
                           '/home',
                         );
                       },
-                      child: Text('Home'),
+                      child: Text('Home Page'),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
