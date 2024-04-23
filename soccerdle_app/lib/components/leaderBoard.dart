@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:soccerdle_app/services/loginPageServices.dart';
 
 class LeaderBoardPage extends StatefulWidget {
   static const String routeName = '/leaderBoard';
@@ -64,6 +65,7 @@ class _LeaderboardState extends State<LeaderBoardPage> {
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(10),
+                      color: players[index].name == Storage.getName() ? Colors.green.withOpacity(0.3) : Colors.transparent,
                     ),
                     margin: EdgeInsets.only(bottom: 10),
                     child: Row(

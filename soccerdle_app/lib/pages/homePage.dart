@@ -49,55 +49,161 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      title: const Text(
-        'Soccerdle',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      centerTitle: true,
-      backgroundColor: Colors.grey.shade200.withOpacity(0.5),
-      elevation: 0,
-      automaticallyImplyLeading: false,
-      leading: PopupMenuButton(
-        itemBuilder: (BuildContext context) {
-          return [
-            PopupMenuItem(
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Color(0xff7eaf34), // Set green color
-                  border: Border.all(color: Colors.black, width: 2.0),
-                  borderRadius: BorderRadius.circular(8.0),
+      appBar: AppBar(
+        title: const Text(
+          'Soccerdle',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leading: PopupMenuButton(
+          itemBuilder: (BuildContext context) {
+            return [
+              PopupMenuItem(
+                child: Row(
+                  children: [
+                    Text(
+                      'Signed as: ', // Text to display before the user's name
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      Storage.getName(), // User's name
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
-                child: Text(
-                  'About Us',
-                  style: TextStyle(
-                    color: Colors.black, // Set text color to black for contrast
+                enabled: false, // Make this item not selectable
+              ),
+              PopupMenuItem(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Color(0xff7eaf34), // Set green color
+                    border: Border.all(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    'Daily',
+                    style: TextStyle(
+                      color:
+                          Colors.black, // Set text color to black for contrast
+                    ),
                   ),
                 ),
+                value: 'daily',
               ),
-              value: 'aboutUs',
-            ),
-          ];
-        },
-  onSelected: (value) {
-    if (value == 'aboutUs') {
-      Navigator.pushNamed(context, '/aboutUs');
-    }
-  },
-),
-
-
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.logout),
-          color: Color.fromARGB(255, 157, 21, 21),
-          onPressed: logout,
+              PopupMenuItem(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Color(0xff7eaf34), // Set green color
+                    border: Border.all(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    'Unlimited',
+                    style: TextStyle(
+                      color:
+                          Colors.black, // Set text color to black for contrast
+                    ),
+                  ),
+                ),
+                value: 'unlimited',
+              ),
+              PopupMenuItem(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Color(0xff7eaf34), // Set green color
+                    border: Border.all(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    'Leaderboard',
+                    style: TextStyle(
+                      color:
+                          Colors.black, // Set text color to black for contrast
+                    ),
+                  ),
+                ),
+                value: 'dlb',
+              ),
+              PopupMenuItem(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Color(0xff7eaf34), // Set green color
+                    border: Border.all(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    'All time Leaderboard',
+                    style: TextStyle(
+                      color:
+                          Colors.black, // Set text color to black for contrast
+                    ),
+                  ),
+                ),
+                value: 'alltime',
+              ),
+              PopupMenuItem(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Color(0xff7eaf34), // Set green color
+                    border: Border.all(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    'About Us',
+                    style: TextStyle(
+                      color:
+                          Colors.black, // Set text color to black for contrast
+                    ),
+                  ),
+                ),
+                value: 'aboutUs',
+              ),
+            ];
+          },
+          onSelected: (value) {
+            if (value == 'aboutUs') {
+              Navigator.pushNamed(context, '/aboutUs');
+            }
+            if (value == 'daily') {
+              Navigator.pushNamed(context, '/dailyGamePage');
+            }
+            if (value == 'unlimited') {
+              Navigator.pushNamed(context, '/unlimitedModePage');
+            }
+            if (value == 'dlb') {
+              Navigator.pushNamed(context, '/leaderBoard');
+            }
+            if (value == 'alltime') {
+              Navigator.pushNamed(context, '/allTimeLeaderboard');
+            }
+          },
         ),
-      ],
-    ),
-
-
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            color: Color.fromARGB(255, 157, 21, 21),
+            onPressed: logout,
+          ),
+        ],
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -113,33 +219,33 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   _buildCard(
-                    context,
-                    'Daily Game',
-                    'Every 24 hours a new player will be randomly selected. Can you guess today\'s player?',
-                    'lib/images/messi2.jpeg',
-                    playDaily,
-                  ),
+                      context,
+                      'Daily Game',
+                      'Every 24 hours a new player will be randomly selected. Can you guess today\'s player?',
+                      'lib/images/messi2.jpeg',
+                      playDaily,
+                      'Play Now'),
                   _buildCard(
-                    context,
-                    'Unlimited Game',
-                    'Test your knowledge and go as many times as you want! How many can you guess?',
-                    'lib/images/SUI.jpeg',
-                    goUnlimited,
-                  ),
+                      context,
+                      'Unlimited Game',
+                      'Test your knowledge and go as many times as you want! How many can you guess?',
+                      'lib/images/SUI.jpeg',
+                      goUnlimited,
+                      'Play Now'),
                   _buildCard(
-                    context,
-                    'Daily Leaderboard',
-                    'Leaderboard for the Daily game mode.',
-                    'lib/images/france2.jpeg',
-                    goLeaderboard,
-                  ),
+                      context,
+                      'Daily Leaderboard',
+                      'Leaderboard for the Daily game mode.',
+                      'lib/images/france2.jpeg',
+                      goLeaderboard,
+                      'Leaderboard'),
                   _buildCard(
-                    context,
-                    'All Time Leaderboard',
-                    'Overall Leaderboard. Do you see yourself on it?',
-                    'lib/images/brazil2.jpeg',
-                    goAllTime,
-                  ),
+                      context,
+                      'All Time Leaderboard',
+                      'Overall Leaderboard. Do you see yourself on it?',
+                      'lib/images/brazil2.jpeg',
+                      goAllTime,
+                      'All Time'),
                 ],
               ),
             ),
@@ -149,8 +255,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-Widget _buildCard(BuildContext context, String title, String description,
-      String imagePath, Function onPressed) {
+  Widget _buildCard(BuildContext context, String title, String description,
+      String imagePath, Function onPressed, String text) {
     return Container(
       width: 300,
       height: 450,
@@ -159,17 +265,17 @@ Widget _buildCard(BuildContext context, String title, String description,
         color: Colors.white,
         elevation: 20,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), 
-          side: BorderSide(color: Colors.black, width: 2), 
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: Colors.black, width: 2),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               width: 200,
-              height: 200, 
+              height: 200,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1.5), 
+                border: Border.all(color: Colors.black, width: 1.5),
               ),
               child: Image.asset(
                 imagePath,
@@ -198,16 +304,18 @@ Widget _buildCard(BuildContext context, String title, String description,
                   OutlinedButton(
                     onPressed: () => onPressed(context),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        'Play now',
+                        text,
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7eaf34)), 
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xff7eaf34)),
                       side: MaterialStateProperty.all<BorderSide>(
-                        BorderSide(color: Colors.black, width: 2), 
+                        BorderSide(color: Colors.black, width: 2),
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -225,6 +333,3 @@ Widget _buildCard(BuildContext context, String title, String description,
     );
   }
 }
-
-
-

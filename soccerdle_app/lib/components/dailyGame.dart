@@ -613,7 +613,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
                           ),
                         ),
                       );
-                    } else if (index < 5) {
+                    } else if (index < 5 && !gameEnded) {
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Align(
@@ -740,7 +740,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[100],
                         padding: const EdgeInsets.symmetric(
-                            vertical: 30, horizontal: 30),
+                            vertical: 15, horizontal: 30),
                       ),
                       child: Text('Stats'),
                     ),
