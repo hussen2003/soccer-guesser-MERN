@@ -160,7 +160,6 @@ function UnlimitedMode() {
   return (
     <div>
       <Header />
-
       <div
         style={{
           minHeight: '75vh',
@@ -195,7 +194,7 @@ function UnlimitedMode() {
                   borderRadius: '5px',
                   height: '9vh',
                   color: 'white',
-                  animation: wrongGuesses.includes(index) ? 'shake 0.5s' : 'none',
+                  animation: wrongGuesses.includes(index) ? 'shake 0.2s' : 'none',
                 }}
               >
                 <p style={{ fontSize: '20px', color: 'white', margin: '0' }}>{`Guess ${index + 1}: ${guess}`}</p>

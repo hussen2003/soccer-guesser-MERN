@@ -1,12 +1,13 @@
 .signup-container {
     font-family: Arial, sans-serif;
+    display: inline-block;
+    /* margin-top: 200px; */
     max-width: 400px;
     padding: 30px;
     background-color: rgba(33,37,41, 0.87);
     color: white;    
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
     backdrop-filter: blur(1px);
 }
 
