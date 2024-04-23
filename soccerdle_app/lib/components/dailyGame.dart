@@ -702,7 +702,7 @@ Widget build(BuildContext context) {
                 checkGuess();
               });
             },
-            maxLength: 15,
+            maxLength: 16,
             autofocus: true,
             decoration: InputDecoration(
               hintText: 'Enter your guess here',
