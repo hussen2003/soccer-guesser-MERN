@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -14,14 +13,14 @@ class ForgotPasswordPageService {
     required BuildContext context,
     required String username,
     required String password,
+    required String email,
   }) async {
     try {
       final http.Response res = await http.post(
         Uri.parse(
-            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
+            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/forgetPassword'),
         body: jsonEncode({
-          'username': username,
-          'password': password,
+          'email': email,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

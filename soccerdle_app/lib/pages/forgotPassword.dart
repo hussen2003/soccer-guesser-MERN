@@ -11,45 +11,39 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _signInFormKey = GlobalKey<FormState>();
-  final forogtPasswordPageService forgotPasswordService =
-      forogtPasswordPageService();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final ForgotPasswordPageService loginService = ForgotPasswordPageService();
+  final TextEditingController _emailController = TextEditingController();
   bool _isObscure = true;
 
   @override
   void dispose() {
     super.dispose();
-    _usernameController.dispose();
-    _passwordController.dispose();
+    _emailController.dispose();
   }
 
-  void forogtPassword() async {
-    if (_signInFormKey.currentState!.validate()) {
-      await forgotPasswordService.forgotPassword(
-        context: context,
-        username: _usernameController.text,
-        password: _passwordController.text,
-      );
-      if (forgotPasswordService.userData != null) {
-        Navigator.pushNamed(context, '/login');
-      }
-    }
+  void forgotPassword() async {
+        await loginService.forgotPassword(context: context, email: _emailController.text);
   }
 
-  void navigateToAboutUs() {
-    Navigator.pushNamed(context, '/aboutUs');
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            _buildBackgroundImage(),
-            _loginUI(context),
-          ],
+    return Center( 
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Soccerdle',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+          ),
+          body: Stack(
+            children: [
+              _buildBackgroundImage(),
+              _loginUI(context),
+            ],
+          ),
         ),
       ),
     );
@@ -79,39 +73,31 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.9),
                 border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: Form(
                 key: _signInFormKey,
                 child: Column(
                   children: [
                     const Text(
-                      "Forgot Password",
+                      "Reset Password",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                        fontSize: 25,
                         color: Colors.black,
                       ),
                     ),
+                    const SizedBox(height: 40),
+                    _buildTextField(
+                      controller: _emailController,
+                      hintText: 'Email',
+                      prefixIcon: Icons.email,
+                    ),
                     const SizedBox(height: 30),
-                    _buildTextField(
-                      controller: _usernameController,
-                      hintText: 'Username',
-                      prefixIcon: Icons.person,
-                    ),
-                    const SizedBox(height: 20),
-                    _buildTextField(
-                      controller: _passwordController,
-                      hintText: 'Password',
-                      prefixIcon: Icons.lock,
-                      isPassword: true,
-                    ),
-                    const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: forogtPassword,
-                      child: const Text('Update Password'),
+                      onPressed: forgotPassword,
+                      child: const Text('Submit'),
                     ),
-                    const SizedBox(height: 20),
                   ],
                 ),
               ),

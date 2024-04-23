@@ -42,11 +42,17 @@ class _AllTimeLeaderboardState extends State<AllTimeLeaderBoardPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Top Players'),
-      ),
+Widget build(BuildContext context) {
+  return Center(
+    child: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Top Players',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+        ),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -97,6 +103,8 @@ class _AllTimeLeaderboardState extends State<AllTimeLeaderBoardPage> {
           ],
         ),
       ),
+      ),
+    ),
     );
   }
 }

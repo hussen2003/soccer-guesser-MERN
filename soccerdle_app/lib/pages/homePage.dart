@@ -65,28 +65,28 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   children: [
                     Text(
-                      'Signed as: ', // Text to display before the user's name
+                      'Signed as: ',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      Storage.getName(), // User's name
+                      Storage.getName(),
                       style: TextStyle(
                         color: Colors.black,
                       ),
                     ),
                   ],
                 ),
-                enabled: false, // Make this item not selectable
+                enabled: false,
               ),
               PopupMenuItem(
                 child: Container(
                   padding: EdgeInsets.all(8.0),
                   width: 200,
                   decoration: BoxDecoration(
-                    color: Color(0xff7eaf34), // Set green color
+                    color: Color(0xff7eaf34),
                     border: Border.all(color: Colors.black, width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                     'Daily',
                     style: TextStyle(
                       color:
-                          Colors.black, // Set text color to black for contrast
+                          Colors.black,
                     ),
                   ),
                 ),
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(8.0),
                   width: 200,
                   decoration: BoxDecoration(
-                    color: Color(0xff7eaf34), // Set green color
+                    color: Color(0xff7eaf34),
                     border: Border.all(color: Colors.black, width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                     'Unlimited',
                     style: TextStyle(
                       color:
-                          Colors.black, // Set text color to black for contrast
+                          Colors.black,
                     ),
                   ),
                 ),
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(8.0),
                   width: 200,
                   decoration: BoxDecoration(
-                    color: Color(0xff7eaf34), // Set green color
+                    color: Color(0xff7eaf34),
                     border: Border.all(color: Colors.black, width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                     'Leaderboard',
                     style: TextStyle(
                       color:
-                          Colors.black, // Set text color to black for contrast
+                          Colors.black,
                     ),
                   ),
                 ),
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(8.0),
                   width: 200,
                   decoration: BoxDecoration(
-                    color: Color(0xff7eaf34), // Set green color
+                    color: Color(0xff7eaf34),
                     border: Border.all(color: Colors.black, width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                     'All time Leaderboard',
                     style: TextStyle(
                       color:
-                          Colors.black, // Set text color to black for contrast
+                          Colors.black,
                     ),
                   ),
                 ),
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(8.0),
                   width: 200,
                   decoration: BoxDecoration(
-                    color: Color(0xff7eaf34), // Set green color
+                    color: Color(0xff7eaf34),
                     border: Border.all(color: Colors.black, width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                     'About Us',
                     style: TextStyle(
                       color:
-                          Colors.black, // Set text color to black for contrast
+                          Colors.black,
                     ),
                   ),
                 ),
