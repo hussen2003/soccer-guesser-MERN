@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container'; // Import Container
 import Row from 'react-bootstrap/Row'; // Import Row
 import Col from 'react-bootstrap/Col'; // Import Col
 
+
 function AboutPage() {
   const teamMembers = [
     { name: 'David Urrego', role: 'Frontend (Web)', image: 'https://cdn.sofifa.net/players/241/721/24_120.png', linkedin: 'https://www.linkedin.com/in/david-urrego-93aa522b8/' },
