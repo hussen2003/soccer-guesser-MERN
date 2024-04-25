@@ -6,7 +6,7 @@ const LoginPage = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div>
-        <img src={logo} alt="Logo" style={{ width: '550px', height: '550px', marginTop: '-100px', marginBottom: '-500px' }} />
+        <img src={logo} alt="Logo" style={{ width: '550px', height: '550px', marginTop: '-100px', marginBottom: '-400px' }} />
       </div>
       <div>
         <Login />
