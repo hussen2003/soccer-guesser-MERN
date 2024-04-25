@@ -23,6 +23,7 @@ function Profile() {
   const [streak, setStreak] = useState(0);
   const [nameMessage, setNameMessage] = useState('');
   const [usernameMessage, setUsernameMessage] = useState('');
+  const [wrong, setWrong] = useState(false);
 
   useEffect(() => {
     async function grabUser() {
@@ -98,8 +99,10 @@ function Profile() {
         });
         var res = JSON.parse(await response.text());
         if (res.error) {
-          setMessage(res.error);
+          setUsernameMessage(res.error);
+          setWrong(true);
         } else {
+          setWrong(false);
           setUsernameMessage(res.message); // Set the usernameMessage state
           setNewUser(res.newUser);
           const userData = JSON.parse(sessionStorage.getItem('user_data'));
@@ -210,7 +213,7 @@ function Profile() {
             <Button variant="success" type="submit" style={{ verticalAlign: 'top', width: '200px', height: '40px' }}>
               Update Username
             </Button>
-            <p style={{ color: 'green' }}>{usernameMessage}</p>
+            <p style={{ color: (!wrong) ? 'green' : 'red'}}>{usernameMessage}</p>
           </form>
         </div>
         <div style={{ margin: '60px 0' }}></div>
