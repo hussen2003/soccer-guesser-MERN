@@ -28,6 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchUser();
   }
 
+  
+
   final String baseUrl = 'http://soccerdle-mern-ace81d4f14ec.herokuapp.com';
 
   Future<void> fetchUser() async {
@@ -171,109 +173,292 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+
+
+  void playDaily(BuildContext context) {
+    Navigator.pushNamed(context, '/dailyGamePage');
+  }
+
+  void goLeaderboard(BuildContext context) {
+    Navigator.pushNamed(context, '/leaderBoard');
+  }
+
+  void goUnlimited(BuildContext context) {
+    Navigator.pushNamed(context, '/unlimitedModePage');
+  }
+
+  void goAllTime(BuildContext context) {
+    Navigator.pushNamed(context, '/allTimeLeaderboard');
+  }
+
+  void goHome(BuildContext context) {
+    Navigator.pushNamed(context, '/home');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Hello $display!',
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Soccerdle',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+          elevation: 0,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              color: Color.fromARGB(255, 157, 21, 21),
+              onPressed: logout,
             ),
-            SizedBox(height: 20.0),
-            Text(
-              'Your Stats:',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            Text('Daily Score: $dailyScore'),
-            Text('All Time Score: $score'),
-            Text('Games Played: $gamesPlayed'),
-            Text('Games Won: $gamesWon'),
-            Text('Streak: $streak'),
-            SizedBox(height: 20.0),
-            Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    initialValue: newName,
-                    onChanged: (value) {
-                      setState(() {
-                        newName = value;
-                      });
-                    },
-                    decoration: InputDecoration(labelText: 'Name'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await changeName(newName);
-                    },
-                    child: Text('Update Name'),
-                  ),
-                  TextFormField(
-                    initialValue: newUsername,
-                    onChanged: (value) {
-                      setState(() {
-                        newUsername = value;
-                      });
-                    },
-                    decoration: InputDecoration(labelText: 'Username'),
-                  ),
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Container(
+                color: Color(0xff7eaf34),
+                height: 120, // Adjust the height as needed
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                        'Signed as:',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                        Storage.getName(),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text('Home Page'),
+                onTap: () {
+                  Navigator.pop(context);
+                  goHome(context);
+                },
+                shape: RoundedRectangleBorder(
+                  //side: BorderSide(color: Colors.black, width: 0.5),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+              ListTile(
+                title: Text('Daily'),
+                onTap: () {
+                  Navigator.pop(context);
+                  playDaily(context);
+                },
+                shape: RoundedRectangleBorder(
+                  //side: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+              ListTile(
+                title: Text('Unlimited'),
+                onTap: () {
+                  Navigator.pop(context);
+                  goUnlimited(context);
+                },
+                shape: RoundedRectangleBorder(
+                  //side: BorderSide(color: Colors.black, width: 0.5),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+              ListTile(
+                title: Text('Leaderboard'),
+                onTap: () {
+                  Navigator.pop(context);
+                  goLeaderboard(context);
+                },
+                shape: RoundedRectangleBorder(
+                  //side: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+              ListTile(
+                title: Text('All time Leaderboard'),
+                onTap: () {
+                  Navigator.pop(context);
+                  goAllTime(context);
+                },
+                shape: RoundedRectangleBorder(
+                  //side: BorderSide(color: Colors.black, width: 0.5),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+              ListTile(
+                title: Text('About Us'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/aboutUs');
+                },
+                shape: RoundedRectangleBorder(
+                  //side: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Hello $display!',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Your Stats:',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text('Daily Score: $dailyScore'),
+              Text('All Time Score: $score'),
+              Text('Games Played: $gamesPlayed'),
+              Text('Games Won: $gamesWon'),
+              Text('Streak: $streak'),
+              SizedBox(height: 20.0),
+              Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      initialValue: newName,
+                      onChanged: (value) {
+                        setState(() {
+                          newName = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: 'Name'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await changeName(newName);
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7eaf34)),
+                        side: MaterialStateProperty.all<BorderSide>(
+                          BorderSide(color: Colors.black, width: 1),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    ),
+                      child: Text('Update Name'),
+                    ),
+                    TextFormField(
+                      initialValue: newUsername,
+                      onChanged: (value) {
+                        setState(() {
+                          newUsername = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: 'Username'),
+                    ),
                   ElevatedButton(
                     onPressed: () async {
                       await changeUsername(newUsername);
                     },
-                    child: Text('Update Username'),
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Show confirmation dialog to delete account
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Confirm'),
-                            content: Text(
-                                'Are you sure you want to delete your account?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                },
-                                child: Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                  await deleteUser(); // Call deleteUser function
-                                },
-                                child: Text('Delete'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    child: Text('Delete Account'),
-                  ),
-                  SizedBox(height: 20.0),
-                  if (message.isNotEmpty)
-                    Text(
-                      message,
-                      style: TextStyle(color: Colors.red),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7eaf34)),
+                      side: MaterialStateProperty.all<BorderSide>(
+                        BorderSide(color: Colors.black, width: 1),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                     ),
+                      child: Text('Update Username'),
+                    ),
+                    SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Show confirmation dialog to delete account
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Confirm'),
+                              content: Text(
+                                  'Are you sure you want to delete your account?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                    await deleteUser(); // Call deleteUser function
+                                  },
+                                  child: Text('Delete'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                        side: MaterialStateProperty.all<BorderSide>(
+                          BorderSide(color: Colors.black, width: 1),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      child: Text('Delete Account'),
+                    ),
+                    SizedBox(height: 20.0),
+                    if (message.isNotEmpty)
+                      Text(
+                        message,
+                        style: TextStyle(color: Colors.red),
+                      ),
                 ],
               ),
             ),

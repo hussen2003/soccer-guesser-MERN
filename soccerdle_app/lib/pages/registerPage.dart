@@ -60,11 +60,11 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     if (!password.contains(RegExp(r'[A-Z]'))) {
       return 'Add at least'
-          ' One uppercase letter';
+          ' one uppercase letter';
     }
     if (!password.contains(RegExp(r'[a-z]'))) {
       return 'Add at least'
-          ' One lowercase letter';
+          ' one lowercase letter';
     }
 
     return null;
