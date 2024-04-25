@@ -140,20 +140,21 @@ function Profile() {
     };
 
     return (
-        <div
-            style={{
-                position: 'relative',
-                minWidth: '20vw',
-                minHeight: '70vh',
-                margin: 'auto',
-                backgroundColor: 'rgba(33, 37, 41, 1)',
-                borderRadius: '10px',
-                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                color: 'white',
-                maxWidth: '60vw',
-            }}>
+        <div>
             <Header />
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ 
+                minHeight: '75vh',
+                minWidth: '45vw',
+                // width: '60px',
+                display: 'inline-block',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '20px',
+                backgroundColor: 'rgba(33, 37, 41, 0.87)',
+                borderRadius: '10px',
+                backdropFilter: 'blur(1px)',
+                color: 'white',
+            }}>
                 <h1>Hello {JSON.parse(sessionStorage.getItem('user_data')).name}!</h1>
                 <div style={{ margin: '30px 0' }}></div>
 
@@ -170,7 +171,13 @@ function Profile() {
                         <label style={{ marginRight: '10px', display: 'inline-block', verticalAlign: 'middle', width: '100px', textAlign: 'right' }}>
                             Name:
                         </label>
-                        <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} style={{ marginRight: '10px' , height: '40px'}} />
+                        <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} style={{ 
+                            marginRight: '10px' , 
+                            height: '40px', 
+                            padding: '10px',
+                            backgroundColor: 'rgba(85, 85, 85, 0.6)',
+                            borderRadius: '5px',
+                            color: 'white'}} />
                         <Button variant="success" type="submit" style={{ verticalAlign: 'top', width: '200px', height: '40px' }}>Update Name</Button>
                     </form>
                 </div>
@@ -179,7 +186,12 @@ function Profile() {
                         <label style={{ marginRight: '10px', display: 'inline-block', verticalAlign: 'middle', width: '100px', textAlign: 'right' }}>
                             Username:
                         </label>
-                        <input type="text" value={newUser} onChange={(e) => setNewUser(e.target.value)} style={{ marginRight: '10px' , height: '40px'}} />
+                        <input type="text" value={newUser} onChange={(e) => setNewUser(e.target.value)} style={{ marginRight: '10px' , 
+                            height: '40px', 
+                            padding: '10px',
+                            backgroundColor: 'rgba(85, 85, 85, 0.6)',
+                            borderRadius: '5px',
+                            color: 'white'}} />
                         <Button variant="success" type="submit" style={{ verticalAlign: 'top', width: '200px', height: '40px' }}>Update Username</Button>
                     </form>
                 </div>
