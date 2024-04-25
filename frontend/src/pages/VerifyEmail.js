@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-
 const app_name = 'soccerdle-mern-ace81d4f14ec';
 function buildPath(route) {
   if (process.env.NODE_ENV === 'production') {
@@ -35,22 +34,24 @@ const VerifyEmail = () => {
 
   return (
     <div>
-      <div style={{
-        fontFamily: 'Arial, sans-serif',
-        fontSize: '24px',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        margin: '0 auto',
-        width: '100%',
-        maxWidth: '400px',
-        padding: '30px',
-        backgroundColor: 'rgba(33,37,41, 0.87)',
-        color: 'white',    
-        borderRadius: '10px',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-        backdropFilter: 'blur(1px)',
-        marginTop: '200px'
-      }}>
+      <div
+        style={{
+          fontFamily: 'Arial, sans-serif',
+          fontSize: '24px',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          margin: '0 auto',
+          width: '100%',
+          maxWidth: '400px',
+          padding: '30px',
+          backgroundColor: 'rgba(33,37,41, 0.87)',
+          color: 'white',
+          borderRadius: '10px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+          backdropFilter: 'blur(1px)',
+          marginTop: '500px',
+        }}
+      >
         {verificationStatus} !
       </div>
     </div>
