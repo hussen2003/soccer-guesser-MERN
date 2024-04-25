@@ -46,6 +46,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushNamed(context, '/allTimeLeaderboard');
   }
 
+  void goProfile(BuildContext context) {
+    Navigator.pushNamed(context, '/profile');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,6 +112,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            ListTile(
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                goProfile(context);
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 0.5),
+                borderRadius: BorderRadius.circular(0),
               ),
             ),
             ListTile(

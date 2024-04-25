@@ -116,4 +116,12 @@ class Storage {
   static String getName() {
     return name;
   }
+
+  static void setUser(String u) {
+    use = u;
+  }
+
+  static void setName(String n) {
+    name = n;
+  }
 }

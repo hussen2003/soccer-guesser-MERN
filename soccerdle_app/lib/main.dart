@@ -4,6 +4,7 @@ import 'package:soccerdle_app/components/allTimeLeaderboard.dart';
 import 'package:soccerdle_app/components/dailyGame.dart';
 import 'package:soccerdle_app/components/leaderBoard.dart';
 import 'package:soccerdle_app/components/unlimitedModePage.dart';
+import 'package:soccerdle_app/components/profile.dart';
 import 'package:soccerdle_app/pages/aboutusPage.dart';
 import 'package:soccerdle_app/pages/forgotPassword.dart';
 import 'package:soccerdle_app/pages/homePage.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/leaderBoard': (context) => const LeaderBoardPage(),
         '/aboutUs': (context) => const AboutUsPage(),
         '/allTimeLeaderboard': (context) => const AllTimeLeaderBoardPage(),
+        '/profile': (context) => const ProfilePage(),
       },
     );
   }
