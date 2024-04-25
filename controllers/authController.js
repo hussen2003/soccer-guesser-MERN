@@ -210,7 +210,7 @@ export const updateName = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({ message: 'Name updated successfully' });
+    res.status(200).json({ message: 'Name updated successfully' , newName: newName });
   } catch (error) {
     console.log('Error in updateName controller', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -229,9 +229,23 @@ export const updateUsername = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({ message: 'userName updated successfully' });
+    res.status(200).json({ message: 'userName updated successfully', newUser: newUsername });
   } catch (error) {
     console.log('Error in updateUsername controller', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const obtainUser = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const user = await User.findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ user: user });
+  } catch (error) {
+    console.error('Error in obtainUser:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

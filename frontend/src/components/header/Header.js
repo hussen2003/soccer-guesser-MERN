@@ -24,7 +24,10 @@ const Header = () => {
               <Nav.Link href="/UnlimitedMode">Unlimited</Nav.Link>
               <Nav.Link href="/Leaderboard">Leaderboard</Nav.Link>
               <Nav.Link href="/AllTimeLB">All Time Leaderboard</Nav.Link>
-              <Nav.Link href="/AboutPage">About us</Nav.Link>
+              <Nav.Link href="/AboutPage">About Us</Nav.Link>
+            </Nav>
+            <Nav className = "ml-auto">
+            <Nav.Link style = {{ padding: '0 5px'}} href="/Profile">Profile</Nav.Link>
             </Nav>
             <Navbar.Text style={{ padding: '0 20px' }}>
               Signed in as: <a>{name}</a>
