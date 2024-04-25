@@ -164,7 +164,8 @@ function UnlimitedMode() {
         style={{
           minHeight: '75vh',
           minWidth: '45vw',
-          display: 'flex',
+          width: '60px',
+          display: 'inline-block',
           flexDirection: 'column',
           alignItems: 'center',
           padding: '20px',

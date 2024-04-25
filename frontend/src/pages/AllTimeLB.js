@@ -48,29 +48,22 @@ function AllTimeLB() {
     grabdata();
   }, []);
   return (
-    <div
-      style={{
-        position: 'relative',
-        minWidth: '40vw',
-        minHeight: '80vh',
-        margin: 'auto',
-        backgroundColor: 'rgba(33, 37, 41, .9)',
-        borderRadius: '10px',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-        color: 'white',
-      }}
-    >
+    <div>
       <Header />
       <div
         className="Leaderboard"
         style={{
-          width: '100%',
-          margin: '15px auto',
-          // backgroundColor: "rgba(0, 150, 0, .5)", // Adjust transparency here
+          minHeight: '75vh',
+          minWidth: '45vw',
+          width: '60px',
+          display: 'inline-block',
+          flexDirection: 'column',
+          alignItems: 'center',
           padding: '20px',
-          borderRadius: '1px', // Optional: Add border radius for better appearance
-          // boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // Optional: Add shadow for better contrast
+          backgroundColor: 'rgba(33, 37, 41, 0.87)',
+          borderRadius: '10px',
           backdropFilter: 'blur(1px)',
+          color: 'white',
         }}
       >
         <h1 style={{ textAlign: 'center' }}>Top Players</h1>

@@ -342,21 +342,22 @@ function DailyPage() {
       <Header />
       <div
         style={{
-          color: 'white',
           minHeight: '75vh',
           minWidth: '45vw',
-          display: 'flex',
+          width: '60px',
+          display: 'inline-block',
           flexDirection: 'column',
           alignItems: 'center',
           padding: '20px',
-          backgroundColor: 'rgba(33, 37, 41, 0.87)', // Change background color to white with some opacity
-          borderRadius: '10px', // Add some border radius for the container
-          backdropFilter: 'blur(1px)', // Add a blur effect for better blending with the background image
+          backgroundColor: 'rgba(33, 37, 41, 0.87)',
+          borderRadius: '10px',
+          backdropFilter: 'blur(1px)',
+          color: 'white',
         }}
       >
         <h1 style={{ textAlign: 'center' }}>Daily Mode</h1>
         <div style={{ margin: '5px 0' }}></div>
-        {currentGuessIndex === 0 && (<p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>)}
+        {currentGuessIndex === 0 && <p style={{ fontSize: '20px', color: 'white', margin: '0', paddingBottom: '15px' }}>To start, guess a soccer player below!</p>}
         <span style={{ width: '100%', alignContent: 'center' }}>
           <div>
             {guessesMade.map((guess, index) => (
