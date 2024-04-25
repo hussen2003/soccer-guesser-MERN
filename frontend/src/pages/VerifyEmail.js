@@ -49,7 +49,7 @@ const VerifyEmail = () => {
           borderRadius: '10px',
           boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
           backdropFilter: 'blur(1px)',
-          marginTop: '500px',
+          marginTop: '400px',
         }}
       >
         {verificationStatus} !
