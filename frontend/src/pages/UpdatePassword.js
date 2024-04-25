@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Alert, ProgressBar } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../components/login/login.css'
+import '../components/login/login.css';
 
 const app_name = 'soccerdle-mern-ace81d4f14ec';
 function buildPath(route) {
@@ -68,7 +68,7 @@ const UpdatePassword = () => {
     const fulfilledStyle = { color: 'green', fontWeight: 'bold' };
 
     return (
-      <div style={{fontSize: "14px", textAlign: 'left', marginTop: '-15px', color: 'red', marginLeft: '-10px'}}>
+      <div style={{ fontSize: '14px', textAlign: 'left', marginTop: '-15px', color: 'red', marginLeft: '-10px' }}>
         <ul>
           <li style={requirements.minLength ? fulfilledStyle : null}>Minimum 8 characters</li>
           <li style={requirements.uppercase ? fulfilledStyle : null}>At least one uppercase letter</li>
@@ -83,27 +83,26 @@ const UpdatePassword = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (newPassword !== confirmPassword) {
-      setMessage("Passwords do not match.");
+      setMessage('Passwords do not match.');
       setVariant('danger');
       return;
     }
-  
+
     try {
       const response = await axios.post(buildPath('api/auth/updatePassword'), { newPassword, token });
       if (response.data.message) {
         setMessage(response.data.message);
-        setVariant('success'); 
+        setVariant('success');
       }
     } catch (error) {
-      console.error("Error in updatePassword", error.message);
+      console.error('Error in updatePassword', error.message);
       setMessage(error.message);
       setVariant('danger');
-      navigate("/");
+      navigate('/');
     }
   };
-  
 
   return (
     <div className="login-container">
@@ -124,7 +123,6 @@ const UpdatePassword = () => {
           <input type="password" placeholder="Enter your new password again" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
         </div>
         {getPasswordRequirements(passwordRequirements)}
-        <ProgressBar striped now={passwordStrength} variant={passwordStrength < 50 ? 'danger' : passwordStrength < 80 ? 'warning' : 'success'} />
         <Button
           type="submit"
           variant="outline-primary"
@@ -144,7 +142,7 @@ const UpdatePassword = () => {
         >
           Submit
         </Button>
-        <p style={{marginTop: '10px'}}>
+        <p style={{ marginTop: '10px' }}>
           Back to <a href="/">Login</a>
         </p>
       </form>
