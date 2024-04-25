@@ -53,9 +53,8 @@ function AllTimeLB() {
       <div
         className="Leaderboard"
         style={{
-          minHeight: '75vh',
-          minWidth: '45vw',
-          width: '60px',
+          minHeight: '80vh',
+          width: '80%',
           display: 'inline-block',
           flexDirection: 'column',
           alignItems: 'center',

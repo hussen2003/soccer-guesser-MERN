@@ -37,7 +37,7 @@
   .login-container form > div {
     display: block;
     flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
     
   .login-container label {
@@ -48,7 +48,7 @@
     
   .login-container input {
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding-left: 10px;

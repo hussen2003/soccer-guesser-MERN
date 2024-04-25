@@ -46,6 +46,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushNamed(context, '/allTimeLeaderboard');
   }
 
+  void goProfile(BuildContext context) {
+    Navigator.pushNamed(context, '/profile');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,143 +61,14 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Colors.grey.shade200.withOpacity(0.5),
         elevation: 0,
-        automaticallyImplyLeading: false,
-        leading: PopupMenuButton(
-          itemBuilder: (BuildContext context) {
-            return [
-              PopupMenuItem(
-                child: Row(
-                  children: [
-                    Text(
-                      'Signed as: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      Storage.getName(),
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                enabled: false,
-              ),
-              PopupMenuItem(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Color(0xff7eaf34),
-                    border: Border.all(color: Colors.black, width: 2.0),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'Daily',
-                    style: TextStyle(
-                      color:
-                          Colors.black,
-                    ),
-                  ),
-                ),
-                value: 'daily',
-              ),
-              PopupMenuItem(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Color(0xff7eaf34),
-                    border: Border.all(color: Colors.black, width: 2.0),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'Unlimited',
-                    style: TextStyle(
-                      color:
-                          Colors.black,
-                    ),
-                  ),
-                ),
-                value: 'unlimited',
-              ),
-              PopupMenuItem(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Color(0xff7eaf34),
-                    border: Border.all(color: Colors.black, width: 2.0),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'Leaderboard',
-                    style: TextStyle(
-                      color:
-                          Colors.black,
-                    ),
-                  ),
-                ),
-                value: 'dlb',
-              ),
-              PopupMenuItem(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Color(0xff7eaf34),
-                    border: Border.all(color: Colors.black, width: 2.0),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'All time Leaderboard',
-                    style: TextStyle(
-                      color:
-                          Colors.black,
-                    ),
-                  ),
-                ),
-                value: 'alltime',
-              ),
-              PopupMenuItem(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Color(0xff7eaf34),
-                    border: Border.all(color: Colors.black, width: 2.0),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'About Us',
-                    style: TextStyle(
-                      color:
-                          Colors.black,
-                    ),
-                  ),
-                ),
-                value: 'aboutUs',
-              ),
-            ];
-          },
-          onSelected: (value) {
-            if (value == 'aboutUs') {
-              Navigator.pushNamed(context, '/aboutUs');
-            }
-            if (value == 'daily') {
-              Navigator.pushNamed(context, '/dailyGamePage');
-            }
-            if (value == 'unlimited') {
-              Navigator.pushNamed(context, '/unlimitedModePage');
-            }
-            if (value == 'dlb') {
-              Navigator.pushNamed(context, '/leaderBoard');
-            }
-            if (value == 'alltime') {
-              Navigator.pushNamed(context, '/allTimeLeaderboard');
-            }
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
           },
         ),
         actions: [
@@ -203,6 +78,110 @@ class _HomePageState extends State<HomePage> {
             onPressed: logout,
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              color: Color(0xff7eaf34),
+              height: 120, // Adjust the height as needed
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Text(
+                      'Signed as:',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Text(
+                      Storage.getName(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                goProfile(context);
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 0.5),
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            ListTile(
+              title: Text('Daily'),
+              onTap: () {
+                Navigator.pop(context);
+                playDaily(context);
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            ListTile(
+              title: Text('Unlimited'),
+              onTap: () {
+                Navigator.pop(context);
+                goUnlimited(context);
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 0.5),
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            ListTile(
+              title: Text('Leaderboard'),
+              onTap: () {
+                Navigator.pop(context);
+                goLeaderboard(context);
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            ListTile(
+              title: Text('All time Leaderboard'),
+              onTap: () {
+                Navigator.pop(context);
+                goAllTime(context);
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 0.5),
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            ListTile(
+              title: Text('About Us'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/aboutUs');
+              },
+              shape: RoundedRectangleBorder(
+                //side: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+          ],
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(

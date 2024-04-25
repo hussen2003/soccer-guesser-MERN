@@ -229,7 +229,7 @@ export const updateUsername = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({ message: 'userName updated successfully', newUser: newUsername });
+    res.status(200).json({ message: 'Username updated successfully', newUser: newUsername });
   } catch (error) {
     console.log('Error in updateUsername controller', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
