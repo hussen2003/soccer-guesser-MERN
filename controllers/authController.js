@@ -225,6 +225,11 @@ export const updateUsername = async (req, res) => {
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
     }
+    const newUser = await User.findOne({ username: newUsername });
+    if (newUser) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+    
     await User.updateOne({ username: username }, { username: newUsername });
 
     await user.save();
