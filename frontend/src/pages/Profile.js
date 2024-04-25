@@ -172,8 +172,8 @@ function Profile() {
         <div style={{ margin: '30px 0' }}></div>
         <p>Daily Score: {dScore}</p>
         <p>All Time Score: {score}</p>
-        <p>Games Played: {GP}</p>
-        <p>Games Won: {GW}</p>
+        <p>Daily Games Played: {GP}</p>
+        <p>Daily Games Won: {GW}</p>
         <p>Streak: {streak}</p>
         <div style={{ margin: '30px 0' }}></div>
         <div>
