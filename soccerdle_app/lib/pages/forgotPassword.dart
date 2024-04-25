@@ -22,9 +22,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   void forgotPassword() async {
-        await loginService.forgotPassword(context: context, email: _emailController.text);
+    // Check if the form is valid before proceeding
+    if (_signInFormKey.currentState!.validate()) {
+      await loginService.forgotPassword(context: context, email: _emailController.text);
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,53 +62,63 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  Widget _loginUI(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 120),
-        color: Colors.black.withOpacity(0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(40),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Form(
-                key: _signInFormKey,
-                child: Column(
-                  children: [
-                    const Text(
-                      "Reset Password",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Colors.black,
-                      ),
+Widget _loginUI(BuildContext context) {
+  return SingleChildScrollView(
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 120),
+      color: Colors.black.withOpacity(0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(40),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.9),
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Form(
+              key: _signInFormKey,
+              child: Column(
+                children: [
+                  const Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 40),
-                    _buildTextField(
-                      controller: _emailController,
-                      hintText: 'Email',
-                      prefixIcon: Icons.email,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "If you have an account with us, you will receive an email to change your password.",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: forgotPassword,
-                      child: const Text('Submit'),
-                    ),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 30),
+                  _buildTextField(
+                    controller: _emailController,
+                    hintText: 'Email',
+                    prefixIcon: Icons.email,
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: forgotPassword,
+                    child: const Text('Submit'),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildTextField({
     required TextEditingController controller,

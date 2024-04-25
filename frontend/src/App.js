@@ -12,6 +12,7 @@ import VerifyEmail from './pages/VerifyEmail.js';
 import AllTimeLB from './pages/AllTimeLB.js';
 import ForgetPassword from "./pages/ForgetPassword.js";
 import UpdatePassword from "./pages/UpdatePassword.js";
+import Profile from "./pages/Profile.js";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path ="/VerifyEmail/:token" element={<VerifyEmail />} />
           <Route path = "/ForgetPassword" index element={<ForgetPassword />} />
           <Route path = "/UpdatePassword/:token" element={<UpdatePassword />} />
+          <Route path = "/Profile" index element = {<Profile />} />
           </Routes>
       </BrowserRouter>
     </div>
