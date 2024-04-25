@@ -127,9 +127,13 @@ class _ProfilePageState extends State<ProfilePage> {
           newUsername = res['newUser'];
           Storage.setUser(newUsername);
         });
-      } else {
+      } else if(response.statusCode == 400){
         setState(() {
-          message = 'Failed to update username';
+          message = 'Username already existed';
+        });
+      } else{
+        setState(() {
+          message = 'Failed to update Username!';
         });
       }
     } catch (e) {
