@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                 playDaily(context);
               },
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black, width: 1),
+                //side: BorderSide(color: Colors.black, width: 1),
                 borderRadius: BorderRadius.circular(0),
               ),
             ),
@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                 goLeaderboard(context);
               },
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black, width: 1),
+                //side: BorderSide(color: Colors.black, width: 1),
                 borderRadius: BorderRadius.circular(0),
               ),
             ),
@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/aboutUs');
               },
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black, width: 1),
+                //side: BorderSide(color: Colors.black, width: 1),
                 borderRadius: BorderRadius.circular(0),
               ),
             ),
