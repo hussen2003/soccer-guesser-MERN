@@ -345,8 +345,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 10.0),
               Text('Daily Score: $dailyScore'),
               Text('All Time Score: $score'),
-              Text('Games Played: $gamesPlayed'),
-              Text('Games Won: $gamesWon'),
+              Text('Daily Games Played: $gamesPlayed'),
+              Text('Daily Games Won: $gamesWon'),
               Text('Streak: $streak'),
               SizedBox(height: 20.0),
               Form(
