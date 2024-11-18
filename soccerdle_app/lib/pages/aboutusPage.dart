@@ -13,52 +13,28 @@ class AboutUsPage extends StatefulWidget {
 class _AboutUsPageState extends State<AboutUsPage> {
   final List<Map<String, dynamic>> teamMembers = [
     {
-      'name': 'David Urrego',
-      'role': 'Frontend (Web)',
-      'image': 'https://cdn.sofifa.net/players/241/721/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/david-urrego-93aa522b8/'
+      'name': 'Maya Sosa',
+      'role': 'PSE',
+      'image': 'https://thenounproject.com/icon/unknown-user-994628/',
+      'linkedin': 'https://www.linkedin.com'
     },
     {
-      'name': 'Hussen Premier',
-      'role': 'Database',
-      'image': 'https://cdn.sofifa.net/players/192/448/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/hussen-premier/'
+      'name': 'Paul Weiner',
+      'role': 'PSE',
+      'image': 'person.jpg',
+      'linkedin': 'https://www.linkedin.com'
     },
     {
-      'name': 'Jack Gao',
-      'role': 'Frontend (Web)/(Mobile)',
-      'image': 'https://cdn.sofifa.net/players/232/411/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/jack-gao-376328290'
+      'name': 'Raul Graerol Medina',
+      'role': 'CPE',
+      'image': 'person.jpg',
+      'linkedin': 'https://www.linkedin.com'
     },
     {
-      'name': 'Luckner Ablard',
-      'role': 'Frontend (Mobile)',
-      'image': 'https://cdn.sofifa.net/players/206/517/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/luckner-ablard/'
-    },
-    {
-      'name': 'Moses Cohen',
-      'role': 'Frontend (Web)',
-      'image': 'https://cdn.sofifa.net/players/231/443/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/moses-cohen/'
-    },
-    {
-      'name': 'Patrick Rizkalla',
-      'role': 'API',
-      'image': 'https://cdn.sofifa.net/players/264/240/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/patrick-rizkalla/'
-    },
-    {
-      'name': 'Raul Graterol',
-      'role': 'Frontend (Mobile)',
-      'image': 'https://cdn.sofifa.net/players/252/371/24_120.png',
-      'linkedin': 'https://www.linkedin.com/in/raul-graterol-509716241'
-    },
-    {
-      'name': 'Ryan Rahrooh',
-      'role': 'Project Manager',
-      'image': 'https://cdn.sofifa.net/players/010/535/15_120.png',
-      'linkedin': 'https://www.linkedin.com/in/ryan-rahrooh'
+      'name': 'Leiner Suarez Colome',
+      'role': 'EE',
+      'image': 'person.jpg',
+      'linkedin': 'https://www.linkedin.com'
     },
   ];
 
@@ -71,7 +47,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
         preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
           title: Text(
-            'Soccerdle',
+            'G.E.A',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,

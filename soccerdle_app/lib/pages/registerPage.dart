@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
         preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
           title: Text(
-            'Soccerdle',
+            'G.E.A',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,

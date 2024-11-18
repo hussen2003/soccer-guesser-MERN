@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
       return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Soccerdle',
+            'G.E.A',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
@@ -343,14 +343,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: 20.0),
               Text(
-                'Your Stats:',
+                'Readings recorded:',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10.0),
-              Text('Daily Score: $dailyScore'),
-              Text('All Time Score: $score'),
-              Text('Daily Games Played: $gamesPlayed'),
-              Text('Daily Games Won: $gamesWon'),
+              Text('Analyzer Of Blue to Red Light: $dailyScore'),
+              Text('Temperature readings: $score'),
+              Text('Humidity readings: $gamesPlayed'),
+              Text('CO2 readings: $gamesWon'),
               Text('Streak: $streak'),
               SizedBox(height: 20.0),
               Form(

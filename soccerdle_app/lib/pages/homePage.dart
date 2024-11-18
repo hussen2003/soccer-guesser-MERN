@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Soccerdle',
+          'G.E.A',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('Daily'),
+              title: Text('Analyzer of Blue to Red Light'),
               onTap: () {
                 Navigator.pop(context);
                 playDaily(context);
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('Unlimited'),
+              title: Text('Temperature Readings'),
               onTap: () {
                 Navigator.pop(context);
                 goUnlimited(context);
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('Leaderboard'),
+              title: Text('Humidity Readings'),
               onTap: () {
                 Navigator.pop(context);
                 goLeaderboard(context);
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('All time Leaderboard'),
+              title: Text('CO2 Readings'),
               onTap: () {
                 Navigator.pop(context);
                 goAllTime(context);
@@ -199,32 +199,32 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   _buildCard(
                       context,
-                      'Daily Game',
-                      'Every 24 hours a new player will be randomly selected. Can you guess today\'s player?',
-                      'lib/images/messi2.jpeg',
+                      'Analyzer of Blue to Red Light',
+                      'Analyze the spectrum of light in the environment.',
+                      'lib/images/messi2.jpg',
                       playDaily,
-                      'Play Now'),
+                      'Get Readings'),
                   _buildCard(
                       context,
-                      'Unlimited Game',
-                      'Test your knowledge and go as many times as you want! How many can you guess?',
-                      'lib/images/SUI.jpeg',
+                      'Temperature Readings',
+                      'Get temperature data and see daily variations over time.',
+                      'lib/images/SUI.jpg',
                       goUnlimited,
-                      'Play Now'),
+                      'Get Readings'),
                   _buildCard(
                       context,
-                      'Daily Leaderboard',
-                      'Leaderboard for the Daily game mode.',
-                      'lib/images/france2.jpeg',
+                      'Humidity Readings',
+                      'Track humidity levels and stay informed on daily fluctuations.',
+                      'lib/images/france.jpg',
                       goLeaderboard,
-                      'Leaderboard'),
+                      'Get Readings'),
                   _buildCard(
                       context,
-                      'All Time Leaderboard',
-                      'Overall Leaderboard. Do you see yourself on it?',
-                      'lib/images/brazil2.jpeg',
+                      'CO2 Readings',
+                      'Check CO2 levels for a healthy environment and view trends over time.',
+                      'lib/images/messi2.jpg',
                       goAllTime,
-                      'All Time'),
+                      'Get Readings'),
                 ],
               ),
             ),
