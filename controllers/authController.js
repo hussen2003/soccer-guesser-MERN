@@ -39,13 +39,13 @@ export const signup = async (req, res) => {
       let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: process.env.EMAIL_USER, // replace this with new email environment variable
-          pass: process.env.EMAIL_PASS, // replace this with new password environment variable
+          user: 'soccerdle.verify.email@gmail.com',
+          pass: 'dlom qktg fvci rgpl',
         },
       });
 
       let info = await transporter.sendMail({
-        from: '"G.E.A" <gea.verify.email@gmail.com>',
+        from: '"G.E.A" <soccerdle.verify.email@gmail.com>',
         to: newUser.email,
         subject: 'Please verify your email',
         text: `Please verify your email by clicking on the following link: ${buildPath(`VerifyEmail/${token}`)}`,
@@ -155,15 +155,15 @@ export const forgetPassword = async (req, res) => {
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // replace this with new email environment variable
-        pass: process.env.EMAIL_PASS, // replace this with new password environment variable
+        user: 'soccerdle.verify.email@gmail.com',
+        pass: 'dlom qktg fvci rgpl',
       },
     });
 
     let resetLink = `${buildPath(`UpdatePassword/${resetToken}`)}`;
 
     await transporter.sendMail({
-      from: '"G.E.A" <gea.verify.email@gmail.com>',
+      from: '"G.E.A" <soccerdle.verify.email@gmail.com>',
       to: user.email,
       subject: 'Password Reset',
       text: `You requested for a password reset. Please click on the following link to reset your password: ${resetLink}`,
