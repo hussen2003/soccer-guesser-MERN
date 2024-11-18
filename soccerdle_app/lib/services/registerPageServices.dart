@@ -59,7 +59,7 @@ class RegisterPageService {
 
       http.Response res = await http.post(
         Uri.parse(
-            'https://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/signup'),
+            'https://sd-group1-7db20f01361c.herokuapp.com/api/auth/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

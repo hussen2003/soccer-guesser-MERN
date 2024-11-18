@@ -37,7 +37,7 @@ class _DailyGamePageState extends State<DailyGamePage> {
     dailyUserGuess();
   }
 
-  final String baseUrl = 'http://soccerdle-mern-ace81d4f14ec.herokuapp.com';
+  final String baseUrl = 'https://sd-group1-7db20f01361c.herokuapp.com';
   Future<void> dailyUserGuess() async {
     try {
       http.Response response = await http.post(

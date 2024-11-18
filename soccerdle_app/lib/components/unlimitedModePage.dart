@@ -30,7 +30,7 @@ class _UnlimitedModeState extends State<UnlimitedModePage> {
     fetchData();
   }
 
-  final String baseUrl = 'http://soccerdle-mern-ace81d4f14ec.herokuapp.com';
+  final String baseUrl = 'https://sd-group1-7db20f01361c.herokuapp.com/';
 
   void fetchData() async {
     try {

@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import './signup.css';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-const app_name = 'soccerdle-mern-ace81d4f14ec';
+const app_name = 'sd-group1-7db20f01361c';
 
 function buildPath(route) {
   if (process.env.NODE_ENV === 'production') {

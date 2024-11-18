@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Alert } from 'react-bootstrap';
 import '../components/login/login.css'
 
-const app_name = 'soccerdle-mern-ace81d4f14ec';
+const app_name = 'sd-group1-7db20f01361c';
 function buildPath(route) {
   if (process.env.NODE_ENV === 'production') {
     return 'https://' + app_name + '.herokuapp.com/' + route;

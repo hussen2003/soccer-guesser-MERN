@@ -18,7 +18,7 @@ class ForgotPasswordPageService {
     try {
       final http.Response res = await http.post(
         Uri.parse(
-            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/forgetPassword'),
+            'https://sd-group1-7db20f01361c.herokuapp.com/api/auth/forgetPassword'),
         body: jsonEncode({
           'email': email,
         }),
@@ -51,7 +51,7 @@ class LoginPageService {
     try {
       final http.Response res = await http.post(
         Uri.parse(
-            'http://soccerdle-mern-ace81d4f14ec.herokuapp.com/api/auth/login'),
+            'https://sd-group1-7db20f01361c.herokuapp.com/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,

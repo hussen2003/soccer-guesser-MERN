@@ -20,7 +20,7 @@ class _AllTimeLeaderboardState extends State<AllTimeLeaderBoardPage> {
     fetchPlayers();
   }
 
-  final String baseUrl = 'http://soccerdle-mern-ace81d4f14ec.herokuapp.com';
+  final String baseUrl = 'https://sd-group1-7db20f01361c.herokuapp.com';
   Future<void> fetchPlayers() async {
     try {
       http.Response response = await http.post(
