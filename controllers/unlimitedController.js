@@ -4,14 +4,13 @@ import User from "../models/userModel.js";
 
 import Player from "../models/playerModel.js";
 
-const leaderboardAmount = 10;
-
-export const leaderboard = async (req, res) => {
+export const collectlux = async (req, res) => {
     try {
-      //const { score } = req.body;
-        const users = await User.find({}).select({ "name": 1, "score": 1, "_id": 0}).sort({ score: -1 }).limit(10);
+        const { lux } = req.body;
+        //const users = await User.find({}).select({ "name": 1, "score": 1, "_id": 0}).sort({ score: -1 }).limit(10);
 
-        res.status(201).json(users);
+        //res.status(201).json(users);
+        res.status(201).json(lux);
 
     } catch (error) {
       console.log("Error in unlimited controller", error.message);
