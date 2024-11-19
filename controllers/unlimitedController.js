@@ -11,14 +11,26 @@ export const collectlux = async (req, res) => {
 
         //res.status(201).json(users);
         //res.status(201).json(lux);
-       const user = "Bot";
-       if (lux != -1){
-        await User.findOne({user});
-        user.lux = parseInt(lux);
-        await user.save();
-        res.status(201).json(lux);
-       } else {const user2 = await User.findOne({user})
-         res.status(201).json({user : user2});};
+        const userName = "Bot"; // Define the username to search for
+
+        if (lux !== -1) {
+          const userRecord = await User.findOne({ user: userName });
+          if (userRecord) {
+            userRecord.lux = parseInt(lux); // Set lux value
+            await userRecord.save(); // Save updated record
+            res.status(201).json({ lux: userRecord.lux }); // Return updated lux
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } else {
+          const userRecord = await User.findOne({ user: userName });
+          if (userRecord) {
+            res.status(201).json({ user: userRecord });
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        }
+        
 
     } catch (error) {
       console.log("Error in unlimited controller", error.message);
