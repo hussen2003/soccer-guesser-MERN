@@ -16,7 +16,7 @@ export const collectlux = async (req, res) => {
         await User.updateOne({ user }, { lux: lux })
         res.status(201).json(lux);
        } else {const user2 = await User.findOne({user})
-         res.status(201).json(user2);};
+         res.status(201).json({user : user2});};
 
     } catch (error) {
       console.log("Error in unlimited controller", error.message);
