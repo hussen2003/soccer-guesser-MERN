@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       'Analyzer of Blue to Red Light',
                       'Analyze the spectrum of light in the environment.',
-                      'lib/images/messi2.jpg',
+                      'lib/images/light.jpg',
                       playDaily,
                       'Get Readings'),
                   _buildCard(
@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       'Humidity Readings',
                       'Track humidity levels and stay informed on daily fluctuations.',
-                      'lib/images/france.jpg',
+                      'lib/images/light.jpg',
                       goLeaderboard,
                       'Get Readings'),
                   _buildCard(

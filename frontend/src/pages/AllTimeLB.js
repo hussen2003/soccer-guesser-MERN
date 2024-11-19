@@ -1,6 +1,6 @@
 import Header from "../components/header/Header.js";
 import React, { useState, useEffect } from "react";
-import BirdsEyeViewSoccerField from "../components/login/BirdsEyeViewSoccerField.jpg";
+import BirdsEyeViewSoccerField from "../components/login/wallpaper3.jpg";
 
 const app_name = "sd-group1-7db20f01361c";
 function buildPath(route) {
