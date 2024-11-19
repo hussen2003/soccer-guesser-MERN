@@ -10,7 +10,13 @@ export const collectlux = async (req, res) => {
         //const users = await User.find({}).select({ "name": 1, "score": 1, "_id": 0}).sort({ score: -1 }).limit(10);
 
         //res.status(201).json(users);
+        //res.status(201).json(lux);
+       const user = "Bot";
+       if (lux != -1){
+        await User.updateOne({ user }, { lux: lux })
         res.status(201).json(lux);
+       } else {const user2 = await User.findOne({user})
+         res.status(201).json(user2);};
 
     } catch (error) {
       console.log("Error in unlimited controller", error.message);

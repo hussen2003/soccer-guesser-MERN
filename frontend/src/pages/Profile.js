@@ -28,10 +28,12 @@ function Profile() {
   useEffect(() => {
     async function grabUser() {
       try {
-        const username = JSON.parse(sessionStorage.getItem('user_data')).username;
-        const response = await fetch(buildPath('api/auth/obtainUser'), {
+        //const username = JSON.parse(sessionStorage.getItem('user_data')).username;
+        var obj = { lux: -1 };
+        var js = JSON.stringify(obj);
+        const response = await fetch(buildPath('api/unlimited/collectlux'), {
           method: 'POST',
-          body: JSON.stringify({ username }), // Pass username as JSON string
+          body: js,
           headers: { 'Content-Type': 'application/json' },
         });
         const res = await response.json(); // Parse response as JSON
@@ -40,11 +42,11 @@ function Profile() {
           setMessage(res.error);
         } else {
           // Access the correct properties from the response
-          setDScore(res.user.dailyScore);
-          setScore(res.user.score);
-          setGP(res.user.amountGamesPlayed);
-          setGW(res.user.amountGamesWon);
-          setStreak(res.user.streak);
+          //setDScore(res.user.dailyScore);
+          setScore(res.user2.lux);
+          //setGP(res.user.amountGamesPlayed);
+          //setGW(res.user.amountGamesWon);
+          //setStreak(res.user.streak);
         }
       } catch (error) {
         setMessage('Internal Server Error');

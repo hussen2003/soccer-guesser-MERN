@@ -25,34 +25,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 6,
   },
-  score: {
+
+  lux: {
     type: Number,
-    default: 0,
   },
-  guessDistribution: {
-    type: [Number],
-    default: [0, 0, 0, 0, 0, 0],
-  },
-  amountGamesPlayed: {
-    type: Number,
-    default: 0,
-  },
-  amountGamesWon: {
-    type: Number,
-    default: 0,
-  },
-  streak: {
-    type: Number,
-    default: 0,
-  },
-  currentGuesses: {
-    type: [String],
-    default: ["", "", "", "", "", ""],
-  },
-  usedHint: {
-    type: [Boolean],
-    default: [false, false, false, false, false],
-  },
+  
 });
 
 const User = mongoose.model("users", userSchema);
