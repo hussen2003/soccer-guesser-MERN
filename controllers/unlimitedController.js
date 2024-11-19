@@ -14,7 +14,7 @@ export const collectlux = async (req, res) => {
         const userName = "Bot"; // Define the username to search for
 
         if (lux !== -1) {
-          const userRecord = await User.findOne({ user: userName });
+          const userRecord = await User.findOne({ username : userName });
           if (userRecord) {
             userRecord.lux = parseInt(lux); // Set lux value
             await userRecord.save(); // Save updated record
@@ -23,7 +23,7 @@ export const collectlux = async (req, res) => {
             res.status(404).json({ error: "User not found" });
           }
         } else {
-          const userRecord = await User.findOne({ user: userName });
+          const userRecord = await User.findOne({ username: userName });
           if (userRecord) {
             res.status(201).json({ user: userRecord });
           } else {
