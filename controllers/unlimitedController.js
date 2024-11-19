@@ -13,7 +13,9 @@ export const collectlux = async (req, res) => {
         //res.status(201).json(lux);
        const user = "Bot";
        if (lux != -1){
-        await User.updateOne({ user }, { lux: lux })
+        await User.findOne({user});
+        user.lux = lux;
+        await user.save();
         res.status(201).json(lux);
        } else {const user2 = await User.findOne({user})
          res.status(201).json({user : user2});};
