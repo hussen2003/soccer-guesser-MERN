@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
 
   lux: {
     type: Number,
+    default: 0,
   },
   
 });
