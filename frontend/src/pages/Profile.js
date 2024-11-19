@@ -43,7 +43,7 @@ function Profile() {
         } else {
           // Access the correct properties from the response
           //setDScore(res.user.dailyScore);
-          setScore(res.user2.lux);
+          setScore(res.user.lux);
           //setGP(res.user.amountGamesPlayed);
           //setGW(res.user.amountGamesWon);
           //setStreak(res.user.streak);
