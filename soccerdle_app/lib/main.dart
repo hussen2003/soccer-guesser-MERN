@@ -11,6 +11,7 @@ import 'package:soccerdle_app/pages/homePage.dart';
 import 'package:soccerdle_app/pages/loginPage.dart';
 import 'package:soccerdle_app/pages/registerPage.dart';
 import 'package:soccerdle_app/providers/userProvider.dart';
+import 'package:soccerdle_app/components/ligth.dart';
 
 void main() async {
   runApp(
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const HomePage(),
+        '/luxDisplay': (context) => const LuxDisplayPage(),
         '/dailyGamePage': (context) => const DailyGamePage(),
         '/unlimitedModePage': (context) => const UnlimitedModePage(),
         '/leaderBoard': (context) => const LeaderBoardPage(),

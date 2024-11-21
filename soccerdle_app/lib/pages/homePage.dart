@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void playDaily(BuildContext context) {
-    Navigator.pushNamed(context, '/dailyGamePage');
+    Navigator.pushNamed(context, '/luxDisplay');
   }
 
   void goLeaderboard(BuildContext context) {

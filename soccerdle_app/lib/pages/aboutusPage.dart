@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AboutUsPage extends StatefulWidget {
   static const String routeName = '/aboutUsPage';
@@ -15,30 +14,32 @@ class _AboutUsPageState extends State<AboutUsPage> {
     {
       'name': 'Maya Sosa',
       'role': 'PSE',
-      'image': 'https://thenounproject.com/icon/unknown-user-994628/',
-      'linkedin': 'https://www.linkedin.com'
+      'image': 'lib/images/user.png', // Updated to use local image
+      'linkedin': 'https://www.linkedin.com',
     },
     {
       'name': 'Paul Weiner',
       'role': 'PSE',
-      'image': 'person.jpg',
-      'linkedin': 'https://www.linkedin.com'
+      'image': 'lib/images/user.png', // Updated to use local image
+      'linkedin': 'https://www.linkedin.com',
     },
     {
-      'name': 'Raul Graerol Medina',
+      'name': 'Raul Graterol Medina',
       'role': 'CPE',
-      'image': 'person.jpg',
-      'linkedin': 'https://www.linkedin.com'
+      'image': 'lib/images/user.png', // Updated to use local image
+      'linkedin': 'https://www.linkedin.com',
     },
     {
       'name': 'Leiner Suarez Colome',
       'role': 'EE',
-      'image': 'person.jpg',
-      'linkedin': 'https://www.linkedin.com'
+      'image': 'lib/images/user.png', // Updated to use local image
+      'linkedin': 'https://www.linkedin.com',
     },
   ];
 
-  void redirectToLinkedIn(String linkedinUrl) {}
+  void redirectToLinkedIn(String linkedinUrl) {
+    // Define your redirection logic here
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
-          title: Text(
+          title: const Text(
             'G.E.A',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
@@ -92,7 +93,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.7),//Opacity 
+                              color: Colors.white.withOpacity(0.7), // Opacity
                               border: Border.all(
                                 color: Colors.black,
                                 width: 2,
@@ -115,8 +116,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                                       color: Color.fromARGB(255, 86, 85, 85)),
                                 ),
                                 const SizedBox(height: 10),
-                                Image.network(
-                                  teamMembers[index]['image'],
+                                Image.asset(
+                                  teamMembers[index]['image'], // Use local image
                                   width: 120,
                                   height: 120,
                                 ),
