@@ -12,15 +12,15 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String message = '';
   String display = Storage.getName();
   String newName = Storage.getName();
   String newUsername = Storage.getUser();
-  int score = 0;
-  int dailyScore = 0;
-  int gamesPlayed = 0;
-  int gamesWon = 0;
-  int streak = 0;
+  String message = '';
+  //int score = 0;
+  //int dailyScore = 0;
+  //int gamesPlayed = 0;
+  //int gamesWon = 0;
+  //int streak = 0;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   
 
-  final String baseUrl = 'https://sd-group1-7db20f01361c.herokuapp.com/';
+  final String baseUrl = 'https://sd-group1-7db20f01361c.herokuapp.com';
 
   Future<void> fetchUser() async {
     // Fetch user data from the API
@@ -50,13 +50,16 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           newName = userData['name'];
           newUsername = userData['username'];
-          score = userData['score'];
-          dailyScore = userData['dailyScore'];
-          gamesPlayed = userData['amountGamesPlayed'];
-          gamesWon = userData['amountGamesWon'];
-          streak = userData['streak'];
+          //score = userData['score'];
+          //dailyScore = userData['dailyScore'];
+          //gamesPlayed = userData['amountGamesPlayed'];
+          //gamesWon = userData['amountGamesWon'];
+          //streak = userData['streak'];
         });
       } else {
+         print('Response status: ${response.statusCode}');
+         print('Username fetched from Storage: ${Storage.getUser()}');
+
         setState(() {
           message = 'Failed to fetch user data';
         });
@@ -180,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
   void playDaily(BuildContext context) {
-    Navigator.pushNamed(context, '/dailyGamePage');
+    Navigator.pushNamed(context, '/luxDisplay');
   }
 
   void goLeaderboard(BuildContext context) {
@@ -275,7 +278,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: Text('Daily'),
+                title: Text('Analyzer of Blue to red Light'),
                 onTap: () {
                   Navigator.pop(context);
                   playDaily(context);
@@ -286,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: Text('Unlimited'),
+                title: Text('Tempetarute Readings'),
                 onTap: () {
                   Navigator.pop(context);
                   goUnlimited(context);
@@ -297,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: Text('Leaderboard'),
+                title: Text('Humidity Readings'),
                 onTap: () {
                   Navigator.pop(context);
                   goLeaderboard(context);
@@ -308,7 +311,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: Text('All time Leaderboard'),
+                title: Text('CO2 Readings'),
                 onTap: () {
                   Navigator.pop(context);
                   goAllTime(context);
@@ -342,17 +345,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20.0),
-              Text(
-                'Readings recorded:',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10.0),
-              Text('Analyzer Of Blue to Red Light: $dailyScore'),
-              Text('Temperature readings: $score'),
-              Text('Humidity readings: $gamesPlayed'),
-              Text('CO2 readings: $gamesWon'),
-              Text('Streak: $streak'),
-              SizedBox(height: 20.0),
+             // Text(
+               // 'Readings recorded:',
+               // style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+             // ),
+            //  SizedBox(height: 10.0),
+             // Text('Analyzer Of Blue to Red Light: $dailyScore'),
+             // Text('Temperature readings: $score'),
+             // Text('Humidity readings: $gamesPlayed'),
+             // Text('CO2 readings: $gamesWon'),
+             // Text('Streak: $streak'),
+              //SizedBox(height: 20.0),
               Form(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -35,7 +35,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              'Soccerdle',
+              'G.E.A',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,

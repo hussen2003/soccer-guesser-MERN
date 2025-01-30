@@ -1,10 +1,10 @@
 import express from "express";
-import { collectlux, updateScore } from "../controllers/unlimitedController.js";
+import { collectlux, updateScore, collectSensorData } from "../controllers/unlimitedController.js";
 
 const router = express.Router();
 
 router.post("/collectlux", collectlux);
-
+router.post("/collectsensordata", collectSensorData);
 router.post("/updateScore", updateScore);
 
 
