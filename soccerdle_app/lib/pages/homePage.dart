@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void goUnlimited(BuildContext context) {
-    Navigator.pushNamed(context, '/unlimitedModePage');
+    Navigator.pushNamed(context, '/sensorDataDisplay');
   }
 
   void goAllTime(BuildContext context) {

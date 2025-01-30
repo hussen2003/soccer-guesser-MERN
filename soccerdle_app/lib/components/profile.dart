@@ -191,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void goUnlimited(BuildContext context) {
-    Navigator.pushNamed(context, '/unlimitedModePage');
+    Navigator.pushNamed(context, '/sensorDataDisplay');
   }
 
   void goAllTime(BuildContext context) {

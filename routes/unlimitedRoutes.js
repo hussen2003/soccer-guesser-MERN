@@ -4,7 +4,7 @@ import { collectlux, updateScore, collectSensorData } from "../controllers/unlim
 const router = express.Router();
 
 router.post("/collectlux", collectlux);
-router.post("/collectsensordata", collectSensorData);
+router.post("/collectSensorData", collectSensorData);
 router.post("/updateScore", updateScore);
 
 
